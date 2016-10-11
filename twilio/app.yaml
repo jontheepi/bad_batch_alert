@@ -17,8 +17,8 @@ vm: true
 
 # [START env_variables]
 env_variables:
-  TWILIO_ACCOUNT_SID: <your-account-sid>
-  TWILIO_AUTH_TOKEN: <your-auth-token>
-  TWILIO_NUMBER: <your-twilio-number>
+  TWILIO_ACCOUNT_SID: "AC424bce68fb3dab54c349be9b5f94487a"
+  TWILIO_AUTH_TOKEN: "bc0a7b9a5f152051a19fd4dd67f5c3c7"
+  TWILIO_NUMBER: '+14432017340'
 # [END env_variables]
 # [END app_yaml]
