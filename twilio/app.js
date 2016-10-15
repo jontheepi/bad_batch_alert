@@ -41,7 +41,7 @@ var TwimlResponse = require('twilio').TwimlResponse;
 // [START receive_call]
 app.post('/call/receive', function (req, res) {
   var resp = new TwimlResponse();
-  resp.say('Hello from Google App Engine.');
+  resp.say('Thanks for calling Bad Batch Alert. Lets save some lives!.');
 
   res.status(200)
     .contentType('text/xml')
