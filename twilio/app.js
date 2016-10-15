@@ -76,15 +76,17 @@ app.get('/sms/send', function (req, res, next) {
 app.post('/sms/receive', bodyParser, function (req, res) {
 
   pg.defaults.ssl = true;
+
   pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
-    console.log('Connected to postgres! Getting schemas...');
 
-    client
-      .query('SELECT * FROM users WHERE phone_number = "+14108129938"')
-      .on('row', function(row) {
-        console.log(JSON.stringify(row));
-      });
+  console.log('Connected to postgres! Getting schemas...');
+
+  client
+    .query('SELECT * FROM users WHERE phone_number = +14108129938')
+    .on('row', function(row) {
+      console.log(JSON.stringify(row));
+    });
   });
 
 
