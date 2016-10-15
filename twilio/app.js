@@ -86,7 +86,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   console.log(queryString);
 
   client
-    .query(queryString);
+    .query(queryString)
     .on('row', function(row) {
       console.log(JSON.stringify(row));
     });
