@@ -82,7 +82,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
 
   console.log('Connected to db');
   console.log(req.body.From);
-  var queryString = "SELECT * FROM users WHERE phone_number = " + req.body.From;
+  var queryString = "SELECT * FROM users WHERE phone_number = '" + req.body.From + "'";
   console.log(queryString);
 
   client
