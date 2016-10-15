@@ -83,7 +83,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   console.log('Connected to postgres! Getting schemas...');
 
   client
-    .query("SELECT * FROM users WHERE phone_number = '+14108129938'")
+    .query("SELECT * FROM users WHERE phone_number = " + req.body.From)
     .on('row', function(row) {
       console.log(JSON.stringify(row));
     });
