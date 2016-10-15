@@ -81,7 +81,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
     console.log('Connected to postgres! Getting schemas...');
 
     client
-      .query('SELECT * FROM Users;')
+      .query('SELECT * FROM users;')
       .on('row', function(row) {
         console.log(JSON.stringify(row));
       });
