@@ -80,10 +80,13 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
 
-  console.log('Connected to postgres! Getting schemas...');
+  console.log('Connected to db');
+  console.log(req.body.From);
+  var queryString = "SELECT * FROM users WHERE phone_number = " + req.body.From;
+  console.log(queryString);
 
   client
-    .query("SELECT * FROM users WHERE phone_number = " + req.body.From)
+    .query(queryString);
     .on('row', function(row) {
       console.log(JSON.stringify(row));
     });
