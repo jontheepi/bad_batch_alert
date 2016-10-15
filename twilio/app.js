@@ -71,16 +71,15 @@ app.get('/sms/send', function (req, res, next) {
 // [END send_sms]
 
 // [START receive_sms]
+// [START receive_sms]
 app.post('/sms/receive', bodyParser, function (req, res) {
   var sender = req.body.From;
   var body = req.body.Body;
 
-  var resp = new TwimlResponse();
-  resp.message(format('Hello, %s, you said: %s', sender, body));
-
+  var resp = '<Response><Message><Body>Thank you for registering. Find out more at BadBatchAlert.com</Body><Media>http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png</Media></Message></Response>';
   res.status(200)
     .contentType('text/xml')
-    .send(resp.toString());
+    .send(resp);
 });
 // [END receive_sms]
 
