@@ -4,7 +4,7 @@
 var adminActions = function() {
 
   var self = this;
-  
+
   var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
   var MY_NUMBER = process.env.MY_NUMBER;
   
@@ -51,9 +51,9 @@ var adminActions = function() {
   {
     console.log("ADMIN ACTION:" + action);
     if (action == "⚠️") {//Alert Emoji
-      self.adminTestAlerts(res, client, action);
+      self.adminTestAlerts(twilio, res, client, action);
     } else if (action == "👋") {
-      self.adminHelloWorld(res, client, action);
+      self.adminHelloWorld(twilio, res, client, action);
     }
   }
 
