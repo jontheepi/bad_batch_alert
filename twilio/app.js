@@ -39,11 +39,12 @@ var TwimlResponse = require('twilio').TwimlResponse;
 function doAdminAction(client, action)
 {
   console.log("ADMIN ACTION:" + action);
-  if (action == "TEXT_ALL") {
+  if (action == "TestAlert") {
     twilio.sendMessage({
       to: process.env.MY_NUMBER,
       from: TWILIO_NUMBER,
-      body: 'Overdose nearby, Please be careful tonight.'
+      body: 'Overdose nearby, Please be careful tonight.',
+      mediaUrl: "http://farm2.static.flickr.com/1075/1404618563_3ed9a44a3a.jpg"  
     }, function (err) {
       if (err) {
         return next(err);
