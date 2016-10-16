@@ -39,6 +39,18 @@ var TwimlResponse = require('twilio').TwimlResponse;
 function doAdminAction(client, action)
 {
   console.log("ADMIN ACTION:" + action);
+  if (action == "TEXT_ALL") {
+    twilio.sendMessage({
+      to: process.env.MY_NUMBER,
+      from: TWILIO_NUMBER,
+      body: 'Overdose nearby, Please be careful tonight.'
+    }, function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.status(200).send('Message sent.');
+    });
+  }
 }
 
 
