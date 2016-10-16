@@ -5,6 +5,9 @@ var adminActions = function() {
 
   var self = this;
   
+  var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
+  var MY_NUMBER = process.env.MY_NUMBER;
+  
   //fires off a test alert to all the registered users
   self.adminTestAlerts = function(twilio, res, client, action)
   {
@@ -31,7 +34,7 @@ var adminActions = function() {
   self.adminHelloWorld = function(twilio, res, client, action)
   {
     twilio.sendMessage({
-      to: process.env.MY_NUMBER,
+      to: MY_NUMBER,
       from: TWILIO_NUMBER,
       body: '👋 Hello World 👋'
     }, function (err) {
