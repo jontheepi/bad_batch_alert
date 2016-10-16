@@ -39,12 +39,12 @@ var TwimlResponse = require('twilio').TwimlResponse;
 function doAdminAction(res, client, action)
 {
   console.log("ADMIN ACTION:" + action);
-  if (action == "TestAlert") {
+  if (action == "⚠️") {//Alert Emoji
     twilio.sendMessage({
       to: process.env.MY_NUMBER,
       from: TWILIO_NUMBER,
-      body: 'Overdose nearby, Please be careful tonight.',
-      mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/fen.jpg"  
+      body: '⚠️ Overdose nearby, Please be careful tonight.'
+      //mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/fen.jpg"  
     }, function (err) {
       if (err) {
         return next(err);
