@@ -31,7 +31,7 @@ function adminHelloWorld(res, client, action)
   twilio.sendMessage({
     to: process.env.MY_NUMBER,
     from: TWILIO_NUMBER,
-    body: '💊 Hello World 💊️'
+    body: '👋 Hello World 👋'
   }, function (err) {
     if (err) {
       return next(err);
@@ -47,7 +47,7 @@ function doAdminAction(res, client, action)
   console.log("ADMIN ACTION:" + action);
   if (action == "⚠️") {//Alert Emoji
     adminTestAlerts(res, client, action);
-  } else if (action == "💊") {
+  } else if (action == "👋") {
     adminHelloWorld(res, client, action);
   }
 }
