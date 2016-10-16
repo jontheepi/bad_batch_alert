@@ -18,7 +18,7 @@
 var pg = require('pg');
 var format = require('util').format;
 var express = require('express');
-var admin = requre('adminActions');
+var admin = require('adminActions');
 
 var bodyParser = require('body-parser').urlencoded({
   extended: false
