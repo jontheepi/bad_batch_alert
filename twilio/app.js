@@ -46,7 +46,7 @@ function doAdminAction(res, client, action)
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       console.log(row.phone_number);
-      (twilio.sendMessage({
+      twilio.sendMessage({
         to: process.env.MY_NUMBER,//row.phone_number,
         from: TWILIO_NUMBER,
         body: '⚠️ Overdose nearby, please be careful. http://health.baltimorecity.gov/Fentanyl',
