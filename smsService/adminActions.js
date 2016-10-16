@@ -48,9 +48,9 @@ var adminActions = function() {
   {
     console.log("ADMIN ACTION:" + action);
     if (action == "⚠️") {//Alert Emoji
-      adminTestAlerts(res, client, action);
+      self.adminTestAlerts(res, client, action);
     } else if (action == "👋") {
-      adminHelloWorld(res, client, action);
+      self.adminHelloWorld(res, client, action);
     }
   }
 
