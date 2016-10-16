@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "monitor": "nodemon app.js",
+    "monitor": "nodemon app.js"
   },
   "dependencies": {
     "body-parser": "^1.14.2",
