@@ -34,34 +34,6 @@ var twilio = require('twilio')(
 var TwimlResponse = require('twilio').TwimlResponse;
 // [END config]
 
-
-//Special admin actions, like mass text etc.
-function doAdminAction(res, client, action)
-{
-  console.log("ADMIN ACTION:" + action);
-  if (action == "⚠️") {//Alert Emoji
-    //Query for all users and send them alerts.
-    var findQueryString = "SELECT * FROM users";
-    var findQuery = client.query(findQueryString);
-    findQuery.on('row', function(row) {
-      console.log(JSON.stringify(row));
-      console.log(row.phone_number);
-      twilio.sendMessage({
-        to: row.phone_number,
-        from: TWILIO_NUMBER,
-        body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
-        mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
-      }, function (err) {
-        if (err) {
-          return next(err);
-        }
-        res.status(200).send('Message sent.');
-      });
-    });
-  }
-}
-
-
 // [START receive_call]
 app.post('/call/receive', function (req, res) {
   var resp = new TwimlResponse();
@@ -73,26 +45,6 @@ app.post('/call/receive', function (req, res) {
 });
 // [END receive_call]
 
-// [START send_sms]
-app.get('/sms/send', function (req, res, next) {
-  var to = req.query.to;
-  if (!to) {
-    return res.status(400).send(
-      'Please provide an number in the "to" query string parameter.');
-  }
-
-  twilio.sendMessage({
-    to: to,
-    from: TWILIO_NUMBER,
-    body: 'Hello from Google App Engine'
-  }, function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.status(200).send('Message sent.');
-  });
-});
-// [END send_sms]
 
 // [START receive_sms]
 app.post('/sms/receive', bodyParser, function (req, res) {
