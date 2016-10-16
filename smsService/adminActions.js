@@ -29,7 +29,7 @@ function adminTestAlerts(res, client, action);
 function adminHelloWorld(res, client, action)
 {
   twilio.sendMessage({
-    to: rrocess.env.MY_NUMBER,
+    to: process.env.MY_NUMBER,
     from: TWILIO_NUMBER,
     body: '💊 Hello World 💊️'
   }, function (err) {
