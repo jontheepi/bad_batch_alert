@@ -128,7 +128,7 @@ var server = app.listen(process.env.PORT || '8080', function () {
 });
 
 
-function doAdminActions(client, action)
+function doAdminAction(client, action)
 {
   console.log("ADMIN ACTION:" + action);
 }
