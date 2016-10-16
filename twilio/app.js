@@ -96,15 +96,19 @@ app.post('/sms/receive', bodyParser, function (req, res) {
 
     console.log(sender);
     var findQueryString = "SELECT * FROM users WHERE phone_number = '" + sender + "'";
-    client.query(findQueryString)
-      .on('row', function(row) {
+    var findQuery = client.query(findQueryString);
+
+    findQuery.on('row', function(row) {
         console.log(JSON.stringify(row));
         //can do something special if we know them. Maybe check for name?
     });
    
 
     var insertQueryString = "INSERT INTO users (phone_number, message_body) VALUES ('" + sender + "', '" + body + "')";
-    client.query(insertQueryString);
+    var insertQuery = client.query(insertQueryString);
+    insertQuery.on('error', function() {
+      console.log("It's cool we're already in here.");
+    });
     
     var resp = '<Response><Message><Body>Thank you for registering. Find out more at BadBatchAlert.com</Body><Media>http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png</Media></Message></Response>';
     res.status(200)
