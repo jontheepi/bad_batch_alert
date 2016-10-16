@@ -3,8 +3,10 @@
 //
 var adminActions = function() {
 
+  var self = this;
+  
   //fires off a test alert to all the registered users
-  function adminTestAlerts(res, client, action)
+  self.adminTestAlerts = function(res, client, action)
   {
     //Query for all users and send them alerts.
     var findQueryString = "SELECT * FROM users";
@@ -26,7 +28,7 @@ var adminActions = function() {
     });
   }
 
-  function adminHelloWorld(res, client, action)
+  self.adminHelloWorld = function(res, client, action)
   {
     twilio.sendMessage({
       to: process.env.MY_NUMBER,
@@ -42,7 +44,7 @@ var adminActions = function() {
 
 
   //Special admin actions, like mass text etc.
-  function doAdminAction(res, client, action)
+  self.doAdminAction = function(res, client, action)
   {
     console.log("ADMIN ACTION:" + action);
     if (action == "⚠️") {//Alert Emoji
