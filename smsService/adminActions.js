@@ -16,7 +16,7 @@ var adminActions = function() {
       console.log(row.phone_number);
       twilio.sendMessage({
         to: row.phone_number,
-        from: process.env.TWILIO_NUMBER,
+        from: TWILIO_NUMBER,
         body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
         mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
       }, function (err) {
@@ -32,7 +32,7 @@ var adminActions = function() {
   {
     twilio.sendMessage({
       to: process.env.MY_NUMBER,
-      from: process.env.TWILIO_NUMBER;,
+      from: TWILIO_NUMBER,
       body: '👋 Hello World 👋'
     }, function (err) {
       if (err) {
