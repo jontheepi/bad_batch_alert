@@ -26,11 +26,6 @@ var app = express();
 
 // [START config]
 var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
-if (!TWILIO_NUMBER) {
-  console.log(
-    'Please configure environment variables as described in README.md');
-  process.exit(1);
-}
 
 var twilio = require('twilio')(
   process.env.TWILIO_ACCOUNT_SID,
@@ -38,6 +33,14 @@ var twilio = require('twilio')(
 
 var TwimlResponse = require('twilio').TwimlResponse;
 // [END config]
+
+
+//Special admin actions, like mass text etc.
+function doAdminAction(client, action)
+{
+  console.log("ADMIN ACTION:" + action);
+}
+
 
 // [START receive_call]
 app.post('/call/receive', function (req, res) {
@@ -128,8 +131,5 @@ var server = app.listen(process.env.PORT || '8080', function () {
 });
 
 
-function doAdminAction(client, action)
-{
-  console.log("ADMIN ACTION:" + action);
-}
+
 // [END app]
