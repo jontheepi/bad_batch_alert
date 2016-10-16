@@ -47,7 +47,7 @@ function doAdminAction(res, client, action)
       console.log(JSON.stringify(row));
       console.log(row.phone_number);
       twilio.sendMessage({
-        to: process.env.MY_NUMBER,//row.phone_number,
+        to: row.phone_number,
         from: TWILIO_NUMBER,
         body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
         mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
