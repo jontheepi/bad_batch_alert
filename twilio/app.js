@@ -46,17 +46,17 @@ function doAdminAction(res, client, action)
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       console.log(row.phone_number);
-      /*(twilio.sendMessage({
-        to: row.phone_number,
+      (twilio.sendMessage({
+        to: process.env.MY_NUMBER,//row.phone_number,
         from: TWILIO_NUMBER,
-        body: '⚠️ Overdose nearby, please be careful. \n http://health.baltimorecity.gov/Fentanyl',
+        body: '⚠️ Overdose nearby, please be careful. http://health.baltimorecity.gov/Fentanyl',
         mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
       }, function (err) {
         if (err) {
           return next(err);
         }
         res.status(200).send('Message sent.');
-      });*/
+      });
     });
   }
 }
