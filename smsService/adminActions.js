@@ -4,7 +4,7 @@
 
 
 //fires off a test alert to all the registered users
-function adminTestAlerts(res, client, action);
+function adminTestAlerts(res, client, action)
 {
   //Query for all users and send them alerts.
   var findQueryString = "SELECT * FROM users";
