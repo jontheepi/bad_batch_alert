@@ -73,43 +73,45 @@ app.get('/sms/send', function (req, res, next) {
 
 // [START receive_sms]
 app.post('/sms/receive', bodyParser, function (req, res) {
-  //connect to the db
+  
   var sender = req.body.From;
   var body   = req.body.Body;
-  
+  console.log ('SENDER:' + sender + ', BODY:' + body);
+
+  //connect to the db
   pg.defaults.ssl = true;
   pg.connect(process.env.DATABASE_URL, function(err, client) {
     if (err) throw err;
     console.log('Connected to db');
-
+    
     //check to see if the sender is an admin.
     //if so do special logic based on the message body.
+    var isAdmin = sender == process.env.MY_NUMBER;
+    if (isAdmin) console.log("Admin");
+    if (isAdmin && body != "Join") {
+      doAdminAction(client, body);
+      return;
+    }
    
-
-
-
-    //check to see if we already have the user.
-    //if so send them something new?
-
-    //otherwise add them to the db and say thank you.
-
-
-    console.log(sender);
-    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + sender + "'";
+    //look for sender in db
+    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + process.env.MY_NUMBER + "'";
     var findQuery = client.query(findQueryString);
-
     findQuery.on('row', function(row) {
-        console.log(JSON.stringify(row));
-        //can do something special if we know them. Maybe check for name?
+      console.log(JSON.stringify(row));
+      //can do something special if we know them. Maybe check for name?
+      //update their message_body?
     });
    
 
+    //add sender to db
     var insertQueryString = "INSERT INTO users (phone_number, message_body) VALUES ('" + sender + "', '" + body + "')";
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
     });
-    
+
+
+    //send a response
     var resp = '<Response><Message><Body>Thank you for registering. Find out more at BadBatchAlert.com</Body><Media>http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png</Media></Message></Response>';
     res.status(200)
       .contentType('text/xml')
@@ -124,4 +126,10 @@ var server = app.listen(process.env.PORT || '8080', function () {
   console.log('App listening on port %s', server.address().port);
   console.log('Press Ctrl+C to quit.');
 });
+
+
+function doAdminActions(client, action)
+{
+  console.log("ADMIN ACTION:" + action);
+}
 // [END app]
