@@ -49,7 +49,7 @@ function doAdminAction(res, client, action)
       twilio.sendMessage({
         to: process.env.MY_NUMBER,//row.phone_number,
         from: TWILIO_NUMBER,
-        body: '⚠️ Overdose nearby, please be careful. http://health.baltimorecity.gov/Fentanyl',
+        body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
         mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
       }, function (err) {
         if (err) {
