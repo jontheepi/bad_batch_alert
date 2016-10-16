@@ -72,34 +72,46 @@ app.get('/sms/send', function (req, res, next) {
 // [END send_sms]
 
 // [START receive_sms]
-// [START receive_sms]
 app.post('/sms/receive', bodyParser, function (req, res) {
-
-  pg.defaults.ssl = true;
-
-  pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if (err) throw err;
-
-  console.log('Connected to db');
-  console.log(req.body.From);
-  var queryString = "SELECT * FROM users WHERE phone_number = '" + req.body.From + "'";
-  console.log(queryString);
-
-  client
-    .query(queryString)
-    .on('row', function(row) {
-      console.log(JSON.stringify(row));
-    });
-  });
-
-
+  //connect to the db
   var sender = req.body.From;
-  var body = req.body.Body;
+  var body   = req.body.Body;
+  
+  pg.defaults.ssl = true;
+  pg.connect(process.env.DATABASE_URL, function(err, client) {
+    if (err) throw err;
+    console.log('Connected to db');
 
-  var resp = '<Response><Message><Body>Thank you for registering. Find out more at BadBatchAlert.com</Body><Media>http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png</Media></Message></Response>';
-  res.status(200)
-    .contentType('text/xml')
-    .send(resp);
+    //check to see if the sender is an admin.
+    //if so do special logic based on the message body.
+   
+
+
+
+    //check to see if we already have the user.
+    //if so send them something new?
+
+    //otherwise add them to the db and say thank you.
+
+
+    console.log(sender);
+    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + sender + "'";
+    client
+      .query(findQueryString)
+      .on('row', function(row) {
+        console.log(JSON.stringify(row));
+        //can do something special if we know them. Maybe check for name?
+      });
+    });
+
+    var insertQueryString = "INSERT INTO users (phone_number, message_body) VALUES ('" + sender + "', '" + body + "')";
+    client.query(insertQueryString);
+    
+
+    var resp = '<Response><Message><Body>Thank you for registering. Find out more at BadBatchAlert.com</Body><Media>http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png</Media></Message></Response>';
+    res.status(200)
+      .contentType('text/xml')
+      .send(resp);
 });
 // [END receive_sms]
 
