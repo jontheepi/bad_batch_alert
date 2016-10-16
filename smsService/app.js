@@ -67,7 +67,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
     var isAdmin = sender == process.env.MY_NUMBER;
     if (isAdmin) console.log("Admin");
     if (isAdmin && body != "Join") {
-      admin.doAdminAction(res, client, body);
+      doAdminAction(res, client, body);
       return;
     }
    
