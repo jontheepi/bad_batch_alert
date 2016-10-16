@@ -15,11 +15,13 @@
 // [START app]
 'use strict';
 
+// [START config]
+
 var pg = require('pg');
 var format = require('util').format;
 var express = require('express');
 
-var admin = require('./adminActions.js');
+var adminActions = require('adminActions');
 
 var bodyParser = require('body-parser').urlencoded({
   extended: false
@@ -27,7 +29,7 @@ var bodyParser = require('body-parser').urlencoded({
 
 var app = express();
 
-// [START config]
+
 var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
 
 var twilio = require('twilio')(
@@ -35,6 +37,8 @@ var twilio = require('twilio')(
   process.env.TWILIO_AUTH_TOKEN);
 
 var TwimlResponse = require('twilio').TwimlResponse;
+
+var admin = new adminActions();
 // [END config]
 
 // [START receive_call]
