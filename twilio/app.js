@@ -36,7 +36,7 @@ var TwimlResponse = require('twilio').TwimlResponse;
 
 
 //Special admin actions, like mass text etc.
-function doAdminAction(client, action)
+function doAdminAction(res, client, action)
 {
   console.log("ADMIN ACTION:" + action);
   if (action == "TestAlert") {
@@ -105,7 +105,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
     var isAdmin = sender == process.env.MY_NUMBER;
     if (isAdmin) console.log("Admin");
     if (isAdmin && body != "Join") {
-      doAdminAction(client, body);
+      doAdminAction(res, client, body);
       return;
     }
    
