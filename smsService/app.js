@@ -116,7 +116,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
 
 
     var joinResponse = '<Response><Message><Body>Thank you for registering. Text the word "map" to set your location. Find out more at BadBatchAlert.com</Body><Media>http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png</Media></Message></Response>';
-    var mapResponse  = '<Response><Message><Body>Text the number for your location./Body><Media>http://www.mike-legrand.com/BadBatchAlert/regions_01.jpg</Media></Message></Response>';
+    var mapResponse  = '<Response><Message><Body>Text the number for your location.</Body><Media>http://www.mike-legrand.com/BadBatchAlert/regions_01.jpg</Media></Message></Response>';
     
     var resp;
     if (body.toLowerCase() == 'map') {
