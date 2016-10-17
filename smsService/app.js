@@ -71,7 +71,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
     var isAdmin = sender == process.env.MY_NUMBER;
     if (isAdmin) console.log("Admin");
     if (isAdmin && body != "Join") {
-      admin.doAdminAction(twilio, res, client, body);
+      admin.doAdminAction(twilio, client, body);
       return;
     }
    
@@ -98,7 +98,6 @@ app.post('/sms/receive', bodyParser, function (req, res) {
     res.status(200)
       .contentType('text/xml')
       .send(resp);
-
   });
 });
 // [END receive_sms]
