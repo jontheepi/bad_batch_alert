@@ -92,7 +92,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
       }
     }
 
-    if (isAdmin) {
+    if (doAdminAction) {
       admin.doAdminAction(twilio, client, body);
       return;
     }
