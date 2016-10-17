@@ -49,9 +49,9 @@ var adminActions = function() {
   {
     console.log("ADMIN ACTION:" + action);
     if (action == "⚠️") {//Alert Emoji
-      self.adminTestAlerts(twilio, res, client, action);
+      self.adminTestAlerts(twilio, client, action);
     } else if (action == "👋") {
-      self.adminHelloWorld(twilio, res, client, action);
+      self.adminHelloWorld(twilio, client, action);
     }
   };
 
