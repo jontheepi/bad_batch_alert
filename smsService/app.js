@@ -67,6 +67,8 @@ app.post('/call/receive', function (req, res) {
 // [END receive_call]
 
 
+
+
 // [START receive_sms]
 app.post('/sms/receive', bodyParser, function (req, res) {
   
@@ -97,14 +99,24 @@ app.post('/sms/receive', bodyParser, function (req, res) {
       return;
     }
    
+    var region = parseInt(body);
+    var isRegion = (region > 0 && region < 10);
+
     //look for sender in db
-    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + process.env.MY_NUMBER + "'";
-    var findQuery = client.query(findQueryString);
-    findQuery.on('row', function(row) {
-      console.log(JSON.stringify(row));
-      //can do something special if we know them. Maybe check for name?
-      //update their message_body?
-    });
+    if (isRegion) {
+      var findQueryString = "SELECT * FROM users WHERE phone_number = '" + process.env.MY_NUMBER + "'";
+      var findQuery = client.query(findQueryString);
+      findQuery.on('row', function(row) {
+        console.log(JSON.stringify(row));
+        //if they texted us a number. Set it as their region.
+        var insertQueryString = "INSERT INTO users (region) VALUES (" + region + ")";
+        client.query(insertQueryString);
+        var regionResponse = '<Response><Message><Body>You are all set to receive alerts in region ' + region + ':) </Body></Message></Response>';
+        res.status(200)
+        .contentType('text/xml')
+        .send(resp);
+      });
+    }
    
 
     //add sender to db
@@ -117,10 +129,13 @@ app.post('/sms/receive', bodyParser, function (req, res) {
 
     var joinResponse = '<Response><Message><Body>Thank you for registering. Text the word "map" to set your location. Find out more at BadBatchAlert.com</Body><Media>http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png</Media></Message></Response>';
     var mapResponse  = '<Response><Message><Body>Text the number for your location.</Body><Media>http://www.mike-legrand.com/BadBatchAlert/regions_01.jpg</Media></Message></Response>';
+
     
     var resp;
     if (body.toLowerCase() == 'map') {
       resp = mapResponse;
+    } else if (isRegion) {
+      return;
     } else {
       resp = joinResponse;
     }
