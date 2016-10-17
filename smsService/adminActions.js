@@ -9,7 +9,7 @@ var adminActions = function() {
   var MY_NUMBER = process.env.MY_NUMBER;
   
   //fires off a test alert to all the registered users
-  self.adminTestAlerts = function(twilio, res, client, action)
+  self.adminTestAlerts = function(twilio, client, action)
   {
     //Query for all users and send them alerts.
     var findQueryString = "SELECT * FROM users";
@@ -26,12 +26,11 @@ var adminActions = function() {
         if (err) {
           return next(err);
         }
-        res.status(200).send('Message sent.');
       });
     });
-  }
+  };
 
-  self.adminHelloWorld = function(twilio, res, client, action)
+  self.adminHelloWorld = function(twilio, client, action)
   {
     twilio.sendMessage({
       to: MY_NUMBER,
@@ -41,21 +40,20 @@ var adminActions = function() {
       if (err) {
         return next(err);
       }
-      res.status(200).send('Message sent.');
     });
-  }
+  };
 
 
   //Special admin actions, like mass text etc.
-  self.doAdminAction = function(twilio, res, client, action)
+  self.doAdminAction = function(twilio, client, action)
   {
     console.log("ADMIN ACTION:" + action);
     if (action == "⚠️") {//Alert Emoji
-      self.adminTestAlerts(twilio, res, client, action);
+      self.adminTestAlerts(twilio, client, action);
     } else if (action == "👋") {
-      self.adminHelloWorld(twilio, res, client, action);
+      self.adminHelloWorld(twilio, client, action);
     }
-  }
+  };
 
 };
 
