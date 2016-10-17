@@ -104,12 +104,12 @@ app.post('/sms/receive', bodyParser, function (req, res) {
 
     //look for sender in db
     if (isRegion) {
-      var findQueryString = "SELECT * FROM users WHERE phone_number = '" + process.env.MY_NUMBER + "'";
+      var findQueryString = "SELECT * FROM users WHERE phone_number = '" + sender + "'";
       var findQuery = client.query(findQueryString);
       findQuery.on('row', function(row) {
         console.log(JSON.stringify(row));
         //if they texted us a number. Set it as their region.
-        var insertQueryString = "INSERT INTO users (region) VALUES (" + region + ")";
+        var insertQueryString = "UPDATE users SET region = " + region + " WHERE phone_number = '" + sender + "'";
         client.query(insertQueryString);
         var regionResponse = '<Response><Message><Body>You are all set to receive alerts in region ' + region + ':) </Body></Message></Response>';
         res.status(200)
