@@ -39,6 +39,20 @@ var twilio = require('twilio')(
 var TwimlResponse = require('twilio').TwimlResponse;
 
 var admin = new adminActions();
+
+var messages = [
+  'join',
+  'map',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9'
+];
 // [END config]
 
 // [START receive_call]
@@ -70,7 +84,15 @@ app.post('/sms/receive', bodyParser, function (req, res) {
     //if so do special logic based on the message body.
     var isAdmin = sender == process.env.MY_NUMBER;
     if (isAdmin) console.log("Admin");
-    if (isAdmin && body != "Join") {
+    var doAdminAction = isAdmin;
+    for (var i = 0; i < messages.length; i++) {
+      if (messages[i] == body.toLowerCase()) {
+        doAdminAction = false;
+        break;
+      }
+    }
+
+    if (isAdmin) {
       admin.doAdminAction(twilio, client, body);
       return;
     }
