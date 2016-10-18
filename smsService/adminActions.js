@@ -47,14 +47,18 @@ var adminActions = function() {
   //Special admin actions, like mass text etc.
   self.doAdminAction = function(twilio, res, client, sender, action)
   {
-    if (sender != MY_NUMBER) return;//not admin sorry buddy.
+    if (sender != MY_NUMBER) return false;//not admin sorry buddy.
 
     console.log("ADMIN ACTION:" + action);
     if (action == "⚠️") {//Alert Emoji
       self.adminTestAlerts(twilio, client, action);
     } else if (action == "👋") {
       self.adminHelloWorld(twilio, client, action);
+    } else {
+      return false;
     }
+
+    return true;
   };
 
 };

@@ -34,6 +34,14 @@ var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
 
 // [END config]
 
+function doAction(twilio, res, client, sender, body)
+{
+  var messageHandled = admin.doAdminAction(twilio, res, client, sender, body);
+  if (!messageHandled) {
+    user.doUserAction  (twilio, res, client, sender, body);
+  }
+}
+
 // [START receive_call]
 app.post('/call/receive', function (req, res) {
   var resp = new TwimlResponse();
@@ -64,13 +72,11 @@ app.post('/sms/receive', bodyParser, function (req, res) {
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
-      admin.doAdminAction(twilio, res, client, sender, body);
-      user.doUserAction  (twilio, res, client, sender, body);
+      doAction(twilio, res, client, sender, body);
     });
     insertQuery.on('end', function() {
       console.log("New User Added.");
-      admin.doAdminAction(twilio, res, client, sender, body);
-      user.doUserAction  (twilio, res, client, sender, body);
+      doAction(twilio, res, client, sender, body);
     });
   });
 });
