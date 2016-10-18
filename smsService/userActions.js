@@ -40,7 +40,7 @@ var userActions = function() {
       var insertQueryString = "UPDATE users SET region = " + region + " WHERE phone_number = '" + sender + "'";
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
-        var body = "You are all set to receive alerts in region " + region + ":) ";
+        var body = "You are all set to receive alerts in region " + region + "👍";
         var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
         res.status(200)
         .contentType('text/xml')
