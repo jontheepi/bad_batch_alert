@@ -114,7 +114,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
         var regionResponse = '<Response><Message><Body>You are all set to receive alerts in region ' + region + ':) </Body></Message></Response>';
         res.status(200)
         .contentType('text/xml')
-        .send(resp);
+        .send(regionResponse);
       });
     }
    
