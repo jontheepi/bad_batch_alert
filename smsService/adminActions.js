@@ -5,7 +5,8 @@ var adminActions = function() {
 
   var self = this;
 
-  var MY_NUMBER = process.env.MY_NUMBER;
+  var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
+  var MY_NUMBER     = process.env.MY_NUMBER;
   
   //fires off a test alert to all the registered users
   self.adminTestAlerts = function(twilio, client, action)
