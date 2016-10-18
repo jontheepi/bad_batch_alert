@@ -6,8 +6,9 @@ var userActions = function() {
   var self = this;
 
   //fires off a test alert to all the registered users
-  self.userJoin = function(twilio, res, client, action)
+  self.userJoin = function(twilio, res, client, sender, action)
   {
+    console.log("userJoin");
     var body  = "Thank you for registering. Text the word 'map' to set your location. Find out more at BadBatchAlert.com";
     var media = "http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png";
     var resp  = '<Response><Message><Body>' + body + '</Body><Media>' + media + '</Media></Message></Response>';
@@ -18,16 +19,18 @@ var userActions = function() {
 
   self.userMap = function(twilio, res, client, sender, action)
   {
+    console.log("userMap");
     var body  = "Text the number for your location.";
     var media = "http://www.mike-legrand.com/BadBatchAlert/regions_01.jpg";
     var resp  = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
     res.status(200)
         .contentType('text/xml')
         .send(resp);
-  }
+  };
 
   self.userSetRegion = function(twilio, res, client, sender, action)
   {
+    console.log("userSetRegion");
     var region = parseInt(action);
     var findQueryString = "SELECT * FROM users WHERE phone_number = '" + sender + "'";
     var findQuery = client.query(findQueryString);

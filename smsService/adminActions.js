@@ -12,6 +12,7 @@ var adminActions = function() {
   self.adminTestAlerts = function(twilio, client, action)
   {
     //Query for all users and send them alerts.
+    console.log("adminTestAlerts");
     var findQueryString = "SELECT * FROM users";
     var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
@@ -32,6 +33,7 @@ var adminActions = function() {
 
   self.adminHelloWorld = function(twilio, client, sender, action)
   {
+    console.log("adminHelloWorld");
     twilio.sendMessage({
       to: MY_NUMBER,
       from: TWILIO_NUMBER,
@@ -49,7 +51,6 @@ var adminActions = function() {
   {
     if (sender != MY_NUMBER) return false;//not admin sorry buddy.
 
-    console.log("ADMIN ACTION:" + action);
     if (action == "⚠️") {//Alert Emoji
       self.adminTestAlerts(twilio, client, action);
     } else if (action == "👋") {
