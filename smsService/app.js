@@ -16,43 +16,22 @@
 'use strict';
 
 // [START config]
+var pg            = require('pg');
+var format        = require('util').format;
+var express       = require('express');
+var twilio        = require('twilio') (process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+var TwimlResponse = require('twilio').TwimlResponse;
+var bodyParser    = require('body-parser').urlencoded({extended: false});
+var adminActions  = require('./adminActions.js');
+var userActions   = require('./userActions.js');
 
-var pg = require('pg');
-var format = require('util').format;
-var express = require('express');
 
-var adminActions = require('./adminActions.js');
-
-var bodyParser = require('body-parser').urlencoded({
-  extended: false
-});
-
-var app = express();
-
+var app   = express();
+var admin = new adminActions();
+var user  = new userActions();
 
 var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
 
-var twilio = require('twilio')(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN);
-
-var TwimlResponse = require('twilio').TwimlResponse;
-
-var admin = new adminActions();
-
-var messages = [
-  'join',
-  'map',
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9'
-];
 // [END config]
 
 // [START receive_call]
@@ -67,8 +46,6 @@ app.post('/call/receive', function (req, res) {
 // [END receive_call]
 
 
-
-
 // [START receive_sms]
 app.post('/sms/receive', bodyParser, function (req, res) {
   
@@ -81,67 +58,20 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client) {
     if (err) throw err;
     console.log('Connected to db');
-    
-    //check to see if the sender is an admin.
-    //if so do special logic based on the message body.
-    var isAdmin = sender == process.env.MY_NUMBER;
-    if (isAdmin) console.log("Admin");
-    var doAdminAction = isAdmin;
-    for (var i = 0; i < messages.length; i++) {
-      if (messages[i] == body.toLowerCase()) {
-        doAdminAction = false;
-        break;
-      }
-    }
 
-    if (doAdminAction) {
-      admin.doAdminAction(twilio, client, body);
-      return;
-    }
-   
-    var region = parseInt(body);
-    var isRegion = (region > 0 && region < 10);
-
-    //look for sender in db
-    if (isRegion) {
-      var findQueryString = "SELECT * FROM users WHERE phone_number = '" + sender + "'";
-      var findQuery = client.query(findQueryString);
-      findQuery.on('row', function(row) {
-        console.log(JSON.stringify(row));
-        //if they texted us a number. Set it as their region.
-        var insertQueryString = "UPDATE users SET region = " + region + " WHERE phone_number = '" + sender + "'";
-        client.query(insertQueryString);
-        var regionResponse = '<Response><Message><Body>You are all set to receive alerts in region ' + region + ':) </Body></Message></Response>';
-        res.status(200)
-        .contentType('text/xml')
-        .send(regionResponse);
-      });
-    }
-   
-
-    //add sender to db
+    //add sender to the db before we do anything else.
     var insertQueryString = "INSERT INTO users (phone_number, message_body) VALUES ('" + sender + "', '" + body + "')";
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
+      admin.doAdminAction(twilio, res, client, sender, body);
+      user.doUserAction  (twilio, res, client, sender, body);
     });
-
-
-    var joinResponse = '<Response><Message><Body>Thank you for registering. Text the word "map" to set your location. Find out more at BadBatchAlert.com</Body><Media>http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png</Media></Message></Response>';
-    var mapResponse  = '<Response><Message><Body>Text the number for your location.</Body><Media>http://www.mike-legrand.com/BadBatchAlert/regions_01.jpg</Media></Message></Response>';
-
-    
-    var resp;
-    if (body.toLowerCase() == 'map') {
-      resp = mapResponse;
-    } else if (isRegion) {
-      return;
-    } else {
-      resp = joinResponse;
-    }
-    res.status(200)
-      .contentType('text/xml')
-      .send(resp);
+    insertQuery.on('end', function() {
+      console.log("New User Added.");
+      admin.doAdminAction(twilio, res, client, sender, body);
+      user.doUserAction  (twilio, res, client, sender, body);
+    });
   });
 });
 // [END receive_sms]
@@ -151,7 +81,6 @@ var server = app.listen(process.env.PORT || '8080', function () {
   console.log('App listening on port %s', server.address().port);
   console.log('Press Ctrl+C to quit.');
 });
-
 
 
 // [END app]

@@ -30,7 +30,7 @@ var adminActions = function() {
     });
   };
 
-  self.adminHelloWorld = function(twilio, client, action)
+  self.adminHelloWorld = function(twilio, client, sender, action)
   {
     twilio.sendMessage({
       to: MY_NUMBER,
@@ -45,8 +45,10 @@ var adminActions = function() {
 
 
   //Special admin actions, like mass text etc.
-  self.doAdminAction = function(twilio, client, action)
+  self.doAdminAction = function(twilio, client, sender, action)
   {
+    if (sender != MY_NUMBER) return;//not admin sorry buddy.
+
     console.log("ADMIN ACTION:" + action);
     if (action == "⚠️") {//Alert Emoji
       self.adminTestAlerts(twilio, client, action);
