@@ -18,8 +18,8 @@ var userActions = function() {
 
   self.userMap = function(twilio, res, client, sender, action)
   {
-    var body  = 'Text the number for your location.';
-    var media = 'http://www.mike-legrand.com/BadBatchAlert/regions_01.jpg';
+    var body  = "Text the number for your location.";
+    var media = "http://www.mike-legrand.com/BadBatchAlert/regions_01.jpg";
     var resp  = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
     res.status(200)
         .contentType('text/xml')
