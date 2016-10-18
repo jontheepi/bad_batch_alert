@@ -45,7 +45,7 @@ var adminActions = function() {
 
 
   //Special admin actions, like mass text etc.
-  self.doAdminAction = function(twilio, client, sender, action)
+  self.doAdminAction = function(twilio, res, client, sender, action)
   {
     if (sender != MY_NUMBER) return;//not admin sorry buddy.
 

@@ -47,7 +47,7 @@ var userActions = function() {
   };
 
  
-  self.doUserAction = function(twilio, client, sender, body)
+  self.doUserAction = function(twilio, res, client, sender, body)
   {
     if (body.toLowerCase() == "map") {
       self.userMap(twilio, res, client, sender, body);
