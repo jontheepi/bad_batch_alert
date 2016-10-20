@@ -13,7 +13,7 @@ var adminActions = function() {
   {
     //Query for all users and send them alerts.
     console.log("adminTestAlerts");
-    var region = action[1];//in test alert the 2nd character is the region so.. like this is alert region '⚠2'️
+    var region = action.charAt(1);//in test alert the 2nd character is the region so.. like this is alert region '⚠2'️
     var findQueryString = "SELECT * FROM users WHERE region = " + region;
     console.log(findQueryString);
     var findQuery = client.query(findQueryString);
