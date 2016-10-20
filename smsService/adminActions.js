@@ -13,21 +13,22 @@ var adminActions = function() {
   {
     //Query for all users and send them alerts.
     console.log("adminTestAlerts");
-    var findQueryString = "SELECT * FROM users";
+    var region = action[1];//in test alert the 2nd character is the region so.. like this is alert region '⚠2'️
+    var findQueryString = "SELECT * FROM users WHERE region = " + region;
     var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       console.log(row.phone_number);
-      twilio.sendMessage({
-        to: row.phone_number,
-        from: TWILIO_NUMBER,
-        body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
-        mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
-      }, function (err) {
-        if (err) {
-          return next(err);
-        }
-      });
+      //twilio.sendMessage({
+      //  to: row.phone_number,
+      //  from: TWILIO_NUMBER,
+      //  body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
+      //  mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
+      //}, function (err) {
+      //  if (err) {
+      //    return next(err);
+      //  }
+      //});
     });
   };
 
@@ -51,7 +52,7 @@ var adminActions = function() {
   {
     if (sender != MY_NUMBER) return false;//not admin sorry buddy.
 
-    if (action == "⚠️") {//Alert Emoji
+    if (action.startsWith("⚠️")) {//Alert Emoji
       self.adminTestAlerts(twilio, client, action);
     } else if (action == "👋") {
       self.adminHelloWorld(twilio, client, action);
