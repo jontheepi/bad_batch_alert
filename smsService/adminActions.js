@@ -20,16 +20,16 @@ var adminActions = function() {
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       console.log(row.phone_number);
-      //twilio.sendMessage({
-      //  to: row.phone_number,
-      //  from: TWILIO_NUMBER,
-      //  body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
-      //  mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
-      //}, function (err) {
-      //  if (err) {
-      //    return next(err);
-      //  }
-      //});
+      twilio.sendMessage({
+        to: row.phone_number,
+        from: TWILIO_NUMBER,
+        body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
+        mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
+      }, function (err) {
+        if (err) {
+          return next(err);
+        }
+      });
     }).on('error', function() {
       console.log("nobody in region " + region + " to alert.")
     });
