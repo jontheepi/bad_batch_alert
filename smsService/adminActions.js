@@ -29,6 +29,8 @@ var adminActions = function() {
       //    return next(err);
       //  }
       //});
+    }.on('error') {
+      console.log("nobody in region " + region + " to alert.")
     });
   };
 
