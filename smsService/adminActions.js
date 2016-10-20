@@ -12,7 +12,7 @@ var adminActions = function() {
   self.adminTestAlerts = function(twilio, client, action)
   {
     //Query for all users and send them alerts.
-    console.log("adminTestAlerts");
+    console.log("adminTestAlerts " + action );
     var region = action.charAt(1);//in test alert the 2nd character is the region so.. like this is alert region '⚠2'️
     var findQueryString = "SELECT * FROM users WHERE region = " + region;
     console.log(findQueryString);
