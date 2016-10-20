@@ -29,7 +29,7 @@ var adminActions = function() {
       //    return next(err);
       //  }
       //});
-    }.on('error') {
+    }).on('error', function() {
       console.log("nobody in region " + region + " to alert.")
     });
   };
