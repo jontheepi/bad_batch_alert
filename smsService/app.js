@@ -24,13 +24,15 @@ var TwimlResponse = require('twilio').TwimlResponse;
 var bodyParser    = require('body-parser').urlencoded({extended: false});
 var adminActions  = require('./adminActions.js');
 var userActions   = require('./userActions.js');
-
+var crypto        = require('crypto');
 
 var app   = express();
 var admin = new adminActions();
 var user  = new userActions();
 
 var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
+var CRYPTO_KEY    = process.env.CRYPTO_KEY;
+var CRYPTO_ALGO   = 'aes-256-ctr';
 
 // [END config]
 
@@ -40,6 +42,20 @@ function doAction(twilio, res, client, sender, body)
   if (!messageHandled) {
     user.doUserAction  (twilio, res, client, sender, body);
   }
+}
+
+function encrypt(text) {
+  var cipher = crypto.createCipher(CRYPTO_ALGO, CRYPTO_KEY);
+  var crypted = cipher.update(text, 'utf8', 'hex');
+  crypted += cipher.final('hex');
+  return crypted;
+}
+ 
+function decrypt(text) {
+  var decipher = crypto.createDecipher(CRYPTO_ALGO, CRYPTO_KEY);
+  var dec = decipher.update(text, 'hex', 'utf8');
+  dec += decipher.final('utf8');
+  return dec;
 }
 
 // [START receive_call]
@@ -68,7 +84,8 @@ app.post('/sms/receive', bodyParser, function (req, res) {
     console.log('Connected to db');
 
     //add sender to the db before we do anything else.
-    var insertQueryString = "INSERT INTO users (phone_number, message_body) VALUES ('" + sender + "', '" + body + "')";
+    var cryptoSender = encrypt(sender);
+    var insertQueryString = "INSERT INTO users (phone_number, message_body) VALUES ('" + cryptoSender + "', '" + body + "')";
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
