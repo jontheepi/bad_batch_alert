@@ -34,15 +34,12 @@ var adminActions = function() {
       console.log("nobody in region " + region + " to alert.")
     });
 
-    twilio.sendMessage({
-      to: MY_NUMBER,
-      from: TWILIO_NUMBER,
-      body: '⚠️ sent to region ' + region;
-    },function (err) {
-      if (err) {
-        return next(err);
-      }
-    });
+    var body = "👍 Sent alert to region: " + region;
+    var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
+    res.status(200)
+    .contentType('text/xml')
+    .send(resp);
+ 
   };
 
   self.adminHelloWorld = function(twilio, client, sender, action)
