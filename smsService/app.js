@@ -75,7 +75,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
     console.log('Connected to db');
 
     //add sender to the db before we do anything else.
-    var cryptoSender = cryptoHelper.encrypt(sender);
+    var cryptoSender = _cryptoHelper.encrypt(sender);
     var insertQueryString = "INSERT INTO users (phone_number, message_body) VALUES ('" + _cryptoSender + "', '" + body + "')";
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
