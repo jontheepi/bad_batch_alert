@@ -27,23 +27,25 @@ var adminActions  = require('./adminActions');
 var userActions   = require('./userActions');
 
 
-var app   = express();
-var admin = new adminActions();
-var user  = new userActions();
-var cryptoHelper
+var app      = express();
+
+var _adminActions    = new adminActions();
+var _userActions     = new userActions();
+var _cryptoHelper    = new cryptoHelper();
+
 
 var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
 
 var G = {
-  cryptoHelper: cryptoHelper,
+  cryptoHelper: _cryptoHelper,
 };
 
 
 function doAction(twilio, res, client, sender, body)
 {
-  var messageHandled = admin.doAdminAction(twilio, res, client, sender, body, cryptoHelper.decrypt);
+  var messageHandled = _adminActions.doAdminAction(twilio, res, client, sender, body, _cryptoHelper.decrypt);
   if (!messageHandled) {
-    user.doUserAction  (twilio, res, client, sender, body, cryptoHelper.encrypt);
+    _userActions.doUserAction  (twilio, res, client, sender, body, _cryptoHelper.encrypt);
   }
 }
 
@@ -74,7 +76,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
 
     //add sender to the db before we do anything else.
     var cryptoSender = cryptoHelper.encrypt(sender);
-    var insertQueryString = "INSERT INTO users (phone_number, message_body) VALUES ('" + cryptoSender + "', '" + body + "')";
+    var insertQueryString = "INSERT INTO users (phone_number, message_body) VALUES ('" + _cryptoSender + "', '" + body + "')";
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
