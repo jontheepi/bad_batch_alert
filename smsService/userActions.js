@@ -63,7 +63,7 @@ var UserActions = function() {
       var insertQueryString = "UPDATE users SET name = '" + name + "' WHERE phone_number = '" + cryptoSender + "'";
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
-        var body = "You're signed up as: " + name;
+        var body = "👌 You're signed up as: " + name;
         var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
         res.status(200)
         .contentType('text/xml')
