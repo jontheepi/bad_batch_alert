@@ -22,38 +22,28 @@ var express       = require('express');
 var twilio        = require('twilio') (process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 var TwimlResponse = require('twilio').TwimlResponse;
 var bodyParser    = require('body-parser').urlencoded({extended: false});
+var cryptoHelper  = require('./cryptoHelper');
 var adminActions  = require('./adminActions');
 var userActions   = require('./userActions');
-var crypto        = require('crypto');
+
 
 var app   = express();
 var admin = new adminActions();
 var user  = new userActions();
+var cryptoHelper
 
 var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
-var CRYPTO_KEY    = process.env.CRYPTO_KEY;
-var CRYPTO_ALGO   = 'aes-256-ctr';
 
-// [END config]
-function encrypt(text) {
-  var cipher = crypto.createCipher(CRYPTO_ALGO, CRYPTO_KEY);
-  var crypted = cipher.update(text, 'utf8', 'hex');
-  crypted += cipher.final('hex');
-  return crypted;
-}
- 
-function decrypt(text) {
-  var decipher = crypto.createDecipher(CRYPTO_ALGO, CRYPTO_KEY);
-  var dec = decipher.update(text, 'hex', 'utf8');
-  dec += decipher.final('utf8');
-  return dec;
-}
+var G = {
+  cryptoHelper: cryptoHelper,
+};
+
 
 function doAction(twilio, res, client, sender, body)
 {
-  var messageHandled = admin.doAdminAction(twilio, res, client, sender, body, decrypt);
+  var messageHandled = admin.doAdminAction(twilio, res, client, sender, body, cryptoHelper.decrypt);
   if (!messageHandled) {
-    user.doUserAction  (twilio, res, client, sender, body, encrypt);
+    user.doUserAction  (twilio, res, client, sender, body, cryptoHelper.encrypt);
   }
 }
 
@@ -83,7 +73,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
     console.log('Connected to db');
 
     //add sender to the db before we do anything else.
-    var cryptoSender = encrypt(sender);
+    var cryptoSender = cryptoHelper.encrypt(sender);
     var insertQueryString = "INSERT INTO users (phone_number, message_body) VALUES ('" + cryptoSender + "', '" + body + "')";
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
