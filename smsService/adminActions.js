@@ -75,7 +75,7 @@ var AdminActions = function() {
     } else if (action == "👋") {
       self.adminHelloWorld(g, res, client, sender, action);
     } else if (action == "Crypto") {
-      self.encryptUsers(g, res, client, sender, aciton);
+      self.encryptUsers(g, res, client, sender, action);
     } else {
       return false;
     }
