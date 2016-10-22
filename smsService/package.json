@@ -1,6 +1,6 @@
 {
   "name": "bad-batch-alert-sms",
-  "description": "An SMS alert system to prevent overdoses",
+  "description": "An SMS alert system to prevent drug overdoses",
   "version": "0.0.1",
   "private": true,
   "license": "Apache Version 2.0",

@@ -1,7 +1,7 @@
 // 
 // A collection of functions that the user can initiate by texting different messages.*/
 //
-var userActions = function() {
+var UserActions = function() {
 
   var self = this;
 
@@ -65,4 +65,4 @@ var userActions = function() {
 };
 
 
-module.exports = userActions;
+module.exports = UserActions;
