@@ -20,7 +20,8 @@ var adminActions = function() {
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       var phoneNumber = decrypt(row.phone_number);
-      twilio.sendMessage({
+      console.log(phoneNumber);
+      /*twilio.sendMessage({
         to: phoneNumber,
         from: TWILIO_NUMBER,
         body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
@@ -29,9 +30,9 @@ var adminActions = function() {
         if (err) {
           return next(err);
         }
-      });
+      });*
     }).on('error', function() {
-      console.log("nobody in region " + region + " to alert.")
+      console.log("nobody in region " + region + " to alert.")*/
     });
 
     var body = "👍 Sent alert to region: " + region;
