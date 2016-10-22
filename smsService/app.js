@@ -71,7 +71,9 @@ app.post('/sms/receive', bodyParser, function (req, res) {
 
     //add sender to the db before we do anything else. 
     var cryptoSender = G.cryptoHelper.encrypt(sender);
-    var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ('" + cryptoSender + "', '" + body + "', '" + date + ')";
+    var date = new Date();
+    var timestamp = date.toGMTString();
+    var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ('" + cryptoSender + "', '" + body + "', '" + timestamp + "')";
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
