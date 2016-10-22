@@ -26,26 +26,21 @@ var cryptoHelper  = require('./cryptoHelper');
 var adminActions  = require('./adminActions');
 var userActions   = require('./userActions');
 
-
 var app      = express();
 
-var _adminActions    = new adminActions();
-var _userActions     = new userActions();
-var _cryptoHelper    = new cryptoHelper();
-
-
-var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
-
 var G = {
-  cryptoHelper: _cryptoHelper,
+  twilio:           twilio,
+  adminActions:     new AdminActions(),
+  userActions:      new UserActions(),
+  cryptoHelper:     new CryptoHelper(),
 };
 
 
-function doAction(twilio, res, client, sender, body)
+function doAction(res, client, sender, body)
 {
-  var messageHandled = _adminActions.doAdminAction(twilio, res, client, sender, body, _cryptoHelper.decrypt);
+  var messageHandled = G.adminActions.doAdminAction(G, res, client, sender, body);
   if (!messageHandled) {
-    _userActions.doUserAction  (twilio, res, client, sender, body, _cryptoHelper.encrypt);
+    G.userActions.doUserAction(G, res, client, sender, body);
   }
 }
 
@@ -74,17 +69,17 @@ app.post('/sms/receive', bodyParser, function (req, res) {
     if (err) throw err;
     console.log('Connected to db');
 
-    //add sender to the db before we do anything else.
-    var cryptoSender = _cryptoHelper.encrypt(sender);
+    //add sender to the db before we do anything else. 
+    var cryptoSender = G.cryptoHelper.encrypt(sender);
     var insertQueryString = "INSERT INTO users (phone_number, message_body) VALUES ('" + cryptoSender + "', '" + body + "')";
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
-      doAction(twilio, res, client, sender, body);
+      doAction(res, client, sender, body);
     });
     insertQuery.on('end', function() {
       console.log("New User Added.");
-      doAction(twilio, res, client, sender, body);
+      doAction(res, client, sender, body);
     });
   });
 });

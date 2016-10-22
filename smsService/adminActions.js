@@ -9,7 +9,7 @@ var adminActions = function() {
   var MY_NUMBER     = process.env.MY_NUMBER;
   
   //fires off a test alert to all the registered users
-  self.adminTestAlerts = function(twilio, client, action, decrypt)
+  self.adminTestAlerts = function(g, res, client, sender, action)
   {
     //Query for all users and send them alerts.
     console.log("adminTestAlerts " + action );
@@ -19,9 +19,9 @@ var adminActions = function() {
     var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
-      var phoneNumber = decrypt(row.phone_number);
+      var phoneNumber = g.cryptoHelper.decrypt(row.phone_number);
       console.log(phoneNumber);
-      twilio.sendMessage({
+      g.twilio.sendMessage({
         to: phoneNumber,
         from: TWILIO_NUMBER,
         body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
@@ -37,10 +37,10 @@ var adminActions = function() {
  
   };
 
-  self.adminHelloWorld = function(twilio, client, sender, action)
+  self.adminHelloWorld = function(g, res, client, sender, action)
   {
     console.log("adminHelloWorld");
-    twilio.sendMessage({
+    g.twilio.sendMessage({
       to: MY_NUMBER,
       from: TWILIO_NUMBER,
       body: '👋 Hello World 👋'
@@ -53,17 +53,23 @@ var adminActions = function() {
 
 
   //Special admin actions, like mass text etc.
-  self.doAdminAction = function(twilio, res, client, sender, action, decrypt)
+  self.doAdminAction = function(g, res, client, sender, action)
   {
     if (sender != MY_NUMBER) return false;//not admin sorry buddy.
 
     if (action.startsWith("⚠️")) {//Alert Emoji
-      self.adminTestAlerts(twilio, client, action, decrypt);
+      self.adminTestAlerts(g, res, client, sender, action);
     } else if (action == "👋") {
-      self.adminHelloWorld(twilio, client, action);
+      self.adminHelloWorld(g, res, client, sender, action);
     } else {
       return false;
     }
+
+    var body = "Admin Action Sent."
+    var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
+        res.status(200)
+        .contentType('text/xml')
+        .send(resp);
 
     return true;
   };

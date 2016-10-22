@@ -6,7 +6,7 @@ var userActions = function() {
   var self = this;
 
   //fires off a test alert to all the registered users
-  self.userJoin = function(twilio, res, client, sender, action)
+  self.userJoin = function(g, res, client, sender, action)
   {
     console.log("userJoin");
     var body  = "Thank you for registering. Text the word 'map' to set your location. Find out more at BadBatchAlert.com";
@@ -17,7 +17,7 @@ var userActions = function() {
       .send(resp);
   };
 
-  self.userMap = function(twilio, res, client, sender, action)
+  self.userMap = function(g, res, client, sender, action)
   {
     console.log("userMap");
     var body  = "Text the number for your location.";
@@ -28,9 +28,9 @@ var userActions = function() {
         .send(resp);
   };
 
-  self.userSetRegion = function(twilio, res, client, sender, action, encrypt)
+  self.userSetRegion = function(g, res, client, sender, action)
   {
-    var cryptoSender = encrypt(sender);
+    var cryptoSender = g.cryptoHelper.encrypt(sender);
     console.log("userSetRegion");
     var region = parseInt(action);
     var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
@@ -51,14 +51,14 @@ var userActions = function() {
   };
 
  
-  self.doUserAction = function(twilio, res, client, sender, body, encrypt)
+  self.doUserAction = function(g, res, client, sender, body)
   {
     if (body.toLowerCase() == "map") {
-      self.userMap(twilio, res, client, sender, body);
+      self.userMap(g, res, client, sender, body);
     } else if (body == '1' || body =='2' || body =='3' || body=='4' || body == '5' || body == '6' || body == '7' || body == '8' || body == '9') {
-      self.userSetRegion(twilio, res, client, sender, body, encrypt);
+      self.userSetRegion(g, res, client, sender, body);
     } else {
-      self.userJoin(twilio, res, client, sender, body);
+      self.userJoin(g, res, client, sender, body);
     }
   };
 
