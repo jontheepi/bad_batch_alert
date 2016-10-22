@@ -21,7 +21,7 @@ var adminActions = function() {
       console.log(JSON.stringify(row));
       var phoneNumber = decrypt(row.phone_number);
       console.log(phoneNumber);
-      /*twilio.sendMessage({
+      twilio.sendMessage({
         to: phoneNumber,
         from: TWILIO_NUMBER,
         body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
@@ -30,9 +30,9 @@ var adminActions = function() {
         if (err) {
           return next(err);
         }
-      });*
+      });
     }).on('error', function() {
-      console.log("nobody in region " + region + " to alert.")*/
+      console.log("nobody in region " + region + " to alert.")
     });
  
   };
