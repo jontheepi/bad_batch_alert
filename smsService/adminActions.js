@@ -9,7 +9,7 @@ var adminActions = function() {
   var MY_NUMBER     = process.env.MY_NUMBER;
   
   //fires off a test alert to all the registered users
-  self.adminTestAlerts = function(twilio, client, action)
+  self.adminTestAlerts = function(twilio, client, action, decrypt)
   {
     //Query for all users and send them alerts.
     console.log("adminTestAlerts " + action );
@@ -19,9 +19,9 @@ var adminActions = function() {
     var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
-      console.log(row.phone_number);
+      var phoneNumber = decrypt(row.phone_number);
       twilio.sendMessage({
-        to: row.phone_number,
+        to: phoneNumber,
         from: TWILIO_NUMBER,
         body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
         mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
@@ -58,12 +58,12 @@ var adminActions = function() {
 
 
   //Special admin actions, like mass text etc.
-  self.doAdminAction = function(twilio, res, client, sender, action)
+  self.doAdminAction = function(twilio, res, client, sender, action, decrypt)
   {
     if (sender != MY_NUMBER) return false;//not admin sorry buddy.
 
     if (action.startsWith("⚠️")) {//Alert Emoji
-      self.adminTestAlerts(twilio, client, action);
+      self.adminTestAlerts(twilio, client, action, decrypt);
     } else if (action == "👋") {
       self.adminHelloWorld(twilio, client, action);
     } else {

@@ -35,15 +35,6 @@ var CRYPTO_KEY    = process.env.CRYPTO_KEY;
 var CRYPTO_ALGO   = 'aes-256-ctr';
 
 // [END config]
-
-function doAction(twilio, res, client, sender, body)
-{
-  var messageHandled = admin.doAdminAction(twilio, res, client, sender, body);
-  if (!messageHandled) {
-    user.doUserAction  (twilio, res, client, sender, body);
-  }
-}
-
 function encrypt(text) {
   var cipher = crypto.createCipher(CRYPTO_ALGO, CRYPTO_KEY);
   var crypted = cipher.update(text, 'utf8', 'hex');
@@ -56,6 +47,14 @@ function decrypt(text) {
   var dec = decipher.update(text, 'hex', 'utf8');
   dec += decipher.final('utf8');
   return dec;
+}
+
+function doAction(twilio, res, client, sender, body)
+{
+  var messageHandled = admin.doAdminAction(twilio, res, client, sender, body, decrypt);
+  if (!messageHandled) {
+    user.doUserAction  (twilio, res, client, sender, body);
+  }
 }
 
 // [START receive_call]
