@@ -89,9 +89,10 @@ app.post('/sms/receive', bodyParser, function (req, res) {
 
 // Start the server
 var server = app.listen(process.env.PORT || '8080', function () {
-  console.log('App listening on port %s', server.address().port);
+  console.log('Bad Batch Alert listening on port %s', server.address().port);
   console.log('Press Ctrl+C to quit.');
 });
+
 
 
 // [END app]
