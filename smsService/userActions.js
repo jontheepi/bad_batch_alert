@@ -28,16 +28,17 @@ var userActions = function() {
         .send(resp);
   };
 
-  self.userSetRegion = function(twilio, res, client, sender, action)
+  self.userSetRegion = function(twilio, res, client, sender, action, encrypt)
   {
+    var cryptoSender = encrypt(sender);
     console.log("userSetRegion");
     var region = parseInt(action);
-    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + sender + "'";
+    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       //if they texted us a number. Set it as their region.
-      var insertQueryString = "UPDATE users SET region = " + region + " WHERE phone_number = '" + sender + "'";
+      var insertQueryString = "UPDATE users SET region = " + region + " WHERE phone_number = '" + cryptoSender + "'";
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
         var body = "👍 You are all set to receive alerts in region " + region;
@@ -50,12 +51,12 @@ var userActions = function() {
   };
 
  
-  self.doUserAction = function(twilio, res, client, sender, body)
+  self.doUserAction = function(twilio, res, client, sender, body, encrypt)
   {
     if (body.toLowerCase() == "map") {
       self.userMap(twilio, res, client, sender, body);
     } else if (body == '1' || body =='2' || body =='3' || body=='4' || body == '5' || body == '6' || body == '7' || body == '8' || body == '9') {
-      self.userSetRegion(twilio, res, client, sender, body);
+      self.userSetRegion(twilio, res, client, sender, body, encrypt);
     } else {
       self.userJoin(twilio, res, client, sender, body);
     }

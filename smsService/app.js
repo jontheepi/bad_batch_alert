@@ -53,7 +53,7 @@ function doAction(twilio, res, client, sender, body)
 {
   var messageHandled = admin.doAdminAction(twilio, res, client, sender, body, decrypt);
   if (!messageHandled) {
-    user.doUserAction  (twilio, res, client, sender, body);
+    user.doUserAction  (twilio, res, client, sender, body, encrypt);
   }
 }
 
