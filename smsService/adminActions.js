@@ -34,12 +34,6 @@ var adminActions = function() {
     }).on('error', function() {
       console.log("nobody in region " + region + " to alert.")*/
     });
-
-    var body = "👍 Sent alert to region: " + region;
-    var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
-    res.status(200)
-    .contentType('text/xml')
-    .send(resp);
  
   };
 
