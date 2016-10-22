@@ -53,14 +53,14 @@ var UserActions = function() {
   self.userSetName = function(g, res, client, sender, action)
   {
     var cryptoSender = g.cryptoHelper.encrypt(sender);
-    console.log("userSetRegion");
+    console.log("userSetName");
     var name = action.substring(5);
     var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       //if they texted us a number. Set it as their region.
-      var insertQueryString = "UPDATE users SET name = '" + name + "'' WHERE phone_number = '" + cryptoSender + "'";
+      var insertQueryString = "UPDATE users SET name = '" + name + "' WHERE phone_number = '" + cryptoSender + "'";
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
         var body = "You're signed up as: " + name;
