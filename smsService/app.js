@@ -22,8 +22,8 @@ var express       = require('express');
 var twilio        = require('twilio') (process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 var TwimlResponse = require('twilio').TwimlResponse;
 var bodyParser    = require('body-parser').urlencoded({extended: false});
-var adminActions  = require('./adminActions.js');
-var userActions   = require('./userActions.js');
+var adminActions  = require('./adminActions');
+var userActions   = require('./userActions');
 var crypto        = require('crypto');
 
 var app   = express();
