@@ -1,7 +1,7 @@
 // 
 // A collection of functions related to special admin actions that can be triggered from an admin phone number*/
 //
-var adminActions = function() {
+var AdminActions = function() {
 
   var self = this;
 
@@ -51,6 +51,19 @@ var adminActions = function() {
     });
   };
 
+  self.encryptUsers = function(g, res, client, sender, action)
+  {
+    console.log("encryptUsers");
+    var findQueryString = "SELECT * FROM users";
+    console.log(findQueryString);
+    var findQuery = client.query(findQueryString);
+    findQuery.on('row', function(row) {
+      console.log(JSON.stringify(row));
+      var cryptoNumber = g.cryptoHelper.encrypt(row.phone_number);
+      console.log(cryptoNumber);
+    });
+  }
+
 
   //Special admin actions, like mass text etc.
   self.doAdminAction = function(g, res, client, sender, action)
@@ -61,6 +74,8 @@ var adminActions = function() {
       self.adminTestAlerts(g, res, client, sender, action);
     } else if (action == "👋") {
       self.adminHelloWorld(g, res, client, sender, action);
+    } else if (action == "Crypto") {
+      self.encryptUsers(g, res, client, sender, aciton);
     } else {
       return false;
     }
@@ -76,4 +91,4 @@ var adminActions = function() {
 
 };
 
-module.exports = adminActions;
+module.exports = AdminActions;
