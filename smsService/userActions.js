@@ -50,6 +50,27 @@ var UserActions = function() {
     });
   };
 
+  self.userSetName = function(g, res, client, sender, action)
+  {
+    var cryptoSender = g.cryptoHelper.encrypt(sender);
+    console.log("userSetRegion");
+    var name = action.substring(5);
+    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
+    var findQuery = client.query(findQueryString);
+    findQuery.on('row', function(row) {
+      console.log(JSON.stringify(row));
+      //if they texted us a number. Set it as their region.
+      var insertQueryString = "UPDATE users SET name = '" + name + "'' WHERE phone_number = '" + cryptoSender + "'";
+      var insertQuery = client.query(insertQueryString);
+      insertQuery.on('end', function() {
+        var body = "You're signed up as: " + name;
+        var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
+        res.status(200)
+        .contentType('text/xml')
+        .send(resp);
+      });
+    });
+  };
  
   self.doUserAction = function(g, res, client, sender, body)
   {
@@ -57,6 +78,8 @@ var UserActions = function() {
       self.userMap(g, res, client, sender, body);
     } else if (body == '1' || body =='2' || body =='3' || body=='4' || body == '5' || body == '6' || body == '7' || body == '8' || body == '9') {
       self.userSetRegion(g, res, client, sender, body);
+    } else if (body.toLowerCase().startsWith('i am')) {
+      self.userSetName(g, res, client, sender, body);
     } else {
       self.userJoin(g, res, client, sender, body);
     }
