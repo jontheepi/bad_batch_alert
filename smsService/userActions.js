@@ -101,30 +101,30 @@ var UserActions = function() {
       var region = row.region;
       var body  = "Here are your options: ";
       if (region == 1) {
-        body = "Location: Downtown Baltimore, Mercy \n443-567-0055"
+        body = "Location: Downtown Baltimore, Mercy \n443-567-0055";
       } else if (region == 2) {
-        body = "Location: Downtown Baltimore, Johns Hopkinks \n207-456-9887"
+        body = "Location: Downtown Baltimore, Johns Hopkinks \n207-456-9887";
       } else if (region == 3) {
-        body = "Location: Downtown Baltimore, St. Benny Hospital \n410-761-9081"
+        body = "Location: Downtown Baltimore, St. Benny Hospital \n410-761-9081";
       } else if (region == 4) {
-        body = "Location: Downtown Baltimore, Jonhny Long Center \n207-456-9887"
+        body = "Location: Downtown Baltimore, Jonhny Long Center \n207-456-9887";
       } else if (region == 5) {
-        body = "Location: Downtown Baltimore, Hospital1 \n207-666-9887"
+        body = "Location: Downtown Baltimore, Hospital1 \n207-666-9887";
       } else if (region == 6) { 
-        body = "Location: Downtown Baltimore, Hospital2 \n207-999-9887"
+        body = "Location: Downtown Baltimore, Hospital2 \n207-999-9887";
       } else if (region == 7) {
-        body = "Location: Downtown Baltimore, Hospital3 \n207-777-9887"
+        body = "Location: Downtown Baltimore, Hospital3 \n207-777-9887";
       } else if (region == 8) {
-        body = "Location: Downtown Baltimore, Hospital4 \n207-000-9887"
+        body = "Location: Downtown Baltimore, Hospital4 \n207-000-9887";
       } else if (region == 9) {
-        body = "Location: Downtown Baltimore, Hospital5 \n207-222-9887"
+        body = "Location: Downtown Baltimore, Hospital5 \n207-222-9887";
       }
     
       var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
       res.status(200)
           .contentType('text/xml')
           .send(resp);
-    }
+    });
   };
  
   self.doUserAction = function(g, res, client, sender, body)
