@@ -130,19 +130,16 @@ var UserActions = function() {
   //userReport will text the user's message to the admin phone number and will tell the user that it has been sent /
   self.userReport = function(g, res, client, sender, action)
   { 
-    var MY_NUMBER     = process.env.MY_NUMBER;
+    var MY_NUMBER  = process.env.MY_NUMBER;
     g.twilio.sendMessage({
-        to: MY_NUMBER,
-        from: TWILIO_NUMBER,
-        body: action
-      }, function (err) {
-        if (err) {
-          return next(err);
-        }
-      });
-    }.on('error', function() {
-      console.log("nobody in region " + region + " to alert.");
-    });
+      to: MY_NUMBER,
+      from: TWILIO_NUMBER,
+      body: action
+    }, function (err) {
+      if (err) {
+        return next(err);
+      }
+    }); 
 
     var body  = "Your report has been sent.";
     var resp  = '<Response><Message><Body>' + body  + '</Body>' + '</Message></Response>';
