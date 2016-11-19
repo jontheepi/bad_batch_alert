@@ -131,6 +131,7 @@ var UserActions = function() {
   self.userReport = function(g, res, client, sender, action)
   { 
     var MY_NUMBER  = process.env.MY_NUMBER;
+    var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
     g.twilio.sendMessage({
       to: MY_NUMBER,
       from: TWILIO_NUMBER,
