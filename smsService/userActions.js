@@ -87,6 +87,45 @@ var UserActions = function() {
     .contentType('text/xml')
     .send(resp);
   };
+
+  //tells the user the nearest medical center avaiable for the user
+  self.userNear = function(g, res, client, sender, action)
+  {
+    console.log("userNear");
+    var cryptoSender = g.cryptoHelper.encrypt(sender);
+    console.log("userSetRegion");
+    var region = parseInt(action);
+    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
+    var findQuery = client.query(findQueryString);
+    findQuery.on('row', function(row) {
+      var region = row.region;
+      var body  = "Here are your options: ";
+      if (region == 1) {
+        body = "Location: Downtown Baltimore, Mercy \n443-567-0055"
+      } else if (region == 2) {
+        body = "Location: Downtown Baltimore, Johns Hopkinks \n207-456-9887"
+      } else if (region == 3) {
+        body = "Location: Downtown Baltimore, St. Benny Hospital \n410-761-9081"
+      } else if (region == 4) {
+        body = "Location: Downtown Baltimore, Jonhny Long Center \n207-456-9887"
+      } else if (region == 5) {
+        body = "Location: Downtown Baltimore, Hospital1 \n207-666-9887"
+      } else if (region == 6) { 
+        body = "Location: Downtown Baltimore, Hospital2 \n207-999-9887"
+      } else if (region == 7) {
+        body = "Location: Downtown Baltimore, Hospital3 \n207-777-9887"
+      } else if (region == 8) {
+        body = "Location: Downtown Baltimore, Hospital4 \n207-000-9887"
+      } else if (region == 9) {
+        body = "Location: Downtown Baltimore, Hospital5 \n207-222-9887"
+      }
+    
+      var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
+      res.status(200)
+          .contentType('text/xml')
+          .send(resp);
+    }
+  };
  
   self.doUserAction = function(g, res, client, sender, body)
   {
@@ -98,6 +137,8 @@ var UserActions = function() {
       self.userSetName(g, res, client, sender, body);
     } else if (body.toLowerCase().startsWith('resources')) {
       self.userResources(g, res, client, sender, body);
+    } else if (body.toLowerCase() == 'near') {
+      self.userNear(g, res, client, sender, body);
     } else {
       self.userJoin(g, res, client, sender, body);
     }
