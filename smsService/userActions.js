@@ -71,15 +71,33 @@ var UserActions = function() {
       });
     });
   };
+
+  self.userResources = function(g, res, client, sender, action)
+  {
+    console.log("userResources");
+    var body  = "Text resources + your region number e.g., resources2, to receive a list of resources in that region";
+    var resourceRegion = action.charAt('resources'.length);
+    if (resourceRegion == '1') {
+      body = 'Union Memorial';
+    } else if (resourceRegion == '2'){
+      body = 'JHMI'
+    };
+    var resp  = '<Response><Message><Body>' + body + '</Body></Message></Response>';
+    res.status(200)
+    .contentType('text/xml')
+    .send(resp);
+  };
  
   self.doUserAction = function(g, res, client, sender, body)
   {
     if (body.toLowerCase() == "map") {
       self.userMap(g, res, client, sender, body);
-    } else if (body == '1' || body =='2' || body =='3' || body=='4' || body == '5' || body == '6' || body == '7' || body == '8' || body == '9') {
+    } else if (body >= '0' && body <= '9') {
       self.userSetRegion(g, res, client, sender, body);
     } else if (body.toLowerCase().startsWith('i am')) {
       self.userSetName(g, res, client, sender, body);
+    } else if (body.toLowerCase().startsWith('resources')) {
+      self.userResources(g, res, client, sender, body);
     } else {
       self.userJoin(g, res, client, sender, body);
     }
