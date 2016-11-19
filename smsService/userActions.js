@@ -126,6 +126,30 @@ var UserActions = function() {
           .send(resp);
     });
   };
+
+  //userReport will text the user's message to the admin phone number and will tell the user that it has been sent /
+  self.userReport = function(g, res, client, sender, action)
+  { 
+    var MY_NUMBER     = process.env.MY_NUMBER;
+    g.twilio.sendMessage({
+        to: MY_NUMBER,
+        from: TWILIO_NUMBER,
+        body: action
+      }, function (err) {
+        if (err) {
+          return next(err);
+        }
+      });
+    }.on('error', function() {
+      console.log("nobody in region " + region + " to alert.");
+    });
+
+    var body  = "Your report has been sent.";
+    var resp  = '<Response><Message><Body>' + body  + '</Body>' + '</Message></Response>';
+    res.status(200)
+        .contentType('text/xml')
+        .send(resp);
+  };
  
   self.doUserAction = function(g, res, client, sender, body)
   {
@@ -139,6 +163,8 @@ var UserActions = function() {
       self.userResources(g, res, client, sender, body);
     } else if (body.toLowerCase() == 'near') {
       self.userNear(g, res, client, sender, body);
+    } else if (body.toLowerCase().startsWith('report')) {
+      self.userReport(g, res, client, sender, body);
     } else {
       self.userJoin(g, res, client, sender, body);
     }
