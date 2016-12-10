@@ -16,7 +16,19 @@ var UserActions = function() {
       .contentType('text/xml')
       .send(resp);
   };
-
+  
+  self.userLeave= function(g, res, client, sender, body)
+  { 
+    var cryptoSender = g.cryptoHelper.encrypt(sender);
+    var findQueryString = "DELETE * FROM users WHERE phone_number = '" + cryptoSender + "'";
+    var findQuery = client.query(findQueryString);
+    var body= "Thanks for using Bad Batch. Text 'join' to continue recieving updates.";
+    var resp  = '<Response><Message><Body>' + body + '</Body></Message></Response>';
+    res.status(200)
+    .contentType('text/xml')
+    .send(resp);
+  };
+  
   self.userMap = function(g, res, client, sender, action)
   {
     console.log("userMap");
@@ -161,6 +173,8 @@ var UserActions = function() {
       self.userNear(g, res, client, sender, body);
     } else if (body.toLowerCase().startsWith('report')) {
       self.userReport(g, res, client, sender, body);
+    } else if (body.toLowerCase() == 'leave') {
+      self.userLeave(g, res, client, sender, body);
     } else {
       self.userJoin(g, res, client, sender, body);
     }
