@@ -22,7 +22,7 @@ var UserActions = function() {
     console.log("userLeave");
     var cryptoSender = g.cryptoHelper.encrypt(sender);
     console.log(cryptoSender);
-    var findQueryString = "DELETE * FROM users WHERE phone_number = '" + cryptoSender + "'";
+    var findQueryString = "DELETE FROM users WHERE phone_number = '" + cryptoSender + "'";
     console.log(findQueryString);
     var findQuery = client.query(findQueryString);
     var body= "Thanks for using Bad Batch. Text 'join' to continue recieving updates.";
@@ -48,7 +48,7 @@ var UserActions = function() {
     var cryptoSender = g.cryptoHelper.encrypt(sender);
     console.log("userSetRegion");
     var region = parseInt(action);
-    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
+    var findQueryString = "SELECT FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
