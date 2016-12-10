@@ -17,10 +17,13 @@ var UserActions = function() {
       .send(resp);
   };
   
-  self.userLeave= function(g, res, client, sender, body)
+  self.userLeave= function(g, res, client, sender, action)
   { 
+    console.log("userLeave");
     var cryptoSender = g.cryptoHelper.encrypt(sender);
+    console.log(cryptoSender);
     var findQueryString = "DELETE * FROM users WHERE phone_number = '" + cryptoSender + "'";
+    console.log(findQueryString);
     var findQuery = client.query(findQueryString);
     var body= "Thanks for using Bad Batch. Text 'join' to continue recieving updates.";
     var resp  = '<Response><Message><Body>' + body + '</Body></Message></Response>';
