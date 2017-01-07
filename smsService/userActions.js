@@ -225,7 +225,7 @@ var UserActions = function() {
       self.userLeave(g, res, client, sender, body);
     } else if (body.toLowerCase() == 'needle') {
       self.userNeedle(g, res, client, sender, body);
-    } else if (body.toLowerCase() == 'help') {
+    } else if (body.toLowerCase() == 'commands') {
       self.userHelp(g, res, client, sender, body);
     } else {
       self.userJoin(g, res, client, sender, body);
