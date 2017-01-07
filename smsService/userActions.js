@@ -183,7 +183,7 @@ var UserActions = function() {
     } else if (n == 5){
       vanlocation = ['Park Heights & Spaulding; North & Gay','Fulton & Baker','Montford & Biddle','Monroe & Ramsey'];
     } else if (n == 6){
-      vanlocation = ['Fremont & Riggs'];
+      vanlocation = ['Fremont and Riggs'];
     }
 
     //send message
