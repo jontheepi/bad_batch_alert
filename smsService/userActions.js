@@ -163,7 +163,7 @@ var UserActions = function() {
   };
   
   //userNeedles will show you where and when the need fan will show up at certain times/
-  Self.userNeedle = function (g,res,client,sender,action)
+  self.userNeedle = function (g,res,client,sender,action)
   {
     console.log("userNeedle");
     var d = new Date();
