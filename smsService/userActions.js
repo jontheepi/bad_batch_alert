@@ -1,11 +1,11 @@
 // 
 // A collection of functions that the user can initiate by texting different messages.*/
 //
-var UserActions = function() {
 
   var self = this;
+  var commands =["near","join","help","map","leave","report","resources","i am"];
 
-  //fires off a test alert to all the registered users
+  //registers a new user
   self.userJoin = function(g, res, client, sender, action)
   {
     console.log("userJoin");
@@ -15,6 +15,17 @@ var UserActions = function() {
     res.status(200)
       .contentType('text/xml')
       .send(resp);
+  };
+	
+  //list commands that a user can send
+  self.userHelp = function(g, res, client, sender, action)
+  {
+    console.log("userHelp");
+    var body  = commands.join(", ");
+    var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
+    res.status(200)
+        .contentType('text/xml')
+        .send(resp);
   };
   
   self.userLeave= function(g, res, client, sender, action)
@@ -214,6 +225,8 @@ var UserActions = function() {
       self.userLeave(g, res, client, sender, body);
     } else if (body.toLowerCase() == 'needle') {
       self.userNeedle(g, res, client, sender, body);
+    } else if (body.toLowerCase() == 'help') {
+      self.userHelp(g, res, client, sender, body);
     } else {
       self.userJoin(g, res, client, sender, body);
     }
