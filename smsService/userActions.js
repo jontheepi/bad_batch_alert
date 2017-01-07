@@ -167,9 +167,11 @@ var UserActions = function() {
   {
     console.log("userNeedle");
     var d = new Date();
+    console.log(d);
     var n = d.getDay();
+    console.log(n);
     var vanlocation = [];
-
+  
     if (n == 1){ 
       vanlocation = ['Monroe & Ramsey; Greenmount & Preston','Fulton & Baker','Baltimore & Conkling Highlandtown','Milton & Monument'];
     } else if(n == 2){
@@ -186,12 +188,13 @@ var UserActions = function() {
 
     //send message
     var body = ' These are your current needle van location' + vanlocation.join(', ');
+    console.log(body);
     var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
     res.status(200)
           .contentType('text/xml')
           .send(resp);
 
-  }
+  };
  
   self.doUserAction = function(g, res, client, sender, body)
   {
