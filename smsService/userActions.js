@@ -191,8 +191,8 @@ var UserActions = function() {
     console.log(body);
     var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
     res.status(200)
-          .contentType('text/xml')
-          .send(resp);
+        .contentType('text/xml')
+        .send(resp);
 
   };
  
