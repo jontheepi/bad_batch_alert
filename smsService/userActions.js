@@ -1,7 +1,7 @@
 // 
 // A collection of functions that the user can initiate by texting different messages.*/
 //
-
+var UserActions = function() {
   var self = this;
   var commands =["near","join","help","map","leave","report","resources","i am"];
 
