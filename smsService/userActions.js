@@ -161,6 +161,37 @@ var UserActions = function() {
         .contentType('text/xml')
         .send(resp);
   };
+  
+  //userNeedles will show you where and when the need fan will show up at certain times/
+  Self.userNeedle = function (g,res,client,sender,action)
+  {
+    console.log("userNeedle");
+    var d = new Date();
+    var n = d.getDay();
+    var vanlocation = [];
+
+    if (n == 1){ 
+      vanlocation = ['Monroe & Ramsey; Greenmount & Preston','Fulton & Baker','Baltimore & Conkling Highlandtown','Milton & Monument'];
+    } else if(n == 2){
+      vanlocation = ['Montford & Biddle; Pratt & Carey','Freemont & Riggs Barclay & 23rd'];
+    } else if(n == 3){
+      vanlocation = ['Baltimore & Conkling (Highlandtown)','Freemont & Laurens'];
+    } else if (n == 4){
+     vanlocation = ['Pontiac & 9th Ave. North & Rosedale','Milton & Monument; Monroe & Ramsey','Baltimore & Gay (The Block)'];
+    } else if (n == 5){
+      vanlocation = ['Park Heights & Spaulding; North & Gay','Fulton & Baker','Montford & Biddle','Monroe & Ramsey'];
+    } else if (n == 6){
+      vanlocation = ['Fremont & Riggs'];
+    }
+
+    //send message
+    var body = ' These are your current needle van location' + vanlocation.join(', ');
+    var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
+    res.status(200)
+          .contentType('text/xml')
+          .send(resp);
+
+  }
  
   self.doUserAction = function(g, res, client, sender, body)
   {
@@ -178,6 +209,8 @@ var UserActions = function() {
       self.userReport(g, res, client, sender, body);
     } else if (body.toLowerCase() == 'leave') {
       self.userLeave(g, res, client, sender, body);
+    } else if (body.toLowerCase() == 'needle') {
+      self.userNeedle(g, res, client, sender, body);
     } else {
       self.userJoin(g, res, client, sender, body);
     }
