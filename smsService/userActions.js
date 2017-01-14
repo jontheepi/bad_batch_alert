@@ -113,6 +113,16 @@ var UserActions = function() {
     .contentType('text/xml')
     .send(resp);
   };
+	
+  self.userDetox = function(g, res, client, sender, action)
+  {
+    console.log("userDetox");
+    var body  = "call 410-433-5175 for 24 hour service.";
+    var resp  = '<Response><Message><Body>' + body + '</Body></Message></Response>';
+     res.status(200)
+    .contentType('text/xml')
+    .send(resp);
+  }
 
   //tells the user the nearest medical center avaiable for the user
   self.userNear = function(g, res, client, sender, action)
@@ -258,6 +268,8 @@ var UserActions = function() {
       self.userVan(g, res, client, sender, body);
     } else if (body.toLowerCase() == 'commands') {
       self.userHelp(g, res, client, sender, body);
+    } else if (body.toLowerCase() == 'detox') {
+      self.userDetox(g, res, client, sender, body);
     } else {
       self.userJoin(g, res, client, sender, body);
     }
