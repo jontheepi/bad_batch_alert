@@ -3,7 +3,7 @@
 //
 var UserActions = function() {
   var self = this;
-  var commands =["near","join","help","map","leave","report","resources","i am"];
+  var commands =["van","near","join","help","map","leave","report","resources","i am"];
 
   //registers a new user
   self.userJoin = function(g, res, client, sender, action)
@@ -174,36 +174,65 @@ var UserActions = function() {
   };
   
   //userNeedles will show you where and when the need fan will show up at certain times/
-  self.userNeedle = function (g,res,client,sender,action)
+  self.userVan = function (g,res,client,sender,action)
   {
-    console.log("userNeedle");
+    console.log("userVan");
     var d = new Date();
-    console.log(d);
     var n = d.getDay();
-    console.log(n);
-    var vanlocation = [];
-  
-    if (n == 1){ 
-      vanlocation = ['Monroe & Ramsey; Greenmount & Preston','Fulton & Baker','Baltimore & Conkling Highlandtown','Milton & Monument'];
-    } else if(n == 2){
-      vanlocation = ['Montford & Biddle; Pratt & Carey','Freemont & Riggs Barclay & 23rd'];
-    } else if(n == 3){
-      vanlocation = ['Baltimore & Conkling (Highlandtown)','Freemont & Laurens'];
-    } else if (n == 4){
-     vanlocation = ['Pontiac & 9th Ave. North & Rosedale','Milton & Monument; Monroe & Ramsey','Baltimore & Gay (The Block)'];
+    var vanLocation = 'The Van is not in service';
+    var h = d.getHours();
+    if (n == 1) {
+      if ( ( h > 9 and m >30 ) and ( h < 11 and m < 30))  {
+        vanLocation = 'Van 1 is at Monroe and Ramsey. Van 2 is at Greenmount and Preston';
+      } else if (( h > 12 and m < 45 ) and ( h < 15 and m < 30)) {
+        vanLocation = 'The Needle Exchange Van is at Fulton and Baker';
+      } else if (( h > 18 ) and ( h < 20 )) {
+        vanLocation= 'The Needle Exchange Van is at Baltimore and Conkling (Highlandtown)';
+      } else if (( h > 20 and m < 30 ) and ( h < 22 )) {
+        vanLocation = 'The Needle Exchange Van is at Milton and Monument';
+      }
+    } else if(n == 2) {
+      if (( h > 9 and m < 30 ) and ( h < 11 and m < 30 )) {
+        vanLocation = 'Van 1 is at Montford and Biddle. Van 2 is at Pratt and Carey';
+      } else if ((h > 12 and m < 45 ) and ( h > 15 and m < 30 )) {
+        vanLocation = 'Van 1 is at Freemont & Riggs. Van 2 is at Barclay and 23rd';
+      }
+    } else if(n == 3) {
+      if ((h > 18) and (h < 20)) {
+        vanLocation = 'The Needle Exchange Van is at Baltimore and Conkling (Highlandtown)';
+      } else if ((h > 20 and m < 30 ) and (h < 22)) {
+        vanLocation = 'The Needle Exchange Van is at Freemont and Laurens';
+      }
+    } else if (n == 4) {
+        if ((h > 9 and m > 30) and (h < 11 and m < 30 )) {
+          vanLocation = 'Van 1 is at Pontiac and 9th Ave. Van 2 is at North and Rosedale';
+        } else if ((h > 12 and m > 45) and (h < 15 and m < 30 )) {
+          vanLocation = 'Van 1 is at Milton and Monument. Van 2 is at Monroe and Ramsey';
+        } else if ((h > 19) and (h < 22 )) {
+          vanLocation ='The Needle Exchange Van is at Baltimore and Gay (The Block)'; 
+        }
     } else if (n == 5){
-      vanlocation = ['Park Heights & Spaulding; North & Gay','Fulton & Baker','Montford & Biddle','Monroe & Ramsey'];
+      if ((h > 9 and m > 30 ) and (h < 11 and m < 30 )) {
+        vanLocation = 'Van 1 is at Park Heights and Spaulding. Van 2 is at North and Gay';
+      } else if ((h > 12 and m > 45 ) and (h < 3 and m < 30 )) {
+        vanLocation = 'The Needle Exchange Van is at Fulton and Baker';
+      } else if ((h > 18) and (h < 20 )) {
+        vanLocation = 'The Needle Exchange Van is at at Montford and Biddle';
+      } else if ((h > 20 and m > 30 ) and (h < 22)) {
+        vanLocation = 'The Needle Exchange Van is at Monroe and Ramsey';
+      }
     } else if (n == 6){
-      vanlocation = ['Fremont and Riggs'];
+      if ((h > 12 ) and (h < 16 )) {
+        vanLocation = 'The Needle Exchange Van is at Fremont and Riggs';
+      }
     }
 
     //send message
-    var body = ' These are your current needle van location' + vanlocation.join(', ');
-    console.log(body);
+    var body = vanLocation + " right now.";
     var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
     res.status(200)
-        .contentType('text/xml')
-        .send(resp);
+          .contentType('text/xml')
+          .send(resp);
 
   };
  
@@ -223,8 +252,8 @@ var UserActions = function() {
       self.userReport(g, res, client, sender, body);
     } else if (body.toLowerCase() == 'leave') {
       self.userLeave(g, res, client, sender, body);
-    } else if (body.toLowerCase() == 'needle') {
-      self.userNeedle(g, res, client, sender, body);
+    } else if (body.toLowerCase() == 'van') {
+      self.userVan(g, res, client, sender, body);
     } else if (body.toLowerCase() == 'commands') {
       self.userHelp(g, res, client, sender, body);
     } else {
