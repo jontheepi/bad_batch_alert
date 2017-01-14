@@ -179,10 +179,10 @@ var UserActions = function() {
     console.log("userVan");
     var d = new Date();
     var n = d.getDay();
-    var vanLocation = 'The Van is not in service';
     var h = d.getHours();
     var m = d.getMinutes();
-    console.log('d:' + d + ', h:' + h + ', m:' + m); 
+    var vanLocation = 'The Van is not in service';
+    console.log('n:' + n + ', h:' + h + ', m:' + m); 
     if (n == 1) {
       if ( ( h > 9 && m >30 ) && ( h < 11 && m < 30))  {
         vanLocation = 'Van 1 is at Monroe and Ramsey. Van 2 is at Greenmount and Preston';
