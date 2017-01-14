@@ -122,7 +122,7 @@ var UserActions = function() {
      res.status(200)
     .contentType('text/xml')
     .send(resp);
-  }
+  };
 
   //tells the user the nearest medical center avaiable for the user
   self.userNear = function(g, res, client, sender, action)
