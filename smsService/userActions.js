@@ -187,8 +187,6 @@ var UserActions = function() {
   self.userVan = function (g,res,client,sender,action)
   {
     console.log("userVan");
-    var d = new Date();
-    console.log(d.toLocaleString());  
     //EST
     offset = -5.0
     clientDate = new Date();
@@ -196,9 +194,9 @@ var UserActions = function() {
     serverDate = new Date(utc + (3600000*offset));
     console.log(serverDate.toLocaleString());  
 	  
-    var n = d.getDay();
-    var h = d.getHours();
-    var m = d.getMinutes();
+    var n = serverDate.getDay();
+    var h = serverDate.getHours();
+    var m = serverDate.getMinutes();
     var vanLocation = 'The Van is not in service';
     console.log('n:' + n + ', h:' + h + ', m:' + m); 
     if (n == 1) {
