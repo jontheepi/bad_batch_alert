@@ -70,7 +70,7 @@ var AdminActions = function() {
   {
     if (sender != MY_NUMBER) return false;//not admin sorry buddy.
 
-    if (action.startsWith("⚠️")) {//Alert Emoji
+    if (action.startsWith("⚠️") || action.startsWith("⚠")) {//Alert Emoji (2 kinds)
       self.adminTestAlerts(g, res, client, sender, action);
     } else if (action == "👋") {
       self.adminHelloWorld(g, res, client, sender, action);
