@@ -188,6 +188,14 @@ var UserActions = function() {
   {
     console.log("userVan");
     var d = new Date();
+    console.log(d.toLocaleString());  
+    //EST
+    offset = -5.0
+    clientDate = new Date();
+    utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
+    serverDate = new Date(utc + (3600000*offset));
+    console.log(serverDate.toLocaleString());  
+	  
     var n = d.getDay();
     var h = d.getHours();
     var m = d.getMinutes();
