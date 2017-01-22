@@ -14,7 +14,7 @@ var AdminActions = function() {
     //Query for all users and send them alerts.
     console.log("adminTestAlerts " + action );
     var region = action.charAt(2);//in test alert the 2nd character is the region so.. like this is alert region '⚠2'️ (2 because unicode)
-    if (!region) retgion = action.charAt(1);//now there's 2 versions of this emoji. One version only takes up a single char.
+    if (region == "") retgion = action.charAt(1);//now there's 2 versions of this emoji. One version only takes up a single char.
     var findQueryString = "SELECT * FROM users WHERE region = " + region;
     console.log(findQueryString);
     var findQuery = client.query(findQueryString);
