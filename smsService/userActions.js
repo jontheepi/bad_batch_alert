@@ -200,50 +200,51 @@ var UserActions = function() {
     var vanLocation = 'The Van is not in service';
     console.log('n:' + n + ', h:' + h + ', m:' + m); 
     if (n == 1) {
-      if ( ( h > 9 && m >30 ) && ( h < 11 && m < 30))  {
-        vanLocation = 'Van 1 is at Monroe and Ramsey. Van 2 is at Greenmount and Preston';
-      } else if (( h > 12 && m < 45 ) && ( h < 15 && m < 30)) {
-        vanLocation = 'The Needle Exchange Van is at Fulton and Baker';
-      } else if (( h > 18 ) && ( h < 20 )) {
-        vanLocation= 'The Needle Exchange Van is at Baltimore and Conkling (Highlandtown)';
-      } else if (( h > 20 && m < 30 ) && ( h < 22 )) {
-        vanLocation = 'The Needle Exchange Van is at Milton and Monument';
+      if ( ( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11) )  {
+        vanlocation = 'Monroe and Ramsey; Greenmount and Preston';
+      } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)){
+        vanlocation = 'Fulton and Baker';
+      } else if (( h >= 18) && ( h <= 20)) { 
+        vanlocation= 'Baltimore and Conkling Highlandtown';
+      } else if (( h == 20 && m >= 30) || (h > 20 && h <= 22)) {
+        vanlocation ='Milton and Monument';
       }
-    } else if(n == 2) {
-      if (( h > 9 && m < 30 ) && ( h < 11 && m < 30 )) {
-        vanLocation = 'Van 1 is at Montford and Biddle. Van 2 is at Pratt and Carey';
-      } else if ((h > 12 && m < 45 ) && ( h > 15 && m < 30 )) {
-        vanLocation = 'Van 1 is at Freemont & Riggs. Van 2 is at Barclay and 23rd';
+    } else if (n == 2) {
+      if (( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11)) {
+        vanlocation = 'Montford and Biddle; Pratt and Carey';
+      } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)){
+        vanlocation = 'Freemont and Riggs Barclay and 23rd';
       }
-    } else if(n == 3) {
-      if ((h > 18) && (h < 20)) {
-        vanLocation = 'The Needle Exchange Van is at Baltimore and Conkling (Highlandtown)';
-      } else if ((h > 20 && m < 30 ) && (h < 22)) {
-        vanLocation = 'The Needle Exchange Van is at Freemont and Laurens';
+    } else if (n == 3) {
+      if (( h >= 18) && ( h <= 20)){
+        vanlocation = 'Baltimore and Conkling (Highlandtown)';
+      } else if (( h == 20 && m >= 30) || (h > 20 && h <= 22)) {
+        vanlocation = 'Freemont and Laurens';
       }
     } else if (n == 4) {
-        if ((h > 9 && m > 30) && (h < 11 && m < 30 )) {
-          vanLocation = 'Van 1 is at Pontiac and 9th Ave. Van 2 is at North and Rosedale';
-        } else if ((h > 12 && m > 45) && (h < 15 && m < 30 )) {
-          vanLocation = 'Van 1 is at Milton and Monument. Van 2 is at Monroe and Ramsey';
-        } else if ((h > 19) && (h < 22 )) {
-          vanLocation ='The Needle Exchange Van is at Baltimore and Gay (The Block)'; 
-        }
+      if (( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11)) {
+          vanlocation = 'Pontiac and 9th Ave.; North and Rosedale';
+      } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)) {
+          vanlocation ='Milton and Monument; Monroe and Ramsey';
+      } else if (h >= 19 && h <= 22 ) {
+         vanlocation='Baltimore and Gay (The Block)'; 
+      }
     } else if (n == 5){
-      if ((h > 9 && m > 30 ) && (h < 11 && m < 30 )) {
-        vanLocation = 'Van 1 is at Park Heights and Spaulding. Van 2 is at North and Gay';
-      } else if ((h > 12 && m > 45 ) && (h < 3 && m < 30 )) {
-        vanLocation = 'The Needle Exchange Van is at Fulton and Baker';
-      } else if ((h > 18) && (h < 20 )) {
-        vanLocation = 'The Needle Exchange Van is at at Montford and Biddle';
-      } else if ((h > 20 && m > 30 ) && (h < 22)) {
-        vanLocation = 'The Needle Exchange Van is at Monroe and Ramsey';
+      if (( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11)) {
+        vanlocation='Park Heights and Spaulding; North and Gay';
+      } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)) {
+        vanlocation ='Fulton and Baker';
+      } else if (h >= 18 && h <= 20 ) {
+        vanlocation='Montford and Biddle';
+      } else if (( h == 20 && m >= 30) || (h > 20 && h <= 22)) {
+        vanlocation='Monroe and Ramsey';
       }
     } else if (n == 6){
-      if ((h > 12 ) && (h < 16 )) {
-        vanLocation = 'The Needle Exchange Van is at Fremont and Riggs';
+      if (h >= 12 && h <= 16) {
+        vanlocation= 'Fremont and Riggs';
       }
     }
+
 
     //send message
     var body = vanLocation + " right now.";
