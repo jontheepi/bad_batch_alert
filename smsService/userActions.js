@@ -201,47 +201,47 @@ var UserActions = function() {
     console.log('n:' + n + ', h:' + h + ', m:' + m); 
     if (n == 1) {
       if ( ( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11) )  {
-        vanlocation = 'Monroe and Ramsey; Greenmount and Preston';
+        vanLocation = 'Monroe and Ramsey; Greenmount and Preston';
       } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)){
-        vanlocation = 'Fulton and Baker';
+        vanLocation = 'Fulton and Baker';
       } else if (( h >= 18) && ( h <= 20)) { 
-        vanlocation= 'Baltimore and Conkling Highlandtown';
+        vanLocation = 'Baltimore and Conkling Highlandtown';
       } else if (( h == 20 && m >= 30) || (h > 20 && h <= 22)) {
-        vanlocation ='Milton and Monument';
+        vanLocation = 'Milton and Monument';
       }
     } else if (n == 2) {
       if (( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11)) {
-        vanlocation = 'Montford and Biddle; Pratt and Carey';
+        vanLocation = 'Montford and Biddle; Pratt and Carey';
       } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)){
-        vanlocation = 'Freemont and Riggs Barclay and 23rd';
+        vanLocation = 'Freemont and Riggs Barclay and 23rd';
       }
     } else if (n == 3) {
       if (( h >= 18) && ( h <= 20)){
-        vanlocation = 'Baltimore and Conkling (Highlandtown)';
+        vanLocation = 'Baltimore and Conkling (Highlandtown)';
       } else if (( h == 20 && m >= 30) || (h > 20 && h <= 22)) {
-        vanlocation = 'Freemont and Laurens';
+        vanLocation = 'Freemont and Laurens';
       }
     } else if (n == 4) {
       if (( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11)) {
-          vanlocation = 'Pontiac and 9th Ave.; North and Rosedale';
+         vanLocation = 'Pontiac and 9th Ave.; North and Rosedale';
       } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)) {
-          vanlocation ='Milton and Monument; Monroe and Ramsey';
+         vanLocation = 'Milton and Monument; Monroe and Ramsey';
       } else if (h >= 19 && h <= 22 ) {
-         vanlocation='Baltimore and Gay (The Block)'; 
+         vanLocation = 'Baltimore and Gay (The Block)'; 
       }
     } else if (n == 5){
       if (( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11)) {
-        vanlocation='Park Heights and Spaulding; North and Gay';
+        vanLocation = 'Park Heights and Spaulding; North and Gay';
       } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)) {
-        vanlocation ='Fulton and Baker';
+        vanLocation ='Fulton and Baker';
       } else if (h >= 18 && h <= 20 ) {
-        vanlocation='Montford and Biddle';
+        vanLocation = 'Montford and Biddle';
       } else if (( h == 20 && m >= 30) || (h > 20 && h <= 22)) {
-        vanlocation='Monroe and Ramsey';
+        vanLocation = 'Monroe and Ramsey';
       }
     } else if (n == 6){
       if (h >= 12 && h <= 16) {
-        vanlocation= 'Fremont and Riggs';
+        vanLocation= 'Fremont and Riggs';
       }
     }
 
