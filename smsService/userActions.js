@@ -206,7 +206,7 @@ var UserActions = function() {
         vanLocation = 'The van is at Fulton and Baker until 3:30 PM';
       } else if (( h >= 18) && ( h <= 20)) { 
         vanLocation = 'The van is at Baltimore and Conkling Highlandtown until 8:00 PM';
-      } else if (( h == 20 && m >= 30) || (h > 20 && h <= 22)) {
+      } else if (( h == 20 && m >= 30) || (h > 20 && h < 22)) {
         vanLocation = 'The van is at Milton and Monument until 10:00 PM';
       }
     } else if (n == 2) {
@@ -218,7 +218,7 @@ var UserActions = function() {
     } else if (n == 3) {
       if (( h >= 18) && ( h <= 20)){
         vanLocation = 'The van is at Baltimore and Conkling (Highlandtown) until 8:00 PM';
-      } else if (( h == 20 && m >= 30) || (h > 20 && h <= 22)) {
+      } else if (( h == 20 && m >= 30) || (h > 20 && h < 22)) {
         vanLocation = 'The van is at Freemont and Laurens until 10:00 PM';
       }
     } else if (n == 4) {
@@ -236,7 +236,7 @@ var UserActions = function() {
         vanLocation ='The van is at Fulton and Baker until 3:30 PM';
       } else if (h >= 18 && h <= 20 ) {
         vanLocation = 'The van is at Montford and Biddle until 8:00 PM';
-      } else if (( h == 20 && m >= 30) || (h > 20 && h <= 22)) {
+      } else if (( h == 20 && m >= 30) || (h > 20 && h < 22)) {
         vanLocation = 'The van is at Monroe and Ramsey until 10:00 PM';
       }
     } else if (n == 6){
