@@ -197,7 +197,7 @@ var UserActions = function() {
     var n = serverDate.getDay();
     var h = serverDate.getHours();
     var m = serverDate.getMinutes();
-    var vanLocation = 'The Van is not in service';
+    var vanLocation = 'The Van is not in service right now.';
     console.log('n:' + n + ', h:' + h + ', m:' + m); 
     if (n == 1) {
       if ( ( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11) )  {
