@@ -247,7 +247,7 @@ var UserActions = function() {
 
 
     //send message
-    var body = vanLocation + " right now.";
+    var body = vanLocation;
     var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
     res.status(200)
           .contentType('text/xml')
