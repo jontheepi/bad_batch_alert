@@ -34,7 +34,7 @@ var UserActions = function()
     console.log("userCommands");
     var body = "";
     for (var i = 0; i < commands.length; i++){
-     body = body + commands[i] + ": " + commandDescriptions[i];
+     body = body + commands[i] + ": " + commandDescriptions[i] + '/n/n';
     }
     var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
     res.status(200)
