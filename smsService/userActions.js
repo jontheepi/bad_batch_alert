@@ -1,27 +1,41 @@
-// 
-// A collection of functions that the user can initiate by texting different messages.*/
-//
-var UserActions = function() {
+var UserActions = function() 
+{
   var self = this;
-  var commands =["van","near","join","help","map","leave","report","resources","i am"];
-
+  var commands = ["van","near","join","commands","map","leave","report","resources","i am"];
+  var commandDescriptions = ["Tells you where the Baltimore Needle Exchange Van is at any time.",
+   "Tells you where the nearest available medical care center is.", 
+   "Registers you with the Bad Batch alert service.",
+    "Shows you a list of commands you can send.",
+     "Shows you the Region Map, which has numbers that correspond to areas in the city. You can then text the number of the area in which you live, which determines the kind of overdose alerts you will get.",
+     "Removes you from the Bad Batch alert service. You can rejoin at any time by texting this number",
+     "Text 'report' followed by your message to anonymously send a message to someone who can help you.", 
+     "resources placeholder",
+     "Text 'I am' followed by your name to set your name in our database"];
+};
   //registers a new user
   self.userJoin = function(g, res, client, sender, action)
   {
     console.log("userJoin");
-    var body  = "Thank you for registering. Text the word 'map' to set your location. Find out more at BadBatchAlert.com";
+    var body  = "Thank you for registering. Text the word 'map' to set your location. Text the word 'commands' to see a list of commands you can send. Find out more at BadBatchAlert.com";
     var media = "http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png";
     var resp  = '<Response><Message><Body>' + body + '</Body><Media>' + media + '</Media></Message></Response>';
     res.status(200)
       .contentType('text/xml')
       .send(resp);
   };
-	
+  
   //list commands that a user can send
-  self.userHelp = function(g, res, client, sender, action)
+  self.userCommands = function(g, res, client, sender, action)
   {
-    console.log("userHelp");
-    var body  = commands.join(", ");
+    if (commands.length != commandDescriptions.length){
+      console.warn("Commands list and descriptions list don't match.");
+      return;
+    }
+    console.log("userCommands");
+    var body = "";
+    for (var i = 0; i < command.length; i++){
+     body = body + commands[i] + ": " + commandDescriptions[i];
+    }
     var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
     res.status(200)
         .contentType('text/xml')
@@ -274,7 +288,7 @@ var UserActions = function() {
     } else if (body.toLowerCase() == 'van') {
       self.userVan(g, res, client, sender, body);
     } else if (body.toLowerCase() == 'commands') {
-      self.userHelp(g, res, client, sender, body);
+      self.userJoin(g, res, client, sender, body);
     } else if (body.toLowerCase() == 'detox') {
       self.userDetox(g, res, client, sender, body);
     } else {
