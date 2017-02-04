@@ -5,13 +5,13 @@ var UserActions = function()
   var commandDescriptions = ["Tells you where the Baltimore Needle Exchange Van is at any time.",
    "Tells you where the nearest available medical care center is.", 
    "Registers you with the Bad Batch alert service.",
-    "Shows you a list of commands you can send.",
-     "Shows you the Region Map, which has numbers that correspond to areas in the city. You can then text the number of the area in which you live, which determines the kind of overdose alerts you will get.",
-     "Removes you from the Bad Batch alert service. You can rejoin at any time by texting this number",
-     "Text 'report' followed by your message to anonymously send a message to someone who can help you.", 
-     "resources placeholder",
-     "Text 'I am' followed by your name to set your name in our database"];
-};
+   "Shows you a list of commands you can send.",
+   "Shows you the Region Map, which has numbers that correspond to areas in the city. You can then text the number of the area in which you live, which determines the kind of overdose alerts you will get.",
+   "Removes you from the Bad Batch alert service. You can rejoin at any time by texting this number",
+   "Text 'report' followed by your message to anonymously send a message to someone who can help you.", 
+   "resources placeholder",
+   "Text 'I am' followed by your name to set your name in our database"];
+	
   //registers a new user
   self.userJoin = function(g, res, client, sender, action)
   {
