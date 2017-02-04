@@ -288,7 +288,7 @@ var UserActions = function()
     } else if (body.toLowerCase() == 'van') {
       self.userVan(g, res, client, sender, body);
     } else if (body.toLowerCase() == 'commands') {
-      self.userJoin(g, res, client, sender, body);
+      self.userCommands(g, res, client, sender, body);
     } else if (body.toLowerCase() == 'detox') {
       self.userDetox(g, res, client, sender, body);
     } else {
