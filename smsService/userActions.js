@@ -1,7 +1,7 @@
 var UserActions = function() 
 {
   var self = this;
-  var commands = ["van","near","join","commands","map","leave","report","resources","i am"];
+  var commands = ["van","near","join","commands","map","leave","report", "i am"];
   var commandDescriptions = ["Tells you where the Baltimore Needle Exchange Van is at any time.",
    "Tells you where the nearest available medical care center is.", 
    "Registers you with the Bad Batch alert service.",
@@ -9,7 +9,6 @@ var UserActions = function()
    "Shows you the Region Map, which has numbers that correspond to areas in the city. You can then text the number of the area in which you live, which determines the kind of overdose alerts you will get.",
    "Removes you from the Bad Batch alert service. You can rejoin at any time by texting this number",
    "Text 'report' followed by your message to anonymously send a message to someone who can help you.", 
-   "resources placeholder",
    "Text 'I am' followed by your name to set your name in our database"];
 	
   //registers a new user
