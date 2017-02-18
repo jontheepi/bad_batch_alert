@@ -279,7 +279,7 @@ var UserActions = function()
 
   };
 
-  self.setZipCode = function(g, res, client, sender, body) 
+  self.userSetZipCode = function(g, res, client, sender, body) 
   {
     console.log("userVan");
     var zipCode = integer.parseInt(body);
@@ -323,10 +323,10 @@ var UserActions = function()
   {
     if (body.toLowerCase() == "map") {
       self.userMap(g, res, client, sender, body);
+    } else if (self.isZipCode(body)) {
+      self.userSetZipCode(g, res, client, sender,body);
     } else if (body >= '0' && body <= '9') {
       self.userSetRegion(g, res, client, sender, body);
-    } else if (self.isZipCode(body)) {
-      self.setZipCode(g, res, client, sender,body);
     } else if (body.toLowerCase().startsWith('i am')) {
       self.userSetName(g, res, client, sender, body);
     } else if (body.toLowerCase().startsWith('resources')) {
