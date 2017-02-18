@@ -10,6 +10,17 @@ var UserActions = function()
    "Removes you from the Bad Batch alert service. You can rejoin at any time by texting this number",
    "Text 'report' followed by your message to anonymously send a message to someone who can help you.", 
    "Text 'I am' followed by your name to set your name in our database"];
+
+   var regionZips = [ [21217, 21211],
+                      [21211, 21218, 21210], 
+                      [21213, 21202, 21206],
+                      [21223,21229, 21230],
+                      [21231, 21202, 21201, 21230],
+                      [21224, 21205],
+                      [21224,21222],
+                      [21225, 21227, 21230],
+                      [21225, 21226]
+                    ];
 	
   //registers a new user
   self.userJoin = function(g, res, client, sender, action)
@@ -267,6 +278,46 @@ var UserActions = function()
           .send(resp);
 
   };
+
+  self.setZipCode = function(g, res, client, sender, body) 
+  {
+    console.log("userVan");
+    var zipCode = integer.parseInt(body);
+    var matchedRegion
+    for (var i = 0; i < RegionZips.length; i++) {
+      var zips = regionZips[i];
+      for (var j = 0; j < zips.length; j++) {
+        var zip = zips[j];
+        if (zip == zipCode) {
+          matchedRegion = i + 1;
+          break;
+        }
+      }
+    }
+    if (matchedRegion === undefined) {
+      var body = "Sorry, this service is only available in the Baltimore metro area. /n If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com."
+      var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
+      res.status(200)
+            .contentType('text/xml')
+            .send(resp);
+    }
+    else {
+      self.userSetRegion(g, res, client, sender, ""+matchedRegion)
+    }
+  };
+
+  self.isZipCode = function(body)
+  {
+    if (string.length !== 5) {
+      return false;
+    }
+    try {
+      Integer.parseInt(input);
+    } catch(e) {
+      return false;
+    }
+    return true;
+  };
  
   self.doUserAction = function(g, res, client, sender, body)
   {
@@ -274,6 +325,8 @@ var UserActions = function()
       self.userMap(g, res, client, sender, body);
     } else if (body >= '0' && body <= '9') {
       self.userSetRegion(g, res, client, sender, body);
+    } else if (self.isZipCode(body)) {
+      self.setZipCode(g, res, client, sender,body);
     } else if (body.toLowerCase().startsWith('i am')) {
       self.userSetName(g, res, client, sender, body);
     } else if (body.toLowerCase().startsWith('resources')) {
