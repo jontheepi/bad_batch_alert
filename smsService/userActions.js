@@ -313,7 +313,7 @@ var UserActions = function()
       return false;
     }
     try {
-      Integer.parseInt(body);
+      parseInt(body);
     } catch(e) {
       console.log('not int');
       return false;
