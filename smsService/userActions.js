@@ -309,11 +309,13 @@ var UserActions = function()
   self.isZipCode = function(body)
   {
     if (string.length !== 5) {
+      console.log('not 5');
       return false;
     }
     try {
       Integer.parseInt(input);
     } catch(e) {
+      console.log('not int');
       return false;
     }
     return true;
