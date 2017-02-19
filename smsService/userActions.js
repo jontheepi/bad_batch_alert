@@ -104,8 +104,8 @@ var UserActions = function()
 
   self.userAddRegion = function(g, res, client, sender, action)
   {
-    var cryptoSender = g.cryptoHelper.encrypt(sender);
     console.log("userAddRegion");
+    var cryptoSender = g.cryptoHelper.encrypt(sender);
     var region = action.charAt('add'.length);
     var findQueryString = "SELECT FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
@@ -351,7 +351,7 @@ var UserActions = function()
     if (command == "map") {
       self.userMap(g, res, client, sender, body);
     } else if (self.isZipCode(body)) {
-      self.userSetZipCode(g, res, client, sender,body);
+      self.userSetZipCode(g, res, client, sender, body);
     } else if (body.length == 1 && body >= '0' && body <= '9') {
       self.userSetRegion(g, res, client, sender, body);
     } else if (command.startsWith('add')) {
