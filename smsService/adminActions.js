@@ -44,6 +44,7 @@ var AdminActions = function() {
     console.log("adminNews");
     var message = action.slice('news'.length+1);
     var findQueryString = "SELECT * FROM users";
+    var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       var phoneNumber = g.cryptoHelper.decrypt(row.phone_number);
