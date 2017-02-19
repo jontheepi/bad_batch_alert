@@ -355,7 +355,7 @@ var UserActions = function()
  
   self.doUserAction = function(g, res, client, sender, body)
   {
-    var command = body.toLowerCse();
+    var command = body.toLowerCase();
     if (command == "map") {
       self.userMap(g, res, client, sender, body);
     } else if (self.isZipCode(body)) {
