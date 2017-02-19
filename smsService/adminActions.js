@@ -15,7 +15,7 @@ var AdminActions = function() {
     console.log("adminAlert " + action );
     var region = action.charAt(2);//in test alert the 2nd character is the region so.. like this is alert region '⚠2'️ (2 because unicode)
     if (region == "") region = action.charAt(1);//now there's 2 versions of this emoji. One version only takes up a single char.
-    var findQueryString = "SELECT * FROM users WHERE regions LIKE %'" + region + "'%";
+    var findQueryString = "SELECT * FROM users WHERE '" + region + "' LIKE %regions%";
 
     console.log(findQueryString);
     var findQuery = client.query(findQueryString);
@@ -98,7 +98,7 @@ var AdminActions = function() {
       self.adminAlert(g, res, client, sender, action);
     } else if (action == "👋") {
       self.adminHelloWorld(g, res, client, sender, action);
-    } else if (action.toLowerCase.startsWith('news')) {
+    } else if (action.toLowerCase().startsWith('news')) {
       self.adminNews(g, res, client, sender, action);
     } else if (action == "Crypto") {
       self.encryptUsers(g, res, client, sender, action);
