@@ -93,7 +93,7 @@ var UserActions = function()
       var insertQueryString = "UPDATE users SET regions = '" + region + "' WHERE phone_number = '" + cryptoSender + "'";
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
-        var body = "👍 You are all set to receive alerts in region " + region + ".\n If you'd like to add more regions, text the word 'add' followed by the region number.";
+        var body = "👍 You are all set to receive alerts in region " + region + ".\nTo add more regions, text the word 'add' followed by a region number.";
         var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
         res.status(200)
         .contentType('text/xml')

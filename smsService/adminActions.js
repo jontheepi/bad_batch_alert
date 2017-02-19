@@ -9,13 +9,13 @@ var AdminActions = function() {
   var MY_NUMBER     = process.env.MY_NUMBER;
   
   //fires off a test alert to all the registered users
-  self.adminTestAlerts = function(g, res, client, sender, action)
+  self.adminAlerts = function(g, res, client, sender, action)
   {
     //Query for all users and send them alerts.
-    console.log("adminTestAlerts " + action );
+    console.log("adminAlerts " + action );
     var region = action.charAt(2);//in test alert the 2nd character is the region so.. like this is alert region '⚠2'️ (2 because unicode)
     if (region == "") region = action.charAt(1);//now there's 2 versions of this emoji. One version only takes up a single char.
-    var findQueryString = "SELECT * FROM users WHERE regions LIKE %" + region + "%";
+    var findQueryString = "SELECT * FROM users WHERE regions LIKE %'" + region + "'%";
 
     console.log(findQueryString);
     var findQuery = client.query(findQueryString);
@@ -38,6 +38,28 @@ var AdminActions = function() {
     });
  
   };
+
+  self.adminNews = function(g, res, client, sender, action) 
+  {
+    console.log("adminNews");
+    var message = action.slice('adminNews'.length+1);
+    var findQueryString = "SELECT * FROM users";
+    findQuery.on('row', function(row) {
+      console.log(JSON.stringify(row));
+      var phoneNumber = g.cryptoHelper.decrypt(row.phone_number);
+      g.twilio.sendMessage({
+        to: phoneNumber,
+        from: TWILIO_NUMBER,
+        body: message,
+      }, function (err) {
+        if (err) {
+          return next(err);
+        }
+      });
+    }).on('error', function() {
+      console.log("nobody in region " + region + " to alert.")
+    });
+  }
 
   self.adminHelloWorld = function(g, res, client, sender, action)
   {
@@ -76,6 +98,8 @@ var AdminActions = function() {
       self.adminTestAlerts(g, res, client, sender, action);
     } else if (action == "👋") {
       self.adminHelloWorld(g, res, client, sender, action);
+    } else if (action.toLowerCase.startsWith('news')) {
+      self.adminNews(g, res, client, sender, action);
     } else if (action == "Crypto") {
       self.encryptUsers(g, res, client, sender, action);
     } else {
