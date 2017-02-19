@@ -326,7 +326,7 @@ var UserActions = function()
       }
     }
     if (matchedRegionsArray.length === 0) {
-      var body = "Sorry, this service is only available in the Baltimore metro area. /n If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com."
+      var body = "Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com."
       var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
       res.status(200)
             .contentType('text/xml')
@@ -340,16 +340,8 @@ var UserActions = function()
 
   self.isZipCode = function(body)
   {
-    if (body.length !== 5) {
-      console.log('not 5');
-      return false;
-    }
-    try {
-      parseInt(body);
-    } catch(e) {
-      console.log('not int');
-      return false;
-    }
+    if (body.length !== 5) return false;
+    if (body.isNaN(0)) return false;
     return true;
   };
  
