@@ -42,7 +42,7 @@ var AdminActions = function() {
   self.adminNews = function(g, res, client, sender, action) 
   {
     console.log("adminNews");
-    var message = action.slice('adminNews'.length+1);
+    var message = action.slice('news'.length+1);
     var findQueryString = "SELECT * FROM users";
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
