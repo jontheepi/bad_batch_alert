@@ -82,8 +82,8 @@ var UserActions = function()
 
   self.userSetRegion = function(g, res, client, sender, action)
   {
-    var cryptoSender = g.cryptoHelper.encrypt(sender);
     console.log("userSetRegion");
+    var cryptoSender = g.cryptoHelper.encrypt(sender);
     var region = action;
     var findQueryString = "SELECT FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
@@ -107,6 +107,7 @@ var UserActions = function()
     console.log("userAddRegion");
     var cryptoSender = g.cryptoHelper.encrypt(sender);
     var region = action.charAt('add'.length);
+    console.log('region = ' + region);
     var findQueryString = "SELECT FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
@@ -186,6 +187,7 @@ var UserActions = function()
     findQuery.on('row', function(row) {
       var regions = row.regions;
       var body  = "Here are your options: ";
+      if (!regions)regions = '';
       var regionsArray = regions.split(', ');
       for (var i = 0; i < regionsArray.length; i++) {
         var region = regionsArray[i];
@@ -313,7 +315,7 @@ var UserActions = function()
 
   self.userSetZipCode = function(g, res, client, sender, body) 
   {
-    console.log("userVan");
+    console.log("userSetZipCode");
     var zipCode = parseInt(body);
     var matchedRegionsArray = [];
     for (var i = 0; i < regionZips.length; i++) {
