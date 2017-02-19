@@ -135,6 +135,7 @@ var UserActions = function()
 
       regionsArray.push(region);
       regions = regionsArray.length > 1 ?  regionsArray.join(', ') : regionsArray.join('');
+      console.log ('regions after =' + regions);
       var insertQueryString = "UPDATE users SET regions = '" + regions + "' WHERE phone_number = '" + cryptoSender + "'";
       console.log(insertQueryString);
       var insertQuery = client.query(insertQueryString);
