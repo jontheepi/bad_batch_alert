@@ -1,7 +1,7 @@
 var UserActions = function() 
 {
   var self = this;
-  var commands = ["van","near","join","commands","map", "add", "leave","report", "i am"];
+  var commands = ["van","near","join","help","map", "add", "leave","report", "i am"];
   var commandDescriptions = ["Tells you where the Baltimore Needle Exchange Van is at any time.",
    "Tells you where the nearest available medical care center is.", 
    "Registers you with the Bad Batch alert service.",
@@ -37,13 +37,13 @@ var UserActions = function()
   };
   
   //list commands that a user can send
-  self.userCommands = function(g, res, client, sender, action)
+  self.userHelp = function(g, res, client, sender, action)
   {
+    console.log("userCommands");
     if (commands.length != commandDescriptions.length){
       console.warn("Commands list and descriptions list don't match.");
       return;
     }
-    console.log("userCommands");
     var body = "";
     for (var i = 0; i < commands.length; i++){
      body = body + commands[i] + ": " + commandDescriptions[i] + '\n\n';
@@ -113,7 +113,7 @@ var UserActions = function()
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       //if they texted us a number. Set it as their region.
-      var regions = row.regions;
+      var regions = row.regions?row.regions:'';
       var regionsArray = regions.split(', ');
       var alreadyFound = false;
       for (var i = 0; i < regionsArray.length; i++) {
@@ -187,7 +187,7 @@ var UserActions = function()
     findQuery.on('row', function(row) {
       var regions = row.regions;
       var body  = "Here are your options: ";
-      if (!regions)regions = '';
+      regions = regions ? regions:'';
       var regionsArray = regions.split(', ');
       for (var i = 0; i < regionsArray.length; i++) {
         var region = regionsArray[i];
@@ -368,8 +368,8 @@ var UserActions = function()
       self.userLeave(g, res, client, sender, body);
     } else if (command == 'van') {
       self.userVan(g, res, client, sender, body);
-    } else if (command == 'commands') {
-      self.userCommands(g, res, client, sender, body);
+    } else if (command == 'help') {
+      self.userHelp(g, res, client, sender, body);
     } else if (command == 'detox') {
       self.userDetox(g, res, client, sender, body);
     } else {
