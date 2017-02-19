@@ -110,18 +110,20 @@ var UserActions = function()
     console.log('region = ' + region);
     var findQueryString = "SELECT FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
+    var count = 0;
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
+      console.log('count = ' + count);
+      count++;
       //if they texted us a number. Set it as their region.
       var regions = row.regions?row.regions:'';
       console.log('regions = ' + regions);
       if (regions.length == 0) {
         regionsArray = [];
-      } else if (regions.length == 1) {
-        regionsArray = [regions];
-      } else {
-        regionsArray = regions.split(', ')
+      }  else {
+        regionsArray = regions.split(', ');
       }
+
       var alreadyFound = false;
       console.log('checking for duplicates');
       for (var i = 0; i < regionsArray.length; i++) {
