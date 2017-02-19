@@ -114,8 +114,10 @@ var UserActions = function()
       console.log(JSON.stringify(row));
       //if they texted us a number. Set it as their region.
       var regions = row.regions?row.regions:'';
+      console.log('regions = ' + regions);
       var regionsArray = regions.split(', ');
       var alreadyFound = false;
+      console.log('checking for duplicates');
       for (var i = 0; i < regionsArray.length; i++) {
         if (regionsArray[i] == region) {
           alreadyFound = true;
@@ -134,6 +136,7 @@ var UserActions = function()
       regionsArray.push(region);
       regions = regionsArray.join(', ');
       var insertQueryString = "UPDATE users SET regions = " + regions + " WHERE phone_number = '" + cryptoSender + "'";
+      console.log(insertQueryString);
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
         var body = "👍 You are all set to receive alerts in these regions " + regions;
