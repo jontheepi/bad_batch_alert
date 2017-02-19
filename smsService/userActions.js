@@ -112,7 +112,6 @@ var UserActions = function()
     var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
-      count++;
       //if they texted us a number. Set it as their region.
       var regions = row.regions?row.regions:'';
       console.log('regions = ' + regions);
