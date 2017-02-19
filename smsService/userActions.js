@@ -93,7 +93,7 @@ var UserActions = function()
       var insertQueryString = "UPDATE users SET regions = '" + region + "' WHERE phone_number = '" + cryptoSender + "'";
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
-        var body = "👍 You are all set to receive alerts in region " + region;
+        var body = "👍 You are all set to receive alerts in region " + region + ".\n If you'd like to add more regions, text the word 'add' followed by the region number.";
         var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
         res.status(200)
         .contentType('text/xml')
@@ -110,11 +110,8 @@ var UserActions = function()
     console.log('region = ' + region);
     var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
-    var count = 0;
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
-      console.log('count = ' + count);
-      console.log('name = ' + row.name);
       count++;
       //if they texted us a number. Set it as their region.
       var regions = row.regions?row.regions:'';
@@ -199,31 +196,33 @@ var UserActions = function()
     var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
-      var regions = row.regions;
+      var regions = row.regions; 
       var body  = "Here are your options: ";
       regions = regions ? regions:'';
       var regionsArray = regions.split(', ');
       for (var i = 0; i < regionsArray.length; i++) {
+        if (i != 0) body = body + '\n\n';
         var region = regionsArray[i];
         if (region == 1) {
-          body += "Region 1: Mercy Medical Center \n345 St. Paul Place \nBaltimore, MD 21202 (410) 332-9000";
+          body += "Region 1:\n Mercy Medical Center \n345 St. Paul Place \nBaltimore, MD 21202 (410) 332-9000";
         } else if (region == 2) {
-          body += "Regions 2: Union Memorial Hospital \n201 E University Pkwy,\n Baltimore, MD 21218 (410) 554-2000";
+          body += "Regions 2:\n Union Memorial Hospital \n201 E University Pkwy,\n Baltimore, MD 21218 (410) 554-2000";
         } else if (region == 3) {
-          body += "Region 3: Greater Baltimore Medical Center \n6701 N Charles St, \nTowson, MD 21204 (443) 849-2000";
+          body += "Region 3:\n Greater Baltimore Medical Center \n6701 N Charles St, \nTowson, MD 21204 (443) 849-2000";
         } else if (region == 4) {
-          body += "Region 4: University of Maryland Rehabilitation and Orthopaedic Institute \n2200 Kernan Dr, \nBaltimore MD, 21207 (410) 448-2500";
+          body += "Region 4:\n University of Maryland Rehabilitation and Orthopaedic Institute \n2200 Kernan Dr, \nBaltimore MD, 21207 (410) 448-2500";
         } else if (region == 5) {
-          body += "Region 5: UM Medical Center ER \n22 S. Greene Street, \nBaltimore MD, 21201 ((410) 328-8667)";
+          body += "Region 5:\n UM Medical Center ER \n22 S. Greene Street, \nBaltimore MD, 21201 ((410) 328-8667)";
         } else if (region == 6) { 
-          body += "Region 6: UMMC Midtown Campus ER \n827 Linden Ave, \nBaltimore MD, 21201 ((410) 255-8000)";
+          body += "Region 6:\n UMMC Midtown Campus ER \n827 Linden Ave, \nBaltimore MD, 21201 ((410) 255-8000)";
         } else if (region == 7) {
-          body += "Region 7: ChoiceOne Urgent Care Dundalk \n1730 Merritt Blvd, \nBaltimore MD, 20222 ((410) 650-4731)";
+          body += "Region 7:\n ChoiceOne Urgent Care Dundalk \n1730 Merritt Blvd, \nBaltimore MD, 20222 ((410) 650-4731)";
         } else if (region == 8) {
-          body += "Region 8: University of Maryland Faculty Physicians Inc \n5890 Waterloo Rd, \nColumbia MD, 21045 ((667) 214-2100)";
+          body += "Region 8:\n University of Maryland Faculty Physicians Inc \n5890 Waterloo Rd, \nColumbia MD, 21045 ((667) 214-2100)";
         } else if (region == 9) {
-          body += "Region 9: UM Baltimore Washington Medical Center ER \n301 Hospital Drive, \nBaltimore MD, 21060 ((410) 787-4000)";
+          body += "Region 9:\n UM Baltimore Washington Medical Center ER \n301 Hospital Drive, \nBaltimore MD, 21060 ((410) 787-4000)";
         }
+
       }
     
       var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
