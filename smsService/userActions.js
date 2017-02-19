@@ -39,7 +39,7 @@ var UserActions = function()
   //list commands that a user can send
   self.userHelp = function(g, res, client, sender, action)
   {
-    console.log("userCommands");
+    console.log("userHelp");
     if (commands.length != commandDescriptions.length){
       console.warn("Commands list and descriptions list don't match.");
       return;
@@ -106,7 +106,7 @@ var UserActions = function()
   {
     console.log("userAddRegion");
     var cryptoSender = g.cryptoHelper.encrypt(sender);
-    var region = action.charAt('add'.length);
+    var region = action.charAt('add'.length + 1);
     console.log('region = ' + region);
     var findQueryString = "SELECT FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
@@ -357,7 +357,7 @@ var UserActions = function()
     } else if (body.length == 1 && body >= '0' && body <= '9') {
       self.userSetRegion(g, res, client, sender, body);
     } else if (command.startsWith('add')) {
-      self.userAddRegion(g,res, client, sender, body);
+      self.userAddRegion(g, res, client, sender, body);
     } else if (command.startsWith('i am')) {
       self.userSetName(g, res, client, sender, body);
     } else if (command == 'near') {
