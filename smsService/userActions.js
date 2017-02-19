@@ -115,7 +115,7 @@ var UserActions = function()
       //if they texted us a number. Set it as their region.
       var regions = row.regions?row.regions:'';
       console.log('regions = ' + regions);
-      var regionsArray = regions.length>1 ? regions.split(', '):[regions];
+      var regionsArray = regions.length>1 ? regions.split(', '):[region];
       var alreadyFound = false;
       console.log('checking for duplicates');
       for (var i = 0; i < regionsArray.length; i++) {
