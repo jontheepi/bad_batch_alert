@@ -90,7 +90,7 @@ var UserActions = function()
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       //if they texted us a number. Set it as their region.
-      var insertQueryString = "UPDATE users SET regions = " + region + " WHERE phone_number = '" + cryptoSender + "'";
+      var insertQueryString = "UPDATE users SET regions = '" + region + "' WHERE phone_number = '" + cryptoSender + "'";
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
         var body = "👍 You are all set to receive alerts in region " + region;
@@ -134,8 +134,8 @@ var UserActions = function()
       }
 
       regionsArray.push(region);
-      regions = regionsArray.join(', ');
-      var insertQueryString = "UPDATE users SET regions = " + regions + " WHERE phone_number = '" + cryptoSender + "'";
+      regions = regionsArray.length > 1 ?  regionsArray.join(', ') : regionsArray.join('');
+      var insertQueryString = "UPDATE users SET regions = '" + regions + "' WHERE phone_number = '" + cryptoSender + "'";
       console.log(insertQueryString);
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
