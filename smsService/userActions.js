@@ -282,9 +282,9 @@ var UserActions = function()
   self.userSetZipCode = function(g, res, client, sender, body) 
   {
     console.log("userVan");
-    var zipCode = integer.parseInt(body);
+    var zipCode = parseInt(body);
     var matchedRegion
-    for (var i = 0; i < RegionZips.length; i++) {
+    for (var i = 0; i < regionZips.length; i++) {
       var zips = regionZips[i];
       for (var j = 0; j < zips.length; j++) {
         var zip = zips[j];
