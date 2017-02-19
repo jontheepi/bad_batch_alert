@@ -85,7 +85,7 @@ var UserActions = function()
     console.log("userSetRegion");
     var cryptoSender = g.cryptoHelper.encrypt(sender);
     var region = action;
-    var findQueryString = "SELECT FROM users WHERE phone_number = '" + cryptoSender + "'";
+    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
