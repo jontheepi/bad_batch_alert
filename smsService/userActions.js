@@ -341,7 +341,7 @@ var UserActions = function()
   self.isZipCode = function(body)
   {
     if (body.length !== 5) return false;
-    if (body.isNaN(0)) return false;
+    if (isNaN(body)) return false;
     return true;
   };
  
