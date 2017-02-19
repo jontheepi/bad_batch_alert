@@ -59,7 +59,7 @@ var AdminActions = function() {
     }).on('error', function() {
       console.log("nobody in region " + region + " to alert.")
     });
-  }
+  };
 
   self.adminHelloWorld = function(g, res, client, sender, action)
   {
@@ -86,7 +86,7 @@ var AdminActions = function() {
       var cryptoNumber = g.cryptoHelper.encrypt(row.phone_number);
       console.log(cryptoNumber);
     });
-  }
+  };
 
 
   //Special admin actions, like mass text etc.
