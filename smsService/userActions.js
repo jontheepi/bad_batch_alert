@@ -115,7 +115,13 @@ var UserActions = function()
       //if they texted us a number. Set it as their region.
       var regions = row.regions?row.regions:'';
       console.log('regions = ' + regions);
-      var regionsArray = regions.length>1 ? regions.split(', '):[region];
+      if (regions.length == 0) {
+        regionsArray = [];
+      } else if (regions.length == 1) {
+        regionsArray = [regions];
+      } else {
+        regionsArray = regions.split(', ')
+      }
       var alreadyFound = false;
       console.log('checking for duplicates');
       for (var i = 0; i < regionsArray.length; i++) {
@@ -125,6 +131,7 @@ var UserActions = function()
         }
       }
       if (alreadyFound) {
+        console.log('already found this region in your list');
         var body = "👍 You are all set to receive alerts in these regions " + regions;
         var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
         res.status(200)
