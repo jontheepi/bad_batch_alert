@@ -360,7 +360,7 @@ var UserActions = function()
       self.userSetName(g, res, client, sender, body);
     } else if (command == 'near') {
       self.userNear(g, res, client, sender, body);
-    } else if (commad.startsWith('report')) {
+    } else if (command.startsWith('report')) {
       self.userReport(g, res, client, sender, body);
     } else if (command == 'leave') {
       self.userLeave(g, res, client, sender, body);
