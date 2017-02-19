@@ -354,7 +354,7 @@ var UserActions = function()
       self.userSetZipCode(g, res, client, sender,body);
     } else if (body.length == 1 && body >= '0' && body <= '9') {
       self.userSetRegion(g, res, client, sender, body);
-    } else if (command == 'add') {
+    } else if (command.startsWith('add')) {
       self.userAddRegion(g,res, client, sender, body);
     } else if (command.startsWith('i am')) {
       self.userSetName(g, res, client, sender, body);
