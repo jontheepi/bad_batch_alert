@@ -28,7 +28,7 @@ var UserActions = function()
   self.userJoin = function(g, res, client, sender, action)
   {
     console.log("userJoin");
-    var body  = "Thank you for registering. Text the word 'map' to set your location. Text the word 'commands' to see a list of commands you can send. Find out more at BadBatchAlert.com";
+    var body  = "Thank you for registering. Text the word 'map' to set your location. Text the word 'help' to see a list of commands you can send. Find out more at BadBatchAlert.com";
     var media = "http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png";
     var resp  = '<Response><Message><Body>' + body + '</Body><Media>' + media + '</Media></Message></Response>';
     res.status(200)
