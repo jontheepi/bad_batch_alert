@@ -9,10 +9,10 @@ var AdminActions = function() {
   var MY_NUMBER     = process.env.MY_NUMBER;
   
   //fires off a test alert to all the registered users
-  self.adminAlerts = function(g, res, client, sender, action)
+  self.adminAlert = function(g, res, client, sender, action)
   {
     //Query for all users and send them alerts.
-    console.log("adminAlerts " + action );
+    console.log("adminAlert " + action );
     var region = action.charAt(2);//in test alert the 2nd character is the region so.. like this is alert region '⚠2'️ (2 because unicode)
     if (region == "") region = action.charAt(1);//now there's 2 versions of this emoji. One version only takes up a single char.
     var findQueryString = "SELECT * FROM users WHERE regions LIKE %'" + region + "'%";
@@ -95,7 +95,7 @@ var AdminActions = function() {
     if (sender != MY_NUMBER) return false;//not admin sorry buddy.
 
     if (action.startsWith("⚠️") || action.startsWith("⚠")) {//Alert Emoji (2 kinds)
-      self.adminTestAlerts(g, res, client, sender, action);
+      self.adminAlert(g, res, client, sender, action);
     } else if (action == "👋") {
       self.adminHelloWorld(g, res, client, sender, action);
     } else if (action.toLowerCase.startsWith('news')) {
