@@ -10,7 +10,7 @@ var UserActions = function()
    "Removes you from the Bad Batch alert service. You can rejoin at any time by texting this number",
    "Text '!' followed by your message to anonymously send a message to someone who can help you.", 
    "Text 'I am' followed by your name to set your name in our database",
-   "Text 'share' followed by a frined's number to tell that friend about the Bad Batch Alert service."];
+   "Text 'share' followed by a friend's number to tell that friend about the Bad Batch Alert service."];
 
    var regionZips = [ 
    /* region 1  */    [21217, 21211],
