@@ -1,5 +1,6 @@
 var UserActions = function() 
 {
+  var self = this;
   var commands = ["van","near","join","help","map", "add", "leave","!", "i am", "share"];
   var commandDescriptions = ["Tells you where the Baltimore Needle Exchange Van is at any time.",
    "Tells you where the nearest available medical care center is.", 
