@@ -411,7 +411,7 @@ var UserActions = function()
       self.userHelp(g, res, client, sender, body);
     } else if (command == 'detox') {
       self.userDetox(g, res, client, sender, body);
-    } else if (command == 'share') {
+    } else if (command.startsWith('share')) {
       self.userShare(g, res, client, sender, body);
     } else {
       self.userJoin(g, res, client, sender, body);
