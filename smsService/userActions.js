@@ -258,7 +258,7 @@ var UserActions = function()
   { 
     var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
     var length = "share".length + 1;
-    var number = body.substring(length);
+    var number = action.substring(length);
     
     number = "+1" + number;
     number = number.replace("-" , "");
