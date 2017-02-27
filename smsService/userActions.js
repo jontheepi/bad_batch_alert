@@ -240,7 +240,7 @@ var UserActions = function()
     g.twilio.sendMessage({
       to: MY_NUMBER,
       from: TWILIO_NUMBER,
-      body: "Your friend at " + sender + " wants to share the Bad Batch Alert messaging service with you. Text 'Join' to try it out.";
+      body: "Your friend at " + sender + " wants to share the Bad Batch Alert messaging service with you. Text 'Join' to try it out."
     }, function (err) {
       if (err) {
         return next(err);
@@ -264,7 +264,7 @@ var UserActions = function()
     number = number.replace("-" , "");
     number = number.replace("(" , "");
     number = number.replace(")" , "");
-    var body  = "You have shared the Bad Batch Service with: . " + number;
+    var body  = "You have shared the Bad Batch Service with: " + number;
     g.twilio.sendMessage({
       to: number,
       from: TWILIO_NUMBER,
