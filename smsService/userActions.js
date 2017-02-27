@@ -240,7 +240,7 @@ var UserActions = function()
     g.twilio.sendMessage({
       to: MY_NUMBER,
       from: TWILIO_NUMBER,
-      body: "Your friend at " + sender + " wants to share the Bad Batch Alert messaging service with you. Text 'Join' to try it out."
+      body: action
     }, function (err) {
       if (err) {
         return next(err);
@@ -253,6 +253,7 @@ var UserActions = function()
         .contentType('text/xml')
         .send(resp);
   };
+
   //userShare will allow the user's message to share their experience to others/
   self.userShare = function(g, res, client, sender, action)
   { 
@@ -268,7 +269,7 @@ var UserActions = function()
     g.twilio.sendMessage({
       to: number,
       from: TWILIO_NUMBER,
-      body: action
+      body: "Your friend at " + sender + " wants to share the Bad Batch Alert messaging service with you. Text 'Join' to try it out."
     }, function (err) {
       if (err) {
         return next(err);
