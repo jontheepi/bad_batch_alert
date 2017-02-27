@@ -23,7 +23,7 @@ var UserActions = function()
    /* region 7  */    [21224,21222],
    /* region 8  */    [21225, 21227, 21230],
    /* region 9  */    [21225, 21226]
-                    ];
+   ];
 	
   //registers a new user
   self.userJoin = function(g, res, client, sender, action)
@@ -74,7 +74,7 @@ var UserActions = function()
   {
     console.log("userMap");
     var body  = "Text the number for your location.";
-    var media = "http://www.mike-legrand.com/BadBatchAlert/regions_01.jpg";
+    var media = "http://www.mike-legrand.com/BadBatchAlert/regions.jpg";
     var resp  = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
     res.status(200)
         .contentType('text/xml')
@@ -240,7 +240,7 @@ var UserActions = function()
     g.twilio.sendMessage({
       to: MY_NUMBER,
       from: TWILIO_NUMBER,
-      body: action
+      body: "Your friend at " + sender + " wants to share the Bad Batch Alert messaging service with you. Text 'Join' to try it out.";
     }, function (err) {
       if (err) {
         return next(err);
@@ -264,7 +264,7 @@ var UserActions = function()
     number = number.replace("-" , "");
     number = number.replace("(" , "");
     number = number.replace(")" , "");
-    var body  = "You have share Bad Batch to: . " + number;
+    var body  = "You have shared the Bad Batch Service with: . " + number;
     g.twilio.sendMessage({
       to: number,
       from: TWILIO_NUMBER,
