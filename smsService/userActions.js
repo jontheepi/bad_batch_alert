@@ -43,7 +43,7 @@ var UserActions = function()
   self.userJoin = function(g, res, client, sender, action)
   {
     console.log("userJoin");
-    var body  = "Thank you for joining, you are Almost done!, Just text the number for your location on the map above 🗺️ 👆 to get alerts when a potentially lethal batch of tainted heroin is in your neighborhood.";
+    var body  = "Thank you for joining, you are Almost done! Just text the number for your location on the map above 🗺️ 👆 to get alerts when an overdose spike hits your neighborhood.";
     var media = "http://www.mike-legrand.com/BadBatchAlert/regions_02.jpg";
     var resp  = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
     res.status(200)
