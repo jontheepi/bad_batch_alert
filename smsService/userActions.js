@@ -109,7 +109,7 @@ var UserActions = function()
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
         var body = "👍 You are all set to receive alerts in region " + region + ".\n\n" +
-        "There are many other useful resources built into this service you might want to use. To see all the commands text the word 'help'."
+        "There are many other useful resources built into this service. To see all the commands text the word 'help'."
         var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
         res.status(200)
         .contentType('text/xml')
