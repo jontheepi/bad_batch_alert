@@ -14,13 +14,13 @@ var UserActions = function()
    "Gives you some additional information about the service"];
 
    var regionZips = [ 
-   /* region 1  */    [21217, 21211],
-   /* region 2  */    [21211, 21218, 21210], 
+   /* region 1  */    [21217, 21216],
+   /* region 2  */    [21211, 21212, 21218, 21210],
    /* region 3  */    [21213, 21202, 21206],
-   /* region 4  */    [21223,21229, 21230],
-   /* region 5  */    [21231, 21202, 21201, 21230],
-   /* region 6  */    [21224, 21205],
-   /* region 7  */    [21224,21222],
+   /* region 4  */    [21223,21229],
+   /* region 5  */    [21231, 21202, 21201],
+   /* region 6  */    [21224],
+   /* region 7  */    [21222],
    /* region 8  */    [21225, 21227, 21230],
    /* region 9  */    [21225, 21226]
    ];
