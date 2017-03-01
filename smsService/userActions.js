@@ -1,7 +1,7 @@
 var UserActions = function() 
 {
   var self = this;
-  var commands = ["van","near","join","help","map", "add", "leave","!", "i am", "share"];
+  var commands = ["van","near","join","help","map", "add", "leave", "!", "share", "info"];
   var commandDescriptions = ["Tells you where the Baltimore Needle Exchange Van is at any time.",
    "Tells you where the nearest available medical care center is.", 
    "Registers you with the Bad Batch alert service.",
@@ -10,8 +10,8 @@ var UserActions = function()
    "Text 'add' followed by your region number to get alerts in multiple regions",
    "Removes you from the Bad Batch alert service. You can rejoin at any time by texting this number",
    "Text '!' followed by your message to anonymously send a message to someone who can help you.", 
-   "Text 'I am' followed by your name to set your name in our database",
-   "Text 'share' followed by a friend's number to tell that friend about the Bad Batch Alert service."];
+   "Text 'share' followed by a friend's number to tell that friend about the Bad Batch Alert service.",
+   "Gives you some additional information about the service"];
 
    var regionZips = [ 
    /* region 1  */    [21217, 21211],
@@ -24,17 +24,30 @@ var UserActions = function()
    /* region 8  */    [21225, 21227, 21230],
    /* region 9  */    [21225, 21226]
    ];
+
+   //get some general info on the service
+   self.userInfo = function(g, res, client, sender, action)
+   {
+      var body  = "Bad Batch Alert is an anonomys free text message service to help heroin users stay alive in Baltimore City.\n"
+                + "We use data from EMS and the Health Department to send alerts directly to you when a potentially lethal batch of tainted heroin is in your neighborhood.\n"
+                + "Find out more at BadBatchAlert.com";
+      var media = "http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png";
+      var resp  = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
+      res.status(200)
+        .contentType('text/xml')
+        .send(resp);
+   }
 	
   //registers a new user
   self.userJoin = function(g, res, client, sender, action)
   {
     console.log("userJoin");
-    var body  = "Thank you for registering. Text the word 'map' to set your location. Text the word 'help' to see a list of commands you can send. Find out more at BadBatchAlert.com";
-    var media = "http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png";
-    var resp  = '<Response><Message><Body>' + body + '</Body><Media>' + media + '</Media></Message></Response>';
+    var body  = "Text the number for your location on the map above 🗺️  👆 , or you can text your zip code.";
+    var media = "http://www.mike-legrand.com/BadBatchAlert/regions_02.jpg";
+    var resp  = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
     res.status(200)
-      .contentType('text/xml')
-      .send(resp);
+        .contentType('text/xml')
+        .send(resp);
   };
   
   //list commands that a user can send
@@ -94,7 +107,8 @@ var UserActions = function()
       var insertQueryString = "UPDATE users SET regions = '" + region + "' WHERE phone_number = '" + cryptoSender + "'";
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
-        var body = "👍 You are all set to receive alerts in region " + region + ".\nTo add more regions, text the word 'add' followed by a region number.";
+        var body = "Thank you for registering! 👍 You are all set to receive alerts in region " + region + ".\n" +
+        "There are many other useful resources built into this service you might want to use. To see all the commands text the word 'help'."
         var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
         res.status(200)
         .contentType('text/xml')
