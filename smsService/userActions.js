@@ -43,7 +43,7 @@ var UserActions = function()
   self.userJoin = function(g, res, client, sender, action)
   {
     console.log("userJoin");
-    var body  = "Text the number for your location on the map above 🗺️  👆 , or you can text your zip code.";
+    var body  = "Thank you for joining, you are llmost done!, Just text the number for your location on the map above 🗺️  👆 , to recieve alerts when a potentially lethal batch of tainted heroin is in your neighborhood.";
     var media = "http://www.mike-legrand.com/BadBatchAlert/regions_02.jpg";
     var resp  = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
     res.status(200)
@@ -108,7 +108,7 @@ var UserActions = function()
       var insertQueryString = "UPDATE users SET regions = '" + region + "' WHERE phone_number = '" + cryptoSender + "'";
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
-        var body = "Thank you for registering! 👍 You are all set to receive alerts in region " + region + ".\n" +
+        var body = "👍 You are all set to receive alerts in region " + region + ".\n\n" +
         "There are many other useful resources built into this service you might want to use. To see all the commands text the word 'help'."
         var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
         res.status(200)
