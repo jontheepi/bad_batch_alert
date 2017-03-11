@@ -133,7 +133,6 @@ var UserActions = function()
         res.status(200)
         .contentType('text/xml')
         .send(resp);
-      });
       return;
     }
 	
