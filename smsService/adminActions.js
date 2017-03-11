@@ -26,7 +26,7 @@ var AdminActions = function() {
       g.twilio.sendMessage({
         to: phoneNumber,
         from: TWILIO_NUMBER,
-        body: '⚠️ Overdose nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
+        body: '⚠️Multiple overdoses nearby, please be careful: http://health.baltimorecity.gov/Fentanyl ⚠️',
         mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
       }, function (err) {
         if (err) {
