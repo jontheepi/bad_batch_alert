@@ -69,6 +69,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client) {
     if (err) throw err;
     console.log('Connected to db');
+    var client = undefined;
     doAction(res, client, sender, body);
     //add sender to the db before we do anything else. 
     var cryptoSender = G.cryptoHelper.encrypt(sender);
