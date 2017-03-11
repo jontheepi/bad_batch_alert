@@ -123,6 +123,21 @@ var UserActions = function()
     console.log("userAddRegion");
     var cryptoSender = g.cryptoHelper.encrypt(sender);
     var region = action.charAt('add'.length + 1);
+    var isValidRegion = false;
+    if (region.length == 1 && region >= '0' && region <= '9') {
+      isValidRegion = true;
+    }
+    if (isValidRegion === false) {
+      var body = "Sorry we didn't understand that. Text 'add' followed by a single region number to receive alerts in an additional region";
+      var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
+        res.status(200)
+        .contentType('text/xml')
+        .send(resp);
+      });
+      return;
+    }
+	
+	
     console.log('region = ' + region);
     var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = client.query(findQueryString);
