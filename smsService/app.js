@@ -62,9 +62,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   var sender = req.body.From;
   var body   = req.body.Body;
   console.log ('SENDER:' + sender + ', BODY:' + body);
-  var client = undefined;
-  doAction(res, client, sender, body);
-  return;
+ 
   //connect to the db
   pg.defaults.ssl = true;
   pg.connect(process.env.DATABASE_URL, function(err, client) {
