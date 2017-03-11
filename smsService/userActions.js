@@ -419,7 +419,15 @@ var UserActions = function()
       self.userSetRegion(g, res, client, sender, regions)
     }
   };
-
+  self.userFail = function(g, res, client, sender, body)
+  {
+     var body = "Sorry, we didn't understand that. Text 'help' for a list of possible commands.";
+     var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
+     res.status(200)
+           .contentType('text/xml')
+           .send(resp);
+  };
+	
   self.isZipCode = function(body)
   {
     if (body.length !== 5) return false;
@@ -456,8 +464,10 @@ var UserActions = function()
       self.userShare(g, res, client, sender, body);
     } else if (command.startsWith('info')) {
       self.userInfo(g, res, client, sender, body);
+    } else if (command == 'join') {
+      self.userJoin(g, res, client, sender, body);   
     } else {
-      self.userJoin(g, res, client, sender, body);
+      self.userFail(g, res, client, sender, body);
     }
   };
 
