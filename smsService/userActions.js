@@ -24,7 +24,15 @@ var UserActions = function()
    /* region 8  */    [21225, 21227, 21230],
    /* region 9  */    [21225, 21226]
    ];
-
+   
+   self.userResponse = function(body)
+   {
+    var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
+    res.status(200)
+        .contentType('text/xml')
+        .send(resp);
+   };
+   
    //get some general info on the service
    self.userInfo = function(g, res, client, sender, action)
    {
@@ -63,10 +71,7 @@ var UserActions = function()
     for (var i = 0; i < commands.length; i++){
      body = body + commands[i] + ": " + commandDescriptions[i] + '\n\n';
     }
-    var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
-    res.status(200)
-        .contentType('text/xml')
-        .send(resp);
+    self.userRepsonse(body);
   };
   
   self.userLeave= function(g, res, client, sender, action)
