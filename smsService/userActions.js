@@ -134,7 +134,7 @@ var UserActions = function()
       if (regions.length == 0) {
         regionsArray = [];
       }  else {
-        regionsArray = regions.split(', ');
+        regionsArray = regions.split(', '); 
       }
 
       var alreadyFound = false;
@@ -280,17 +280,27 @@ var UserActions = function()
     number = number.replace("-" , "");
     number = number.replace("(" , "");
     number = number.replace(")" , "");
-    var body  = "You have shared the Bad Batch Service with: " + number;
-    g.twilio.sendMessage({
-      to: number,
-      from: TWILIO_NUMBER,
-      body: "Your friend at " + sender + " wants to share the Bad Batch Alert messaging service with you. Text 'Join' to try it out."
-    }, function (err) {
-      if (err) {
-        return next(err);
-      }
-    }); 
+	  
+    var body;
+    var isValidNumber = true;
+    if (number.length != '+10000000000'.length) {
+      isValidNumber = false;	
+    }
     
+    if (isValidNumber) {
+      body  = "You have shared the Bad Batch Service with: " + number;
+      g.twilio.sendMessage({
+        to: number,
+        from: TWILIO_NUMBER,
+        body: "Your friend at " + sender + " wants to share the Bad Batch Alert messaging service with you. Text 'Join' to try it out."
+      }, function (err) {
+        if (err) {
+	  return next(err);
+        }
+      }); 
+    } else {
+      body = "Sorry, we didn't understand that. To use the share command you must text 'share' followed by a phone number";	    
+    }
     var resp  = '<Response><Message><Body>' + body  + '</Body>' + '</Message></Response>';
     res.status(200)
         .contentType('text/xml')
