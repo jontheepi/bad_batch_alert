@@ -335,7 +335,7 @@ var UserActions = function()
       }
     } else if (n == 2) {
       if (( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11)) {
-        vanLocation = 'Montford and Biddle; Pratt and Carey';
+        vanLocation = 'Van 1 is at Montford and Biddle. Van 2 is at Pratt and Carey';
       } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)){
         vanLocation = 'The van is at Freemont and Riggs Barclay and 23rd until 3:30 PM';
       }
@@ -369,7 +369,6 @@ var UserActions = function()
       }
     }
 
-
     //send message
     var body = vanLocation;
     self.userResponse(res, body);
@@ -399,6 +398,7 @@ var UserActions = function()
       self.userSetRegion(g, res, client, sender, regions)
     }
   };
+
   self.userFail = function(g, res, client, sender, body)
   {
      var body = "Sorry, we didn't understand that. Text 'help' for a list of possible commands.";
