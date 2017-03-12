@@ -25,9 +25,15 @@ var UserActions = function()
    /* region 9  */    [21225, 21226]
    ];
    
-   self.userResponse = function(body)
+   self.userResponse = function(res, body, media)
    {
-    var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
+    var resp;
+    if (media == undefined) {
+      resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
+    } else {
+      resp = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
+    }
+
     res.status(200)
         .contentType('text/xml')
         .send(resp);
@@ -41,10 +47,7 @@ var UserActions = function()
                 + "We use data from EMS and the Health Department to send alerts directly to you when a potentially lethal batch of tainted heroin is in your neighborhood.\n"
                 + "Find out more at BadBatchAlert.com";
       var media = "http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png";
-      var resp  = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
-      res.status(200)
-        .contentType('text/xml')
-        .send(resp);
+      self.userResponse(res, body, media);
    }
 	
   //registers a new user
@@ -66,10 +69,7 @@ var UserActions = function()
 	  
     var body  = "Thank you for joining, you are Almost done! Just text the number for your location on the map above 🗺️ 👆 to get alerts when an overdose spike hits your neighborhood.";
     var media = "http://www.mike-legrand.com/BadBatchAlert/regions_02.jpg";
-    var resp  = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
-    res.status(200)
-        .contentType('text/xml')
-        .send(resp);
+    self.userResponse(res, body, media);
   };
   
   //list commands that a user can send
@@ -84,7 +84,7 @@ var UserActions = function()
     for (var i = 0; i < commands.length; i++){
      body = body + commands[i] + ": " + commandDescriptions[i] + '\n\n';
     }
-    self.userRepsonse(body);
+    self.userRepsonse(res, body);
   };
   
   self.userLeave= function(g, res, client, sender, action)
@@ -96,10 +96,7 @@ var UserActions = function()
     console.log(findQueryString);
     var findQuery = client.query(findQueryString);
     var body= "Thanks for using Bad Batch. Text 'join' to continue recieving updates.";
-    var resp  = '<Response><Message><Body>' + body + '</Body></Message></Response>';
-    res.status(200)
-    .contentType('text/xml')
-    .send(resp);
+    self.userResponse(res, body, media);
   };
   
   self.userMap = function(g, res, client, sender, action)
@@ -107,10 +104,7 @@ var UserActions = function()
     console.log("userMap");
     var body  = "Text the number for your location.";
     var media = "http://www.mike-legrand.com/BadBatchAlert/regions_02.jpg";
-    var resp  = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
-    res.status(200)
-        .contentType('text/xml')
-        .send(resp);
+    self.userResponse(res, body, media);
   };
 
   self.userSetRegion = function(g, res, client, sender, action)
@@ -128,10 +122,7 @@ var UserActions = function()
       insertQuery.on('end', function() {
         var body = "👍 You are all set to receive alerts in region " + region + ".\n\n" +
         "There are many other useful resources built into this service. To see all the commands text the word 'help'."
-        var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
-        res.status(200)
-        .contentType('text/xml')
-        .send(resp);
+        self.userResponse(res, body);
       });
     });
   };
@@ -147,10 +138,7 @@ var UserActions = function()
     }
     if (isValidRegion === false) {
       var body = "Sorry we didn't understand that. Text 'add' followed by a single region number to receive alerts in an additional region";
-      var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
-        res.status(200)
-        .contentType('text/xml')
-        .send(resp);
+      self.userResponse(res, body);
       return;
     }
 	
@@ -195,10 +183,7 @@ var UserActions = function()
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
         var body = "👍 You are all set to receive alerts in these regions " + regions;
-        var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
-        res.status(200)
-        .contentType('text/xml')
-        .send(resp);
+        self.userResponse(res, body);
       });
     });
   };
@@ -217,10 +202,7 @@ var UserActions = function()
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
         var body = "👌 You're signed up as: " + name;
-        var resp = '<Response><Message><Body>' + body + '</Body></Message></Response>';
-        res.status(200)
-        .contentType('text/xml')
-        .send(resp);
+        self.userResponse(res, body);
       });
     });
   };
@@ -229,10 +211,7 @@ var UserActions = function()
   {
     console.log("userDetox");
     var body  = "call 410-433-5175 for 24 hour service.";
-    var resp  = '<Response><Message><Body>' + body + '</Body></Message></Response>';
-     res.status(200)
-    .contentType('text/xml')
-    .send(resp);
+    self.userResponse(res, body);
   };
 
   //tells the user the nearest medical center avaiable for the user
@@ -269,13 +248,8 @@ var UserActions = function()
         } else if (region == 9) {
           body += "Region 9:\n UM Baltimore Washington Medical Center ER \n301 Hospital Drive, \nBaltimore MD, 21060 ((410) 787-4000)";
         }
-
       }
-    
-      var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
-      res.status(200)
-          .contentType('text/xml')
-          .send(resp);
+      self.userResponse(res, body);
     });
   };
 
@@ -295,10 +269,7 @@ var UserActions = function()
     }); 
 
     var body  = "Your report has been sent.";
-    var resp  = '<Response><Message><Body>' + body  + '</Body>' + '</Message></Response>';
-    res.status(200)
-        .contentType('text/xml')
-        .send(resp);
+    self.userResponse(res, body);
   };
 
   //userShare will allow the user's message to share their experience to others/
@@ -333,10 +304,7 @@ var UserActions = function()
     } else {
       body = "Sorry, we didn't understand that. To use the share command you must text 'share' followed by a phone number";	    
     }
-    var resp  = '<Response><Message><Body>' + body  + '</Body>' + '</Message></Response>';
-    res.status(200)
-        .contentType('text/xml')
-        .send(resp);
+    self.userResponse(res, body);
   };
   
   //userNeedles will show you where and when the need fan will show up at certain times/
@@ -404,10 +372,7 @@ var UserActions = function()
 
     //send message
     var body = vanLocation;
-    var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
-    res.status(200)
-          .contentType('text/xml')
-          .send(resp);
+    self.userResponse(res, body);
 
   };
 
@@ -427,10 +392,7 @@ var UserActions = function()
     }
     if (matchedRegionsArray.length === 0) {
       var body = "Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com."
-      var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
-      res.status(200)
-            .contentType('text/xml')
-            .send(resp);
+      self.userResponse(res, body);
     }
     else {
       var regions = matchedRegionsArray.join(', '); 
@@ -440,10 +402,7 @@ var UserActions = function()
   self.userFail = function(g, res, client, sender, body)
   {
      var body = "Sorry, we didn't understand that. Text 'help' for a list of possible commands.";
-     var resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
-     res.status(200)
-           .contentType('text/xml')
-           .send(resp);
+     self.userResponse(res, body);
   };
 	
   self.isZipCode = function(body)
