@@ -264,7 +264,7 @@ var UserActions = function()
       body: action
     }, function (err) {
       if (err) {
-        return next(err);
+        console.log(err);
       }
     }); 
 
@@ -298,7 +298,7 @@ var UserActions = function()
         body: "Your friend at " + sender + " wants to share the Bad Batch Alert messaging service with you. Text 'Join' to try it out."
       }, function (err) {
         if (err) {
-	  return next(err);
+	        console.log(err);
         }
       }); 
     } else {

@@ -30,7 +30,7 @@ var AdminActions = function() {
         mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
       }, function (err) {
         if (err) {
-          return next(err);
+          console.log(err);
         }
       });
     }).on('error', function() {
@@ -54,7 +54,7 @@ var AdminActions = function() {
         body: message,
       }, function (err) {
         if (err) {
-          return next(err);
+          console.log(err);
         }
       });
     }).on('error', function() {
@@ -71,7 +71,7 @@ var AdminActions = function() {
       body: '👋 Hello World 👋'
     }, function (err) {
       if (err) {
-        return next(err);
+        console.log(err);
       }
     });
   };
