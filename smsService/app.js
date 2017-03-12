@@ -55,7 +55,6 @@ app.post('/call/receive', function (req, res) {
 });
 // [END receive_call]
 
-
 // [START receive_sms]
 app.post('/sms/receive', bodyParser, function (req, res) {
   
@@ -72,6 +71,13 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   });
 });
 // [END receive_sms]
+
+// Voice to text test
+app.post('/watson/receive', function (test) {
+  console.log("inside watson call");
+  console.log(test);
+});
+
 
 // Start the server
 var server = app.listen(process.env.PORT || '8080', function () {
