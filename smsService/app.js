@@ -48,9 +48,13 @@ function doAction(res, client, sender, body)
 app.post('/call/receive', function (req, res) {
   var resp = new TwimlResponse();
   resp.say({voice:'woman'}, 'Welcome to Bad Batch Alert!');
-  resp.gather({ timeout:30 }, function() {
+  resp.gather({ timeout:30, void:'woman'}, function() {
     this.say('Press 1 to join');
   });
+  resp.record({timeout:30, transcribe:true});
+
+
+
   res.status(200)
     .contentType('text/xml')
     .send(resp.toString());
