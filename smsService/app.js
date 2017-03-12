@@ -51,7 +51,7 @@ app.post('/call/receive', function (req, res) {
   resp.gather({ timeout:30, void:'woman'}, function() {
     this.say('Press 1 to join');
   });
-  resp.record({timeout:30, transcribe:true});
+  resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
 
 
 
