@@ -84,7 +84,7 @@ var UserActions = function()
     for (var i = 0; i < commands.length; i++){
      body = body + commands[i] + ": " + commandDescriptions[i] + '\n\n';
     }
-    self.userRepsonse(res, body);
+    self.userResponse(res, body);
   };
   
   self.userLeave= function(g, res, client, sender, action)
