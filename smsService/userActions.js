@@ -58,7 +58,7 @@ var UserActions = function()
     var cryptoSender = g.cryptoHelper.encrypt(sender);
     var date = new Date();
     var timestamp = date.toGMTString();
-    var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ('" + cryptoSender + "', '" + body + "', '" + timestamp + "')";
+    var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ('" + cryptoSender + "', '" + action + "', '" + timestamp + "')";
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
