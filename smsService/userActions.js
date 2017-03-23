@@ -101,7 +101,7 @@ var UserActions = function()
       console.log('Success on userLeave');
       client.end();
     });
-    findQuery.on('error', function{
+    findQuery.on('error', function() {
       console.log('Error on userLeave');
       client.end();
     });
