@@ -316,7 +316,7 @@ var UserActions = function()
     //EST
     offset = -5.0
     clientDate = new Date();
-    utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
+    utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 70000);
     serverDate = new Date(utc + (3600000*offset));
     console.log(serverDate.toLocaleString());  
 	  
