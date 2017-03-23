@@ -62,9 +62,11 @@ var UserActions = function()
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
+      client.end();
     });
     insertQuery.on('end', function() {
       console.log("New User Added.");
+      client.end();
     });
 	  
     var body  = "Thank you for joining, you are Almost done! Just text the number for your location on the map above 🗺️ 👆 to get alerts when an overdose spike hits your neighborhood.";
