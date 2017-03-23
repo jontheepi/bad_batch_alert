@@ -345,7 +345,7 @@ var UserActions = function()
       if (( h >= 18) && ( h < 20)){
         vanLocation = '🚐 The van is at Baltimore and Conkling (Highlandtown) until 8:00 PM';
       } else if (( h == 20 && m >= 30) || (h > 20 && h < 22)) {
-        vanLocation = 'The van is at Freemont and Laurens until 10:00 PM';
+        vanLocation = '🚐 The van is at Freemont and Laurens until 10:00 PM';
       }
     } else if (n == 4) {
       if (( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11)) {
