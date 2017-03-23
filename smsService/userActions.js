@@ -97,8 +97,16 @@ var UserActions = function()
     var findQueryString = "DELETE FROM users WHERE phone_number = '" + cryptoSender + "'";
     console.log(findQueryString);
     var findQuery = client.query(findQueryString);
+    findQuery.on('end', function() {
+      console.log('Success on userLeave');
+      client.end();
+    });
+    findQuery.on('error', function{
+      console.log('Error on userLeave');
+      client.end();
+    });
     var body= "Thanks for using Bad Batch. Text 'join' to continue recieving updates.";
-    self.userResponse(res, body, media);
+    self.userResponse(res, body);
   };
   
   self.userMap = function(g, res, client, sender, action)
