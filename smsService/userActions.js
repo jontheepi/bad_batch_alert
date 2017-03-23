@@ -323,51 +323,51 @@ var UserActions = function()
     var n = serverDate.getDay();
     var h = serverDate.getHours();
     var m = serverDate.getMinutes();
-    var vanLocation = 'The Van is not in service right now.';
+    var vanLocation = '🚐 The Van is not in service right now.';
     console.log('n:' + n + ', h:' + h + ', m:' + m); 
     if (n == 1) {
       if ( ( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11) )  {
-        vanLocation = 'Van 1 is at Monroe and Ramsey. Van 2 is at Greenmount and Preston until 11:30 AM';
+        vanLocation = '🚐 Van 1 is at Monroe and Ramsey. 🚐 Van 2 is at Greenmount and Preston until 11:30 AM';
       } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)){
-        vanLocation = 'The van is at Fulton and Baker until 3:30 PM';
+        vanLocation = '🚐The van is at Fulton and Baker until 3:30 PM';
       } else if (( h >= 18) && ( h <= 20)) { 
-        vanLocation = 'The van is at Baltimore and Conkling Highlandtown until 8:00 PM';
+        vanLocation = '🚐 The van is at Baltimore and Conkling Highlandtown until 8:00 PM';
       } else if (( h == 20 && m >= 30) || (h > 20 && h < 22)) {
-        vanLocation = 'The van is at Milton and Monument until 10:00 PM';
+        vanLocation = '🚐 The van is at Milton and Monument until 10:00 PM';
       }
     } else if (n == 2) {
       if (( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11)) {
-        vanLocation = 'Van 1 is at Montford and Biddle. Van 2 is at Pratt and Carey';
+        vanLocation = '🚐 Van 1 is at Montford and Biddle. 🚐 Van 2 is at Pratt and Carey';
       } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)){
-        vanLocation = 'The van is at Freemont and Riggs Barclay and 23rd until 3:30 PM';
+        vanLocation = '🚐 The van is at Freemont and Riggs Barclay and 23rd until 3:30 PM';
       }
     } else if (n == 3) {
       if (( h >= 18) && ( h < 20)){
-        vanLocation = 'The van is at Baltimore and Conkling (Highlandtown) until 8:00 PM';
+        vanLocation = '🚐 The van is at Baltimore and Conkling (Highlandtown) until 8:00 PM';
       } else if (( h == 20 && m >= 30) || (h > 20 && h < 22)) {
         vanLocation = 'The van is at Freemont and Laurens until 10:00 PM';
       }
     } else if (n == 4) {
       if (( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11)) {
-         vanLocation = 'Van1 is at Pontiac and 9th Ave. Van 2 is at North and Rosedale until 11:30 AM';
+         vanLocation = '🚐 Van1 is at Pontiac and 9th Ave. Van 2 is at North and Rosedale until 11:30 AM';
       } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)) {
-         vanLocation = 'Van 1 is at Milton and Monument. Van 2 is at Monroe and Ramsey until 3:30 PM';
+         vanLocation = '🚐 Van 1 is at Milton and Monument. 🚐 Van 2 is at Monroe and Ramsey until 3:30 PM';
       } else if (h >= 19 && h < 22 ) {
-         vanLocation = 'The van is at Baltimore and Gay (The Block) until 10:00 PM'; 
+         vanLocation = '🚐 The van is at Baltimore and Gay (The Block) until 10:00 PM'; 
       }
     } else if (n == 5){
       if (( h == 9 && m >= 30) || ( h == 11 && m <= 30) || (h > 9 && h < 11)) {
-        vanLocation = 'Van 1 is at Park Heights and Spaulding. Van 2 is at North and Gay until 11:30 AM';
+        vanLocation = '🚐 Van 1 is at Park Heights and Spaulding. 🚐 Van 2 is at North and Gay until 11:30 AM';
       } else if (( h == 12 && m >= 45 ) || ( h == 15 && m <= 30) || (h > 12 && h < 15)) {
-        vanLocation ='The van is at Fulton and Baker until 3:30 PM';
+        vanLocation ='🚐 The van is at Fulton and Baker until 3:30 PM';
       } else if (h >= 18 && h < 20 ) {
-        vanLocation = 'The van is at Montford and Biddle until 8:00 PM';
+        vanLocation = '🚐 The van is at Montford and Biddle until 8:00 PM';
       } else if (( h == 20 && m >= 30) || (h > 20 && h < 22)) {
-        vanLocation = 'The van is at Monroe and Ramsey until 10:00 PM';
+        vanLocation = '🚐 The van is at Monroe and Ramsey until 10:00 PM';
       }
     } else if (n == 6){
       if (h >= 12 && h < 16) {
-        vanLocation= 'The van is at Fremont and Riggs until 4:00 PM';
+        vanLocation= '🚐 The van is at Fremont and Riggs until 4:00 PM';
       }
     }
 
