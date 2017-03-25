@@ -47,7 +47,7 @@ function doAction(res, client, sender, body)
 // [START receive_call]
 app.post('/call/receive', function (req, res) {
   var resp = new TwimlResponse();
-  resp.say({voice:'woman'}, 'Welcome to Bad Batch Alert!');
+  resp.say({voice:'alice'}, 'Welcome to Bad Batch Alert!');
   resp.gather({ timeout:30 }, function() {
     this.say('Press 1 to join');
   });
