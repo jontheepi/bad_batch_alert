@@ -213,6 +213,7 @@ var UserActions = function()
       insertQuery.on('end', function() {
         var body = "👌 You're signed up as: " + name;
         self.userResponse(res, body);
+	client.end();
       });
     });
   };
