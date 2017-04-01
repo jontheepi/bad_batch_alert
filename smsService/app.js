@@ -47,7 +47,7 @@ function doAction(res, client, sender, body)
 // [START receive_call]
 app.post('/call/receive', function (req, res) {
   var resp = new TwimlResponse();
-  resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.m4a');
+  resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
   //resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
 
   res.status(200)
