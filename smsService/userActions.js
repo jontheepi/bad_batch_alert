@@ -28,7 +28,7 @@ var UserActions = function()
    self.userResponse = function(res, body, media)
    {
     var resp;
-    if (media == undefined) {
+    if (media === undefined) {
       resp  = '<Response><Message><Body>' + body  + '</Body></Message></Response>';
     } else {
       resp = '<Response><Message><Body>' + body  + '</Body><Media>' + media + '</Media></Message></Response>';
@@ -48,7 +48,7 @@ var UserActions = function()
                 + "Find out more at BadBatchAlert.com";
       var media = "http://www.mike-legrand.com/BadBatchAlert/logoSmall150.png";
       self.userResponse(res, body, media);
-   }
+   };
 	
   //registers a new user
   self.userJoin = function(g, res, client, sender, action)
@@ -131,7 +131,7 @@ var UserActions = function()
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
         var body = "👍 You are all set to receive alerts in region " + region + ".\n\n" +
-        "There are many other useful resources built into this service. To see all the commands text the word 'help'."
+        "There are many other useful resources built into this service. To see all the commands text the word 'help'.";
         self.userResponse(res, body);
       });
     });

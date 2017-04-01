@@ -47,13 +47,8 @@ function doAction(res, client, sender, body)
 // [START receive_call]
 app.post('/call/receive', function (req, res) {
   var resp = new TwimlResponse();
-  resp.say({voice:'alice'}, 'Welcome to Bad Batch Alert!');
-  resp.gather({ timeout:30 }, function() {
-    this.say('Press 1 to join');
-  });
+  resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.m4a');
   resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
-
-
 
   res.status(200)
     .contentType('text/xml')
