@@ -1,6 +1,7 @@
 //handles all voice commands.
 var TwimlResponse = require('twilio').TwimlResponse;
 
+var _count = 0;
 var VoiceActions = function() {
   var self = this;
 
@@ -25,7 +26,6 @@ var VoiceActions = function() {
         {text:"where do you live", type: 'text'},
         {text:"Are you a robot", type: 'number'}
     ];
-    var _count = 0;
     function advanceSurvey(info, callback) {
       callback(null, _count);
       _count++;
