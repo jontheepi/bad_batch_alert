@@ -88,15 +88,6 @@ var VoiceActions = function() {
         // render TwiML response
         respond();
     });
-
-
-
-
-
-
-  res.status(200)
-    .contentType('text/xml')
-    .send(resp.toString());
   };
  
 };
