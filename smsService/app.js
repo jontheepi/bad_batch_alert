@@ -81,17 +81,20 @@ function doAction(res, sender, body)
   }
 }
 
+//storing history as a single string separated by the '*' character.
+//only keep last 5 messages.
+//trying to stay with free db.
 function storeMessageHistory(cryptoSender, body) {
-  var divider = '*'
+  var divider = '*';
+  var historyLength = 5;
   var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
-  var findQuery = client.query(findQueryString);
+  var findQuery = historyClient.query(findQueryString);
   findQuery.on('row', function(row) {
     console.log(JSON.stringify(row));
     var newBody = (body + divider + row.message_body).split(divider);
-    newBody.slice(0, 5);//5 is max messages we store.
+    newBody.slice(0, historyLength);
     newBody = newBody.join(divider);
 
-    //if they texted us a number. Set it as their region.
     var queryString = "UPDATE users SET message_body = '" + newBody + "' WHERE phone_number = '" + cryptoSender + "'";
     var insertQuery = historyClient.query(queryString);
     queryString.on('end', function() {
