@@ -65,12 +65,12 @@ function doAction(res, sender, body)
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
       G.userActions.doUserAction(G, res, userClient, sender, body);
-      appClient.end();
+      //appClient.end();
     });
     insertQuery.on('end', function() {
       console.log("New User Added.");
       G.userActions.doUserAction(G, res, userClient, sender, body);
-      appClient.end();
+      //appClient.end();
     });
   }
 }
