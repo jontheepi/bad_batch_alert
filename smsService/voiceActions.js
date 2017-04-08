@@ -15,7 +15,7 @@ var VoiceActions = function() {
       twiml.say(text, { voice: 'alice'});
     }
     
-    console.log(input);
+    console.log("input = " + input);
 
     // respond with the current TwiML content
     function respond() {
