@@ -23,7 +23,7 @@ var VoiceActions = function() {
 
     var survey = [
         {text:"what is your name", type:'boolean'},
-        {text:"where do you live", type: 'text'},
+        {text:"where do you live", type: 'number'},
         {text:"Are you a robot", type: 'number'}
     ];
     function advanceSurvey(info, callback) {
