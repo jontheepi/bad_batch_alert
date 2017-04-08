@@ -92,10 +92,16 @@ app.post('/call/receive', function (req, res) {
   var resp = new TwimlResponse();
   resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
   //resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
-  var sender = req.body.From;
-  var body   = "join";
-  console.log ('SENDER:' + sender + ', BODY:' + body);
-  doAction(res, sender, body);
+  
+  //var sender = req.body.From;
+  //var body   = "join";
+  //console.log ('SENDER:' + sender + ', BODY:' + body);
+  //doAction(res, sender, body);
+
+  res.status(200)
+    .contentType('text/xml')
+    .send(resp.toString());
+
 });
 // [END receive_call]
 
