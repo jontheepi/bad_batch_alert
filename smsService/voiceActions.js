@@ -7,7 +7,7 @@ var VoiceActions = function() {
   self.doVoiceActions = function(req, res) {
 
   var resp = new TwimlResponse();
-  res.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
+  resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
   //resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
   
   res.status(200)
