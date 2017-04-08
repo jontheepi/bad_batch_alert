@@ -1,15 +1,14 @@
 //handles all voice commands.
-var VoiceActions = function() 
-{
+var VoiceActions = function() {
   var self = this;
 
-  self.doVoiceActions(req, res) {
+  self.doVoiceActions = function(req, res) {
 
 
      res.status(200)
     .contentType('text/xml')
     .send(resp.toString());
-  }
+  };
  
 };
 
