@@ -50,7 +50,21 @@ function doAction(res, client, sender, body)
 {
   var messageHandled = G.adminActions.doAdminAction(G, res, client, sender, body);
   if (!messageHandled) {
-    G.userActions.doUserAction(G, res, client, sender, body);
+    var cryptoSender = g.cryptoHelper.encrypt(sender);
+    var date = new Date();
+    var timestamp = date.toGMTString();
+    var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ('" + cryptoSender + "', '" + action + "', '" + timestamp + "')";
+    var insertQuery = client.query(insertQueryString);
+    insertQuery.on('error', function() {
+      console.log("It's cool we're already in here.");
+      G.userActions.doUserAction(G, res, client, sender, body);
+      client.end();
+    });
+    insertQuery.on('end', function() {
+      console.log("New User Added.");
+      G.userActions.doUserAction(G, res, client, sender, body);
+      client.end();
+    });
   }
 }
 
@@ -59,10 +73,10 @@ app.post('/call/receive', function (req, res) {
   var resp = new TwimlResponse();
   resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
   //resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
-
-  res.status(200)
-    .contentType('text/xml')
-    .send(resp.toString());
+  var sender = req.body.From;
+  var body   = "join";
+  console.log ('SENDER:' + sender + ', BODY:' + body);
+  doAction(res, client, sender, body);
 });
 // [END receive_call]
 
@@ -88,6 +102,7 @@ var server = app.listen(process.env.PORT || '8080', function () {
   console.log('Bad Batch Alert listening on port %s', server.address().port);
   console.log('Press Ctrl+C to quit.');
 });
+
 
 
 

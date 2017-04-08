@@ -54,20 +54,6 @@ var UserActions = function()
   self.userJoin = function(g, res, client, sender, action)
   {
     console.log("userJoin");
-    
-    var cryptoSender = g.cryptoHelper.encrypt(sender);
-    var date = new Date();
-    var timestamp = date.toGMTString();
-    var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ('" + cryptoSender + "', '" + action + "', '" + timestamp + "')";
-    var insertQuery = client.query(insertQueryString);
-    insertQuery.on('error', function() {
-      console.log("It's cool we're already in here.");
-      client.end();
-    });
-    insertQuery.on('end', function() {
-      console.log("New User Added.");
-      client.end();
-    });
 	  
     var body  = "Thank you for joining, you are Almost done! Just text the number for your location on the map above 🗺️ 👆 to get alerts when an overdose spike hits your neighborhood.";
     var media = "http://www.mike-legrand.com/BadBatchAlert/regions_02.jpg";
@@ -213,7 +199,7 @@ var UserActions = function()
       insertQuery.on('end', function() {
         var body = "👌 You're signed up as: " + name;
         self.userResponse(res, body);
-	      client.end();
+	      que.end();
       });
     });
   };
@@ -422,6 +408,7 @@ var UserActions = function()
     if (isNaN(body)) return false;
     return true;
   };
+
  
   self.doUserAction = function(g, res, client, sender, body)
   {
