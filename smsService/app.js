@@ -57,13 +57,14 @@ function doAction(res, client, sender, body)
     var insertQuery = client.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
-      G.userActions.doUserAction(G, res, client, sender, body);
       client.end();
+      G.userActions.doUserAction(G, res, client, sender, body);
+      
     });
     insertQuery.on('end', function() {
       console.log("New User Added.");
-      G.userActions.doUserAction(G, res, client, sender, body);
       client.end();
+      G.userActions.doUserAction(G, res, client, sender, body);
     });
   }
 }
