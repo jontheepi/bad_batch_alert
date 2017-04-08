@@ -36,35 +36,41 @@ var G = {
 };
 
 
-//Trying a global client instead of 1 per message.
+//Trying global clients instead of 1 per message.
 pg.defaults.ssl = true;
-var client;
-pg.connect(process.env.DATABASE_URL, function(err, dbClient) {
+var appClient;
+pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
-    console.log('Connected to db');
-    client = dbClient;
+    console.log('App client Connected to db');
+    appClient = client;
+});
+
+var userClient;
+pg.connect(process.env.DATABASE_URL, function(err, client) {
+  if (err) throw err;
+    console.log('User client Connected to db');
+    userClient = client;
 });
 
 
-function doAction(res, client, sender, body)
+function doAction(res, sender, body)
 {
-  var messageHandled = G.adminActions.doAdminAction(G, res, client, sender, body);
+  var messageHandled = G.adminActions.doAdminAction(G, res, userClient, sender, body);
   if (!messageHandled) {
     var cryptoSender = G.cryptoHelper.encrypt(sender);
     var date = new Date();
     var timestamp = date.toGMTString();
     var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ('" + cryptoSender + "', '" + body + "', '" + timestamp + "')";
-    var insertQuery = client.query(insertQueryString);
+    var insertQuery = appClient.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
-      client.end();
-      G.userActions.doUserAction(G, res, client, sender, body);
-      
+      G.userActions.doUserAction(G, res, userClient, sender, body);
+      appClient.end();
     });
     insertQuery.on('end', function() {
       console.log("New User Added.");
-      client.end();
-      G.userActions.doUserAction(G, res, client, sender, body);
+      G.userActions.doUserAction(G, res, userClient, sender, body);
+      appClient.end();
     });
   }
 }
@@ -77,7 +83,7 @@ app.post('/call/receive', function (req, res) {
   var sender = req.body.From;
   var body   = "join";
   console.log ('SENDER:' + sender + ', BODY:' + body);
-  doAction(res, client, sender, body);
+  doAction(res, sender, body);
 });
 // [END receive_call]
 
@@ -87,7 +93,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   var sender = req.body.From;
   var body   = req.body.Body;
   console.log ('SENDER:' + sender + ', BODY:' + body);
-  doAction(res, client, sender, body);
+  doAction(res, sender, body);
 });
 // [END receive_sms]
 
