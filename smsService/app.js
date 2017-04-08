@@ -89,7 +89,6 @@ app.post('/call/receive', function (req, res) {
     }
     return value;
   });
-  console.log(JSON.stringify(req));
   var resp = new TwimlResponse();
   resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
   //resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
