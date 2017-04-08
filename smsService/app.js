@@ -52,6 +52,13 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     userClient = client;
 });
 
+var historyClient;
+pg.connect(process.env.DATABASE_URL, function(err, client) {
+  if (err) throw err;
+    console.log('History client Connected to db');
+    historyClient = client;
+});
+
 
 function doAction(res, sender, body)
 {
@@ -64,6 +71,7 @@ function doAction(res, sender, body)
     var insertQuery = appClient.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
+      storeMessageHistory(cryptoSender, body);
       G.userActions.doUserAction(G, res, userClient, sender, body);
     });
     insertQuery.on('end', function() {
@@ -71,6 +79,25 @@ function doAction(res, sender, body)
       G.userActions.doUserAction(G, res, userClient, sender, body);
     });
   }
+}
+
+function storeMessageHistory(cryptoSender, body) {
+  var divider = '*'
+  var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
+  var findQuery = client.query(findQueryString);
+  findQuery.on('row', function(row) {
+    console.log(JSON.stringify(row));
+    var newBody = (body + divider + row.message_body).split(divider);
+    newBody.slice(0, 5);//5 is max messages we store.
+    newBody = newBody.join(divider);
+
+    //if they texted us a number. Set it as their region.
+    var queryString = "UPDATE users SET message_body = '" + newBody + "' WHERE phone_number = '" + cryptoSender + "'";
+    var insertQuery = historyClient.query(queryString);
+    queryString.on('end', function() {
+      console.log("message history updated to " + newBody);
+    });
+  });
 }
 
 // [START receive_call]
