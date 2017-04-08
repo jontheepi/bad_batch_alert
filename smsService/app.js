@@ -25,6 +25,7 @@ var bodyParser    = require('body-parser').urlencoded({extended: false});
 var CryptoHelper  = require('./cryptoHelper');
 var AdminActions  = require('./adminActions');
 var UserActions   = require('./userActions');
+var VoiceActions  = require('./voiceActions');
 
 var app      = express();
 
@@ -32,6 +33,7 @@ var G = {
   twilio:           twilio,
   adminActions:     new AdminActions(),
   userActions:      new UserActions(),
+  voiceActions:     new VoiceActions(),
   cryptoHelper:     new CryptoHelper(),
 };
 
@@ -128,9 +130,8 @@ app.post('/call/receive', bodyParser, function (req, res) {
   console.log ('SENDER:' + sender + ', BODY:' + body);
   insertUser(res, sender, body);
 
-  res.status(200)
-    .contentType('text/xml')
-    .send(resp.toString());
+  G.voiceActions.doVoiceAction(req, res);
+ 
 
 });
 // [END receive_call]
