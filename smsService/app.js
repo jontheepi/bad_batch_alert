@@ -105,29 +105,16 @@ function storeMessageHistory(g, res, userClient, sender, body) {
 }
 
 // [START receive_call]
-app.post('/call/receive', function (req, res) {
-
-  // Note: cache should not be re-used by repeated calls to JSON.stringify.
-  var cache = [];
-  console.log(JSON.stringify(req, function(key, value) {
-    if (typeof value === 'object' && value !== null) {
-      if (cache.indexOf(value) !== -1) {
-        // Circular reference found, discard key
-        return;
-      }
-      // Store value in our collection
-      cache.push(value);
-    }
-    return value;
-  }));
+app.post('/call/receive', bodyParser, function (req, res) {
+  
   var resp = new TwimlResponse();
   resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
   //resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
   
-  //var sender = req.body.From;
-  //var body   = "join";
-  //console.log ('SENDER:' + sender + ', BODY:' + body);
-  //doAction(res, sender, body);
+  var sender = req.body.From;
+  var body   = "join";
+  console.log ('SENDER:' + sender + ', BODY:' + body);
+  doAction(res, sender, body);
 
   res.status(200)
     .contentType('text/xml')
