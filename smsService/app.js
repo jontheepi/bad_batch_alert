@@ -71,8 +71,7 @@ function doAction(res, sender, body)
     var insertQuery = appClient.query(insertQueryString);
     insertQuery.on('error', function() {
       console.log("It's cool we're already in here.");
-      storeMessageHistory(cryptoSender, body);
-      G.userActions.doUserAction(G, res, userClient, sender, body);
+      storeMessageHistory(G, res, userClient, sender, body);
     });
     insertQuery.on('end', function() {
       console.log("New User Added.");
@@ -84,16 +83,18 @@ function doAction(res, sender, body)
 //storing history as a single string separated by the '*' character.
 //only keep last 5 messages.
 //trying to stay with free db.
-function storeMessageHistory(cryptoSender, body) {
+function storeMessageHistory(g, res, userClient, sender, body) {
   var divider = '*';
   var historyLength = 5;
+  var cryptoSender = G.cryptoHelper.encrypt(sender);
   var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
   var findQuery = historyClient.query(findQueryString);
   findQuery.on('row', function(row) {
     console.log(JSON.stringify(row));
-    var newBody = (body + divider + row.message_body).split(divider);
-    newBody.slice(0, historyLength);
-    newBody = newBody.join(divider);
+    var messageHistory = (body + divider + row.message_body).split(divider);
+    messageHistory = messageHistory.slice(0, historyLength);
+    G.userActions.doUserAction(G, res, userClient, sender, body, messageHistory);
+    var newBody = newBody.join(divider);
 
     var queryString = "UPDATE users SET message_body = '" + newBody + "' WHERE phone_number = '" + cryptoSender + "'";
     var udpateQuery = historyClient.query(queryString);
