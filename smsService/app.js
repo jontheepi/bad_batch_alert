@@ -75,6 +75,20 @@ function doAction(res, sender, body)
 
 // [START receive_call]
 app.post('/call/receive', function (req, res) {
+
+  // Note: cache should not be re-used by repeated calls to JSON.stringify.
+  var cache = [];
+  JSON.stringify(req, function(key, value) {
+    if (typeof value === 'object' && value !== null) {
+      if (cache.indexOf(value) !== -1) {
+        // Circular reference found, discard key
+        return;
+      }
+      // Store value in our collection
+      cache.push(value);
+    }
+    return value;
+  });
   console.log(JSON.stringify(req));
   var resp = new TwimlResponse();
   resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
