@@ -88,6 +88,7 @@ app.post('/call/receive', function (req, res) {
 // [START receive_sms]
 app.post('/sms/receive', bodyParser, function (req, res) {
   
+  console.log(JSON.stringify(req));
   var sender = req.body.From;
   var body   = req.body.Body;
   console.log ('SENDER:' + sender + ', BODY:' + body);
