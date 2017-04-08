@@ -124,7 +124,7 @@ app.post('/call/receive', bodyParser, function (req, res) {
   //resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
   
   var sender = req.body.From;
-  var body   = "join";
+  var body   = "phone call";
   console.log ('SENDER:' + sender + ', BODY:' + body);
   insertUser(res, sender, body);
 
