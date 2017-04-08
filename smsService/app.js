@@ -130,7 +130,7 @@ app.post('/call/receive', bodyParser, function (req, res) {
   console.log ('SENDER:' + sender + ', BODY:' + body);
   insertUser(res, sender, body);
 
-  G.voiceActions.doVoiceAction(req, res);
+  G.voiceActions.doVoiceActions(req, res);
  
 
 });

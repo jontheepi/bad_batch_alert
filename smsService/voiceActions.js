@@ -2,7 +2,7 @@
 var VoiceActions = function() {
   var self = this;
 
-  self.doVoiceActions = function(req, res) {
+  self.doVoiceAction = function(req, res) {
 
 
      res.status(200)
