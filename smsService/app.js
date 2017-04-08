@@ -94,7 +94,7 @@ function storeMessageHistory(g, res, userClient, sender, body) {
     var messageHistory = (body + divider + row.message_body).split(divider);
     messageHistory = messageHistory.slice(0, historyLength);
     G.userActions.doUserAction(G, res, userClient, sender, body, messageHistory);
-    var newBody = newBody.join(divider);
+    var newBody = messageHistory.join(divider);
 
     var queryString = "UPDATE users SET message_body = '" + newBody + "' WHERE phone_number = '" + cryptoSender + "'";
     var udpateQuery = historyClient.query(queryString);

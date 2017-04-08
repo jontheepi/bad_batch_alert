@@ -407,7 +407,7 @@ var UserActions = function()
   };
 
  
-  self.doUserAction = function(g, res, client, sender, body)
+  self.doUserAction = function(g, res, client, sender, body, messageHistory)
   {
     var command = body.toLowerCase().trim();
     if (command == "map") {
