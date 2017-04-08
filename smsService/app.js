@@ -75,6 +75,7 @@ function doAction(res, sender, body)
 
 // [START receive_call]
 app.post('/call/receive', function (req, res) {
+  console.log(JSON.stringify(req));
   var resp = new TwimlResponse();
   resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
   //resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
@@ -87,8 +88,6 @@ app.post('/call/receive', function (req, res) {
 
 // [START receive_sms]
 app.post('/sms/receive', bodyParser, function (req, res) {
-  
-  console.log(JSON.stringify(req));
   var sender = req.body.From;
   var body   = req.body.Body;
   console.log ('SENDER:' + sender + ', BODY:' + body);
