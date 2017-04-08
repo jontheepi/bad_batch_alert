@@ -78,7 +78,7 @@ app.post('/call/receive', function (req, res) {
 
   // Note: cache should not be re-used by repeated calls to JSON.stringify.
   var cache = [];
-  JSON.stringify(req, function(key, value) {
+  console.log(JSON.stringify(req, function(key, value) {
     if (typeof value === 'object' && value !== null) {
       if (cache.indexOf(value) !== -1) {
         // Circular reference found, discard key
@@ -88,7 +88,7 @@ app.post('/call/receive', function (req, res) {
       cache.push(value);
     }
     return value;
-  });
+  }));
   var resp = new TwimlResponse();
   resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
   //resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
