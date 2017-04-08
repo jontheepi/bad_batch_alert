@@ -85,11 +85,9 @@ var UserActions = function()
     var findQuery = client.query(findQueryString);
     findQuery.on('end', function() {
       console.log('Success on userLeave');
-      client.end();
     });
     findQuery.on('error', function() {
       console.log('Error on userLeave');
-      client.end();
     });
     var body= "Thanks for using Bad Batch. Text 'join' to continue recieving updates.";
     self.userResponse(res, body);
@@ -118,7 +116,7 @@ var UserActions = function()
       insertQuery.on('end', function() {
         var body = "👍 You are all set to receive alerts in region " + region + ".\n\n" +
         "There are many other useful resources built into this service. To see all the commands text the word 'help'.";
-        self.userResponse(res, body);
+        self.userResponse(res, body); 
       });
     });
   };
@@ -199,7 +197,6 @@ var UserActions = function()
       insertQuery.on('end', function() {
         var body = "👌 You're signed up as: " + name;
         self.userResponse(res, body);
-	      que.end();
       });
     });
   };
