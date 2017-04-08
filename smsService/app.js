@@ -121,10 +121,6 @@ function storeMessageHistory(g, res, userClient, sender, body, callback) {
 // [START receive_call]
 app.post('/call/receive', bodyParser, function (req, res) {
   
-  var resp = new TwimlResponse();
-  resp.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
-  //resp.record({timeout:30, transcribe:true, transcribeCallback:"https://badbatchalertstaging.herokuapp.com/watson/receive"});
-  
   var sender = req.body.From;
   var body   = "phone call";
   console.log ('SENDER:' + sender + ', BODY:' + body);
@@ -132,7 +128,6 @@ app.post('/call/receive', bodyParser, function (req, res) {
 
   G.voiceActions.doVoiceActions(req, res);
  
-
 });
 // [END receive_call]
 
