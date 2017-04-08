@@ -36,7 +36,7 @@ var G = {
 };
 
 
-//what if I open connection here?
+//Trying a global client instead of 1 per message.
 pg.defaults.ssl = true;
 var client;
 pg.connect(process.env.DATABASE_URL, function(err, dbClient) {
@@ -45,8 +45,6 @@ pg.connect(process.env.DATABASE_URL, function(err, dbClient) {
     client = dbClient;
 });
 
-
-var client;
 
 function doAction(res, client, sender, body)
 {
