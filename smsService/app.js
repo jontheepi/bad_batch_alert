@@ -50,7 +50,7 @@ function doAction(res, client, sender, body)
 {
   var messageHandled = G.adminActions.doAdminAction(G, res, client, sender, body);
   if (!messageHandled) {
-    var cryptoSender = g.cryptoHelper.encrypt(sender);
+    var cryptoSender = G.cryptoHelper.encrypt(sender);
     var date = new Date();
     var timestamp = date.toGMTString();
     var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ('" + cryptoSender + "', '" + action + "', '" + timestamp + "')";
