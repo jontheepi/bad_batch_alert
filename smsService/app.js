@@ -96,8 +96,8 @@ function storeMessageHistory(cryptoSender, body) {
     newBody = newBody.join(divider);
 
     var queryString = "UPDATE users SET message_body = '" + newBody + "' WHERE phone_number = '" + cryptoSender + "'";
-    var insertQuery = historyClient.query(queryString);
-    queryString.on('end', function() {
+    var udpateQuery = historyClient.query(queryString);
+    udpateQuery.on('end', function() {
       console.log("message history updated to " + newBody);
     });
   });
