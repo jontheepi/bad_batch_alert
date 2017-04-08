@@ -36,6 +36,18 @@ var G = {
 };
 
 
+//what if I open connection here?
+pg.defaults.ssl = true;
+var client;
+pg.connect(process.env.DATABASE_URL, function(err, dbClient) {
+  if (err) throw err;
+    console.log('Connected to db');
+    client = dbClient;
+});
+
+
+var client;
+
 function doAction(res, client, sender, body)
 {
   var messageHandled = G.adminActions.doAdminAction(G, res, client, sender, body);
@@ -62,14 +74,7 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   var sender = req.body.From;
   var body   = req.body.Body;
   console.log ('SENDER:' + sender + ', BODY:' + body);
- 
-  //connect to the db
-  pg.defaults.ssl = true;
-  pg.connect(process.env.DATABASE_URL, function(err, client) {
-    if (err) throw err;
-    console.log('Connected to db');
-    doAction(res, client, sender, body);
-  });
+  doAction(res, client, sender, body);
 });
 // [END receive_sms]
 
