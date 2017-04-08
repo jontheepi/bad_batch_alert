@@ -63,27 +63,37 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 function doAction(res, sender, body)
 {
   var messageHandled = G.adminActions.doAdminAction(G, res, userClient, sender, body);
-  if (!messageHandled) {
-    var cryptoSender = G.cryptoHelper.encrypt(sender);
-    var date = new Date();
-    var timestamp = date.toGMTString();
-    var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ('" + cryptoSender + "', '" + body + "', '" + timestamp + "')";
-    var insertQuery = appClient.query(insertQueryString);
-    insertQuery.on('error', function() {
-      console.log("It's cool we're already in here.");
-      storeMessageHistory(G, res, userClient, sender, body);
+  if (messageHandled) return;
+
+  insertUser(res, sender, body, function() {
+    storeMessageHistory(G, res, userClient, sender, body, function(messageHistory) {
+      G.userActions.doUserAction(G, res, userClient, sender, body, messageHistory);
     });
-    insertQuery.on('end', function() {
-      console.log("New User Added.");
-      G.userActions.doUserAction(G, res, userClient, sender, body);
-    });
-  }
+  });
+}
+
+function insertUser(res, sender, body, callback)  {
+
+  var cryptoSender = G.cryptoHelper.encrypt(sender);
+  var date = new Date();
+  var timestamp = date.toGMTString();
+  var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ('" + cryptoSender + "', '" + body + "', '" + timestamp + "')";
+  var insertQuery = appClient.query(insertQueryString);
+  insertQuery.on('error', function() {
+    console.log("It's cool we're already in here.");
+    if (callback) callback();
+  });
+  insertQuery.on('end', function() {
+    console.log("New User Added.");
+    if (callback) callcack();
+  });
+
 }
 
 //storing history as a single string separated by the '*' character.
 //only keep last 5 messages.
 //trying to stay with free db.
-function storeMessageHistory(g, res, userClient, sender, body) {
+function storeMessageHistory(g, res, userClient, sender, body, callback) {
   var divider = '*';
   var historyLength = 5;
   var cryptoSender = G.cryptoHelper.encrypt(sender);
@@ -93,7 +103,9 @@ function storeMessageHistory(g, res, userClient, sender, body) {
     console.log(JSON.stringify(row));
     var messageHistory = (body + divider + row.message_body).split(divider);
     messageHistory = messageHistory.slice(0, historyLength);
-    G.userActions.doUserAction(G, res, userClient, sender, body, messageHistory);
+    
+    if (callback) callback(messageHistory);
+
     var newBody = messageHistory.join(divider);
 
     var queryString = "UPDATE users SET message_body = '" + newBody + "' WHERE phone_number = '" + cryptoSender + "'";
@@ -114,7 +126,7 @@ app.post('/call/receive', bodyParser, function (req, res) {
   var sender = req.body.From;
   var body   = "join";
   console.log ('SENDER:' + sender + ', BODY:' + body);
-  doAction(res, sender, body);
+  insertUser(res, sender, body);
 
   res.status(200)
     .contentType('text/xml')
