@@ -24,10 +24,10 @@ var VoiceActions = function() {
     }
 
     var survey = [
-        {text:"what is your name", type:'boolean'},
-        {text:"where do you live", type: 'number'},
-        {text:"Are you a robot", type: 'number'}
+        {text:"Thanks for calling Bad Batch Alert service. Press 1 or say ‘help’ for a list of options.", type:'number'},
+        {text:"Help. If you would like to know where the Baltimore Needle exchange van is at any time, press 2 or say ‘van’. If you need to make an anonymous call to emergency services, press 3 or say ‘report’. If you would like to learn more about the Bad Batch Alert service, press 4 or say ‘info’. If you would like to stop receiving overdose alerts, press 5 or say ‘leave’. If you would like to hear this message again, press 1 or say ‘help’.", type: 'number'},
     ];
+   
     function advanceSurvey(info, callback) {
       callback(null, _count);
       _count++;
