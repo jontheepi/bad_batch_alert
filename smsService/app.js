@@ -87,7 +87,7 @@ function insertUser(res, sender, body, callback)  {
   });
   insertQuery.on('end', function() {
     console.log("New User Added.");
-    if (callback) callcack();
+    if (callback) callback();
   });
 
 }
