@@ -263,9 +263,28 @@ var UserActions = function()
       }
     }); 
 
-    var body  = "Your report has been sent.";
+    var body  = "Your report has been sent. Text 'OD' if this is an emergency.";
     self.userResponse(res, body);
   };
+	
+  self.userOd = function(g, res, client, sender, action) 
+  {
+    var report = "EMERGENCY";
+    var MY_NUMBER  = process.env.MY_NUMBER;
+    var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
+    g.twilio.sendMessage({
+      to: MY_NUMBER,
+      from: TWILIO_NUMBER,
+      body: report
+    }, function (err) {
+      if (err) {
+        console.log(err);
+      }
+    }); 
+
+    var body  = "Thank you for your report we are taking action.";
+    self.userResponse(res, body);
+  }
 
   //userShare will allow the user's message to share their experience to others/
   self.userShare = function(g, res, client, sender, action)
@@ -439,6 +458,8 @@ var UserActions = function()
       self.userInfo(g, res, client, sender, body);
     } else if (command == 'join') {
       self.userJoin(g, res, client, sender, body);   
+    } else if (command == 'od') {
+      self.userOd(g, res, client, sender, body);
     } else {
       self.userFail(g, res, client, sender, body);
     }
