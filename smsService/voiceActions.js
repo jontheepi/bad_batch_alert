@@ -30,7 +30,8 @@ var VoiceActions = function() {
    
     function advanceSurvey(info, callback) {
       callback(null, _count);
-      _count++;
+      //ALERT! not letting survey advance yet until we get this truly hooked up.
+      //_count++;
     }
 
     // Find an in-progess survey if one exists, otherwise create one
@@ -55,6 +56,10 @@ var VoiceActions = function() {
         // Add a greeting if this is the first question
         if (questionIndex === 0) {
             twiml.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
+
+            //ALERT!!
+            /////EARLYING out here for now since this is not yet hooked up.
+            return;
         }
 
         // Otherwise, ask the next question
