@@ -59,6 +59,7 @@ var VoiceActions = function() {
 
             //ALERT!!
             /////EARLYING out here for now since this is not yet hooked up.
+            respond();
             return;
         }
 
