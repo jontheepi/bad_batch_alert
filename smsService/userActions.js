@@ -145,7 +145,7 @@ var UserActions = function()
       //if they texted us a number. Set it as their region.
       var regions = row.regions?row.regions:'';
       console.log('regions = ' + regions);
-      if (regions.length == 0) {
+      if (regions.length === 0) {
         regionsArray = [];
       }  else {
         regionsArray = regions.split(', '); 
@@ -221,7 +221,7 @@ var UserActions = function()
       regions = regions ? regions:'';
       var regionsArray = regions.split(', ');
       for (var i = 0; i < regionsArray.length; i++) {
-        if (i != 0) body = body + '\n\n';
+        if (i !== 0) body = body + '\n\n';
         var region = regionsArray[i];
         if (region == 1) {
           body += "Region 1:\n Mercy Medical Center \n345 St. Paul Place \nBaltimore, MD 21202 (410) 332-9000";
@@ -306,7 +306,7 @@ var UserActions = function()
   {
     console.log("userVan");
     //EST
-    offset = -4.0
+    offset = -4.0;//need a better solution here this needs to be updated with daylight savings.
     clientDate = new Date();
     utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
     serverDate = new Date(utc + (3600000*offset));
@@ -384,19 +384,19 @@ var UserActions = function()
       }
     }
     if (matchedRegionsArray.length === 0) {
-      var body = "Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com."
-      self.userResponse(res, body);
+      var errorText = "Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com.";
+      self.userResponse(res, errortext);
     }
     else {
       var regions = matchedRegionsArray.join(', '); 
-      self.userSetRegion(g, res, client, sender, regions)
+      self.userSetRegion(g, res, client, sender, regions);
     }
   };
 
   self.userFail = function(g, res, client, sender, body)
   {
-     var body = "Sorry, we didn't understand that. Text 'help' for a list of possible commands.";
-     self.userResponse(res, body);
+     var errorText = "Sorry, we didn't understand that. Text 'help' for a list of possible commands.";
+     self.userResponse(res, errorText);
   };
 	
   self.isZipCode = function(body)
