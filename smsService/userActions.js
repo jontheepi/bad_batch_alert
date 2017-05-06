@@ -250,12 +250,13 @@ var UserActions = function()
   //userReport will text the user's message to the admin phone number and will tell the user that it has been sent /
   self.userReport = function(g, res, client, sender, action)
   { 
+    var report = "from:" + sender + " " + action;
     var MY_NUMBER  = process.env.MY_NUMBER;
     var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
     g.twilio.sendMessage({
       to: MY_NUMBER,
       from: TWILIO_NUMBER,
-      body: action
+      body: report
     }, function (err) {
       if (err) {
         console.log(err);
