@@ -168,9 +168,22 @@ app.post('/webadmin/receive', function (req, res) {
   var findQuery = webAdminClient.query(findQueryString);
   findQuery.on('row', function(row) {
     console.log(JSON.stringify(row));
+    var payload = {
+      err:null;
+      token:"authtoken",
+    }
     res.status(200)
         .contentType('text/json')
-        .send("testing to see if this works");
+        .send(payload);
+  });
+
+  findQuery.on('error', function() {
+     var payload = {
+      err:1;
+    }
+    res.status(200)
+        .contentType('text/json')
+        .send(payload);
   });
 });
 
