@@ -163,7 +163,7 @@ app.post('/webadmin/receive', function (test) {
   findQuery.on('row', function(row) {
     console.log(JSON.stringify(row));
     return row;
-  }
+  });
 });
 
 
