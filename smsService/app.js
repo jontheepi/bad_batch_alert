@@ -161,41 +161,41 @@ app.post('/watson/receive', function (test) {
 
 //Login test
 app.post('/webadmin/receive', function (req, res) {
-  console.log(req);
-
- var body = "";
-  req.on('data', function (chunk) {
-    body += chunk;
-  });
-  req.on('end', function () {
-    var jsonObj = JSON.parse(body);
-    var username = body.username;
-    var password = body.password;
-    var findQueryString = "SELECT * FROM admin WHERE username = '" + username + "' and password = '" + password + "'" ;
-    var findQuery = webAdminClient.query(findQueryString);
-    findQuery.on('row', function(row) {
-      console.log(JSON.stringify(row));
-      var payload = {
-        err:null,
-        token:"authtoken",
-      }
-      res.status(200)
-          .contentType('text/json')
-          .send(payload);
-    });
-
-    findQuery.on('error', function() {
-       var payload = {
-        err:1,
-        tonek:null
-      }
-      res.status(200)
-          .contentType('text/json')
-          .send(payload);
-    });
-  })
-
   
+ var body = "";
+ req.on('data', function (chunk) {
+   body += chunk;
+ });
+ req.on('end', function () {
+  console.log(body);
+  var jsonObj = JSON.parse(body);
+  var username = body.username;
+  var password = body.password;
+  var findQueryString = "SELECT * FROM admin WHERE username = '" + username + "' and password = '" + password + "'" ;
+  var findQuery = webAdminClient.query(findQueryString);
+  findQuery.on('row', function(row) {
+    console.log("found row");
+    console.log(JSON.stringify(row));
+    var payload = {
+      err:null,
+      token:"authtoken",
+    }
+    res.status(200)
+      .contentType('text/json')
+      .send(payload);
+  });
+
+  findQuery.on('error', function() {;
+    console.log("did not find user/pass")
+    var payload = {
+      err:1,
+      tonek:null
+    }
+    res.status(200)
+      .contentType('text/json')
+      .send(payload);
+    });
+  });
 });
 
 
