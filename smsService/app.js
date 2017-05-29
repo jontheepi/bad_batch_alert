@@ -185,7 +185,7 @@ app.post('/webadmin/receive', function (req, res) {
       .send(payload);
   });
 
-  findQuery.on('error', function() {;
+  findQuery.on('error', function() {
     console.log("did not find user/pass")
     var payload = {
       err:1,
