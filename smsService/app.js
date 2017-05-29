@@ -26,6 +26,8 @@ var CryptoHelper  = require('./cryptoHelper');
 var AdminActions  = require('./adminActions');
 var UserActions   = require('./userActions');
 var VoiceActions  = require('./voiceActions');
+var WebAdmin      = require('./webAdmin');
+
 
 var app      = express();
 
@@ -59,6 +61,13 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
     console.log('History client Connected to db');
     historyClient = client;
+});
+
+var webAdminClient;
+pg.connect(process.env.DATABASE_URL, function(err, client) {
+  if (err) throw err;
+    console.log('WebAdmin client Connected to db');
+    webAdminClient = client;
 });
 
 
@@ -129,7 +138,6 @@ app.post('/call/receive', bodyParser, function (req, res) {
   G.voiceActions.doVoiceActions(req, res);
  
 });
-// [END receive_call]
 
 // [START receive_sms]
 app.post('/sms/receive', bodyParser, function (req, res) {
@@ -138,13 +146,25 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   console.log ('SENDER:' + sender + ', BODY:' + body);
   doAction(res, sender, body);
 });
-// [END receive_sms]
 
 // Voice to text test
 app.post('/watson/receive', function (test) {
   console.log("inside watson call");
   console.log(test);
 });
+
+//Login test
+app.post('/webadmin/receive', function (test) {
+  var username = 'amanda';
+  var password = 'bbalert';
+  var findQueryString = "SELECT * FROM admins WHERE username = '" + username + "' and password = '" + password + "'" ;
+  var findQuery = webAdminClient.query(findQueryString);
+  findQuery.on('row', function(row) {
+    console.log(JSON.stringify(row));
+    return row;
+  }
+});
+
 
 
 // Start the server
