@@ -159,6 +159,7 @@ app.post('/webadmin/receive', function (test) {
   var password = 'bbalert';
   var findQueryString = "SELECT * FROM admins WHERE username = '" + username + "' and password = '" + password + "'" ;
   var findQuery = webAdminClient.query(findQueryString);
+  console.log(findQuery);
   findQuery.on('row', function(row) {
     console.log(JSON.stringify(row));
     return row;
