@@ -168,9 +168,9 @@ app.post('/webadmin/receive', function (req, res) {
  });
  req.on('end', function () {
   console.log(body);
-  var jsonObj = JSON.parse(body);
-  var username = body.username;
-  var password = body.password;
+  var jsonBody = JSON.parse(body);
+  var username = jsonBody.username;
+  var password = jsonBody.password;
   var findQueryString = "SELECT * FROM admin WHERE username = '" + username + "' and password = '" + password + "'" ;
   var findQuery = webAdminClient.query(findQueryString);
   findQuery.on('row', function(row) {
