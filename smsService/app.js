@@ -160,16 +160,17 @@ app.post('/watson/receive', function (test) {
 });
 
 //Login test
-app.post('/webadmin/receive', function (test) {
-  console.log(test);
+app.post('/webadmin/receive', function (req, res) {
+  console.log(req);
   var username = 'amanda';
   var password = 'bbalert';
   var findQueryString = "SELECT * FROM admin WHERE username = '" + username + "' and password = '" + password + "'" ;
-  console.log(findQueryString);
   var findQuery = webAdminClient.query(findQueryString);
   findQuery.on('row', function(row) {
     console.log(JSON.stringify(row));
-    return row;
+    res.status(200)
+        .contentType('text/json')
+        .send(row);
   });
 });
 
