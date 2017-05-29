@@ -155,6 +155,7 @@ app.post('/watson/receive', function (test) {
 
 //Login test
 app.post('/webadmin/receive', function (test) {
+  console.log(test);
   var username = 'amanda';
   var password = 'bbalert';
   var findQueryString = "SELECT * FROM admins WHERE username = '" + username + "' and password = '" + password + "'" ;
