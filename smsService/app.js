@@ -162,6 +162,15 @@ app.post('/watson/receive', function (test) {
 //Login test
 app.post('/webadmin/receive', function (req, res) {
   console.log(req);
+
+ var body = "";
+  req.on('data', function (chunk) {
+    body += chunk;
+  });
+  req.on('end', function () {
+    console.log('I Maybe passed some data?: ' + body);
+  })
+
   var username = 'amanda';
   var password = 'bbalert';
   var findQueryString = "SELECT * FROM admin WHERE username = '" + username + "' and password = '" + password + "'" ;
