@@ -172,7 +172,6 @@ app.post('/webadmin/receive', function (req, res) {
   var username = jsonBody.username;
   var password = jsonBody.password;
   var findQueryString = "SELECT * FROM admin WHERE username = '" + username + "' and password = '" + password + "'" ;
-  var findQuery = webAdminClient.query(findQueryString);
   findQuery.on('row', function(row) {
     console.log("found row");
     console.log(JSON.stringify(row));
@@ -185,7 +184,8 @@ app.post('/webadmin/receive', function (req, res) {
       .send(payload);
   });
 
-  findQuery.on('error', function() {
+  findQuery.on('end', function(result) {
+    if (result.rowCount > 0) return;
     console.log("did not find user/pass")
     var payload = {
       err:1,
@@ -196,6 +196,8 @@ app.post('/webadmin/receive', function (req, res) {
       .send(payload);
     });
   });
+
+  var findQuery = webAdminClient.query(findQueryString);
 });
 
 
