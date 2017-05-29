@@ -170,7 +170,7 @@ app.post('/webadmin/receive', function (req, res) {
     console.log(JSON.stringify(row));
     res.status(200)
         .contentType('text/json')
-        .send(row);
+        .send("testing to see if this works");
   });
 });
 
