@@ -169,7 +169,7 @@ app.post('/webadmin/receive', function (req, res) {
   findQuery.on('row', function(row) {
     console.log(JSON.stringify(row));
     var payload = {
-      err:null;
+      err:null,
       token:"authtoken",
     }
     res.status(200)
@@ -179,7 +179,8 @@ app.post('/webadmin/receive', function (req, res) {
 
   findQuery.on('error', function() {
      var payload = {
-      err:1;
+      err:1,
+      tonek:null
     }
     res.status(200)
         .contentType('text/json')
