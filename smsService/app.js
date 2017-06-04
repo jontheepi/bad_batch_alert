@@ -218,15 +218,16 @@ app.post('/webadmin/getusersinregions', function (req, res) {
   var findQueryString = "SELECT * FROM users";  
   var findQuery = webAdminClient.query(findQueryString);
   findQuery.on('row', function(row) {
+    console.log("next row, userCount = " + userCount);
     var regionString = row.regions;
     if (!row.regions) return;
     var regionArray = regionString.split(", ");
     for (var i = 0; i < regionArray.length; i++){
       var region = parseInt(regionArray[i]);
-      for( var j = 0; j < regionNumbers.length; j++){
-        if(regionNumbers[j] == region){
+      for(var j = 0; j < regionNumbers.length; j++){
+        if(regionNumbers[j] == region) {
           userCount++;
-           return;
+          return;
         }//if's
       }//forloop2's
     }//forloop1's
