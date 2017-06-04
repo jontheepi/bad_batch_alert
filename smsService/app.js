@@ -219,6 +219,7 @@ app.post('/webadmin/getusersinregions', function (req, res) {
   var findQuery = webAdminClient.query(findQueryString);
   findQuery.on('row', function(row) {
     var regionString = row.regions;
+    if (!row.regions) return;
     var regionArray = regionString.split(", ");
     for (var i = 0; i < regionArray.length; i++){
       var region = parseInt(regionArray[i]);
