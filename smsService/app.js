@@ -203,7 +203,7 @@ app.post('/webadmin/receive', function (req, res) {
 });
 
 //regionCount (get users per region)
-app.post('/webadmin/getuserinregion', function (req, res) {
+app.post('/webadmin/getusersinregions', function (req, res) {
   
   
  var userCount = 0;
@@ -219,9 +219,9 @@ app.post('/webadmin/getuserinregion', function (req, res) {
   var findQuery = webAdminClient.query(findQueryString);
   findQuery.on('row', function(row) {
     var regionString = row.regions;
-    var regionArray = regionString.split(",");
+    var regionArray = regionString.split(", ");
     for (var i = 0; i < regionArray.length; i++){
-      var region = regionArray[i];
+      var region = parseInt(regionArray[i]);
       for( var j = 0; j < regionNumbers.length; j++){
         if(regionNumbers[j] == region){
           userCount++;
