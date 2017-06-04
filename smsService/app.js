@@ -204,17 +204,8 @@ app.post('/webadmin/receive', function (req, res) {
 
 //regionCount (get users per region)
 app.post('/webadmin/getusersinregions', function (req, res) {
-  
-  
- var userCount = 0;
- var body = "";
- req.on('data', function (chunk) {
-   body += chunk;
- });
- req.on('end', function () {
-  console.log(body);
-  var jsonBody = JSON.parse(body);
-  var regionNumbers = jsonBody.regionNumbers;
+  var userCounts = [0,0,0,0,0,0,0,0,0];
+ 
   var findQueryString = "SELECT * FROM users";  
   var findQuery = webAdminClient.query(findQueryString);
   findQuery.on('row', function(row) {
@@ -224,28 +215,19 @@ app.post('/webadmin/getusersinregions', function (req, res) {
     var regionArray = regionString.split(", ");
     for (var i = 0; i < regionArray.length; i++){
       var region = parseInt(regionArray[i]);
-      for(var j = 0; j < regionNumbers.length; j++){
-        if(regionNumbers[j] == region) {
-          userCount++;
-          return;
-        }//if's
-      }//forloop2's
-    }//forloop1's
-    
+      userCounts[region] ++;
+    }
   });
 
   findQuery.on('end', function(result) {
     console.log("Completed.")
     var payload = {
-      userCount:userCount
+      userCounts:userCounts
     }
     res.status(200)
       .contentType('text/json')
       .send(payload);
-    });
   });
-
-
 });
 
 
