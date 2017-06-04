@@ -209,7 +209,6 @@ app.post('/webadmin/getusersinregions', function (req, res) {
   var findQueryString = "SELECT * FROM users";  
   var findQuery = webAdminClient.query(findQueryString);
   findQuery.on('row', function(row) {
-    console.log("next row, userCount = " + userCount);
     var regionString = row.regions;
     if (!row.regions) return;
     var regionArray = regionString.split(", ");
