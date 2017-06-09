@@ -74,6 +74,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
     console.log('WebAdmin client Connected to db');
     webAdminClient = client;
+    webAdmin.init(app, webAdminClient, G);
 });
 
 
@@ -159,7 +160,7 @@ app.post('/watson/receive', function (test) {
   console.log(test);
 });
 
-//Login test
+///WEB PORTAL
 app.post('/webadmin/receive', function (req, res) {
   
  var body = "";
