@@ -29,7 +29,7 @@ var VoiceActions  = require('./voiceActions');
 var WebAdmin      = require('./webAdmin');
 
 
-var app      = express();
+var app = express();
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -74,7 +74,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
     console.log('WebAdmin client Connected to db');
     webAdminClient = client;
-    webAdmin.init(app, webAdminClient, G);
+    WebAdmin.init(app, webAdminClient, G);
 });
 
 
@@ -159,78 +159,6 @@ app.post('/watson/receive', function (test) {
   console.log("inside watson call");
   console.log(test);
 });
-
-///WEB PORTAL
-app.post('/webadmin/receive', function (req, res) {
-  
- var body = "";
- req.on('data', function (chunk) {
-   body += chunk;
- });
- req.on('end', function () {
-  console.log(body);
-  var jsonBody = JSON.parse(body);
-  var username = jsonBody.username;
-  var password = jsonBody.password;
-  var findQueryString = "SELECT * FROM admin WHERE username = '" + username + "' and password = '" + password + "'" ;
-  var findQuery = webAdminClient.query(findQueryString);
-  findQuery.on('row', function(row) {
-    console.log("found row");
-    console.log(JSON.stringify(row));
-    var payload = {
-      err:null,
-      token:"authtoken",
-    }
-    res.status(200)
-      .contentType('text/json')
-      .send(payload);
-  });
-
-  findQuery.on('end', function(result) {
-    console.log('end got called' + result);
-    if (result.rowCount > 0) return;
-    console.log("did not find user/pass")
-    var payload = {
-      err:1,
-      token:null
-    }
-    res.status(200)
-      .contentType('text/json')
-      .send(payload);
-    });
-  });
-
-
-});
-
-//regionCount (get users per region)
-app.post('/webadmin/getusersinregions', function (req, res) {
-  var userCounts = [0,0,0,0,0,0,0,0,0];
- 
-  var findQueryString = "SELECT * FROM users";  
-  var findQuery = webAdminClient.query(findQueryString);
-  findQuery.on('row', function(row) {
-    var regionString = row.regions;
-    if (!row.regions) return;
-    var regionArray = regionString.split(", ");
-    for (var i = 0; i < regionArray.length; i++){
-      var region = parseInt(regionArray[i]);
-      userCounts[region] ++;
-    }
-  });
-
-  findQuery.on('end', function(result) {
-    console.log("Completed.")
-    var payload = {
-      userCounts:userCounts
-    }
-    res.status(200)
-      .contentType('text/json')
-      .send(payload);
-  });
-});
-
-
 
 
 // Start the server
