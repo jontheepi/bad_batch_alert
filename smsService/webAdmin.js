@@ -2,7 +2,10 @@
 var WebAdmin = function() {
   var self = this;
 
-  this.init = function(app, webAdminClient, G)
+  var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
+  var MY_NUMBER     = process.env.MY_NUMBER;
+
+  self.init = function(app, webAdminClient, G)
   {
 
     //Login to admin db
