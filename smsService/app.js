@@ -43,6 +43,7 @@ var G = {
   userActions:      new UserActions(),
   voiceActions:     new VoiceActions(),
   cryptoHelper:     new CryptoHelper(),
+  webAdmin:         new WebAdmin()
 };
 
 
@@ -74,7 +75,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
     console.log('WebAdmin client Connected to db');
     webAdminClient = client;
-    WebAdmin.init(app, webAdminClient, G);
+    g.webAdmin.init(app, webAdminClient, G);
 });
 
 
