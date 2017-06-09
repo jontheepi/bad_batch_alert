@@ -75,7 +75,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
     console.log('WebAdmin client Connected to db');
     webAdminClient = client;
-    g.webAdmin.init(app, webAdminClient, G);
+    G.webAdmin.init(app, webAdminClient, G);
 });
 
 
