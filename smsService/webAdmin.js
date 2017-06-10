@@ -110,8 +110,18 @@ var WebAdmin = function() {
           return;
         }
         var row = _usersLoggedIn[authtoken];
+        var phoneNumber = row.phone;
+        if (!phoneNumber) {
+            var payload = {
+            err:"noPhoneNumber"
+          }
+          res.status(200)
+          .contentType('text/json')
+          .send(payload);
+          return;
+        }
         g.twilio.sendMessage({
-          to: MY_NUMBER,
+          to: phoneNumber,
           from: TWILIO_NUMBER,
           body: message
         }, function (err) {
