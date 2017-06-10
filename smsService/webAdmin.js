@@ -110,7 +110,9 @@ var WebAdmin = function() {
           return;
         }
         var row = _usersLoggedIn[authtoken];
+        console.log(JSON.stringify(row));
         var phoneNumber = row.phone;
+
         if (!phoneNumber) {
             var payload = {
             err:"noPhoneNumber"
