@@ -21,6 +21,13 @@ var cryptoHelper = function() {
     return dec;
   };
 
+  self.generateAuthtoken = function(callback) {
+    crypto.randomBytes(48, function(err, buffer) {
+      var authtoken = buffer.toString('hex');
+      callback(authtoken);
+    }
+  };
+
 };
 
 module.exports = cryptoHelper;

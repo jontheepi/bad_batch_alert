@@ -122,8 +122,7 @@ var WebAdmin = function() {
   };
 
   function login(row, res) {
-    g.crypto.randomBytes(48, function(err, buffer) {
-      var authtoken = buffer.toString('hex');
+    g.cryptoHelper.generateAuthtoken(function(authtoken) {
       _usersLoggedIn[authtoken] = row;
       setTimeout(function(){delete _usersLoggedIn[authtoken];}, 1000*60);//wipe user after 60s
 
