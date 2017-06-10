@@ -5,6 +5,9 @@ var WebAdmin = function() {
   var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
   var MY_NUMBER     = process.env.MY_NUMBER;
 
+
+  var _usersLoggedIn = [];
+
   self.init = function(app, webAdminClient, g)
   {
 
@@ -25,13 +28,10 @@ var WebAdmin = function() {
       findQuery.on('row', function(row) {
         console.log("found row");
         console.log(JSON.stringify(row));
-        var payload = {
-          err:null,
-          token:"authtoken",
-        }
-        res.status(200)
-          .contentType('text/json')
-          .send(payload);
+
+        //generate an auth token and store it.
+        login(row, res);
+       
       });
 
       findQuery.on('end', function(result) {
@@ -89,6 +89,17 @@ var WebAdmin = function() {
         var jsonBody = JSON.parse(body);
         var regions = jsonBody.regions;
         var message = jsonBody.message;
+        var authtoken = jsonBody.authtoken;
+        if (!authtoken || !_usersLoggedIn.hasOwnProperty(authtoken)) {
+          var payload = {
+            err:"notLoggedIn"
+          }
+          res.status(200)
+          .contentType('text/json')
+          .send(payload);
+          return;
+        }
+        var row = _usersLoggedIn[authtoken];
         g.twilio.sendMessage({
           to: MY_NUMBER,
           from: TWILIO_NUMBER,
@@ -98,11 +109,39 @@ var WebAdmin = function() {
             console.log(err);
           }
         });
+
+        var payload = {
+          err:null
+        }
+        res.status(200)
+        .contentType('text/json')
+        .send(payload);
+
       });
     });
   };
 
+  function login(row, res) {
+    g.crypto.randomBytes(48, function(err, buffer) {
+      var authtoken = buffer.toString('hex');
+      _usersLoggedIn[authtoken] = row;
+      setTimeout(function(){delete _usersLoggedIn[authtoken];}, 1000*60);//wipe user after 60s
+
+      var payload = {
+        err:null,
+        token:authtoken,
+      }
+      res.status(200)
+        .contentType('text/json')
+        .send(payload);
+    });
+    
+    
+  }
+
 };
+
+
 
 
 module.exports = WebAdmin;
