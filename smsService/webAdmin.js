@@ -30,7 +30,17 @@ var WebAdmin = function() {
         console.log(JSON.stringify(row));
 
         //generate an auth token and store it.
-        login(row, res);
+        g.cryptoHelper.generateAuthtoken(function(authtoken) {
+          _usersLoggedIn[authtoken] = row;//add to logged in users
+          setTimeout(function(){delete _usersLoggedIn[authtoken];}, 1000*60);//wipe user after 60s
+          var payload = {
+            err:null,
+            token:authtoken,
+          }
+          res.status(200)
+            .contentType('text/json')
+            .send(payload);
+        });
        
       });
 
@@ -120,24 +130,6 @@ var WebAdmin = function() {
       });
     });
   };
-
-  function login(row, res) {
-    g.cryptoHelper.generateAuthtoken(function(authtoken) {
-      _usersLoggedIn[authtoken] = row;
-      setTimeout(function(){delete _usersLoggedIn[authtoken];}, 1000*60);//wipe user after 60s
-
-      var payload = {
-        err:null,
-        token:authtoken,
-      }
-      res.status(200)
-        .contentType('text/json')
-        .send(payload);
-    });
-    
-    
-  }
-
 };
 
 
