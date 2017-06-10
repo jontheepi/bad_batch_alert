@@ -32,7 +32,7 @@ var WebAdmin = function() {
         //generate an auth token and store it.
         g.cryptoHelper.generateAuthtoken(function(authtoken) {
           _usersLoggedIn[authtoken] = row;//add to logged in users
-          setTimeout(function(){delete _usersLoggedIn[authtoken];}, 1000*60);//wipe user after 60s
+          setTimeout(function(){delete _usersLoggedIn[authtoken];}, 1000*60*90);//wipe user after 90 minutes
           var payload = {
             err:null,
             token:authtoken,
