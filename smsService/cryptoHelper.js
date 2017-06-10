@@ -25,7 +25,7 @@ var cryptoHelper = function() {
     crypto.randomBytes(48, function(err, buffer) {
       var authtoken = buffer.toString('hex');
       callback(authtoken);
-    }
+    });
   };
 
 };
