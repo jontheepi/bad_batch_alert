@@ -79,7 +79,7 @@ var WebAdmin = function() {
         var regionArray = regionString.split(", ");
         for (var i = 0; i < regionArray.length; i++){
           var region = parseInt(regionArray[i]);
-          userCounts[region] ++;
+          userCounts[region-1] ++;
         }
       });
 
