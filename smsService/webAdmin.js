@@ -141,10 +141,9 @@ var WebAdmin = function() {
 
       });
     });
-  };
 
-  //Send real message
-  app.post('/webadmin/sendrealmessage', function (req, res) {
+    //Send real message
+    app.post('/webadmin/sendrealmessage', function (req, res) {
       var body = "";
       req.on('data', function (chunk) {
          body += chunk;
@@ -193,7 +192,6 @@ var WebAdmin = function() {
         res.status(200)
         .contentType('text/json')
         .send(payload);
-
       });
     });
   };
