@@ -36,7 +36,7 @@ var WebAdmin = function() {
           var payload = {
             err:null,
             token:authtoken,
-          }
+          };
           res.status(200)
             .contentType('text/json')
             .send(payload);
@@ -47,11 +47,11 @@ var WebAdmin = function() {
       findQuery.on('end', function(result) {
         console.log('end got called' + result);
         if (result.rowCount > 0) return;
-        console.log("did not find user/pass")
+        console.log("did not find user/pass");
         var payload = {
           err:1,
           token:null
-        }
+        };
         res.status(200)
           .contentType('text/json')
           .send(payload);
@@ -78,10 +78,10 @@ var WebAdmin = function() {
       });
 
       findQuery.on('end', function(result) {
-        console.log("Completed.")
+        console.log("Completed.");
         var payload = {
           userCounts:userCounts
-        }
+        };
         res.status(200)
           .contentType('text/json')
           .send(payload);
@@ -103,7 +103,7 @@ var WebAdmin = function() {
         if (!authtoken || !_usersLoggedIn.hasOwnProperty(authtoken)) {
           var payload = {
             err:"notLoggedIn"
-          }
+          };
           res.status(200)
           .contentType('text/json')
           .send(payload);
@@ -114,9 +114,9 @@ var WebAdmin = function() {
         var phoneNumber = row.phone;
 
         if (!phoneNumber) {
-            var payload = {
+          var payload = {
             err:"noPhoneNumber"
-          }
+          };
           res.status(200)
           .contentType('text/json')
           .send(payload);
@@ -134,7 +134,7 @@ var WebAdmin = function() {
 
         var payload = {
           err:null
-        }
+        };
         res.status(200)
         .contentType('text/json')
         .send(payload);
