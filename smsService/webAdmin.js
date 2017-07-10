@@ -142,6 +142,61 @@ var WebAdmin = function() {
       });
     });
   };
+
+  //Send real message
+  app.post('/webadmin/sendrealmessage', function (req, res) {
+      var body = "";
+      req.on('data', function (chunk) {
+         body += chunk;
+      });
+      req.on('end', function () {
+        console.log(body);
+        var jsonBody = JSON.parse(body);
+        var regions = jsonBody.regions;
+        var message = jsonBody.message;
+        var authtoken = jsonBody.authtoken;
+        if (!authtoken || !_usersLoggedIn.hasOwnProperty(authtoken)) {
+          var payload = {
+            err:"notLoggedIn"
+          }
+          res.status(200)
+          .contentType('text/json')
+          .send(payload);
+          return;
+        }
+        var row = _usersLoggedIn[authtoken];
+
+        console.log(JSON.stringify(row));
+
+        if (!row.access_level > 0) {
+            var payload = {
+            err:"accessDenied"
+          }
+          res.status(200)
+          .contentType('text/json')
+          .send(payload);
+          return;
+        }
+        g.twilio.sendMessage({
+          to: MY_NUMBER,
+          from: TWILIO_NUMBER,
+          body: message
+        }, function (err) {
+          if (err) {
+            console.log(err);
+          }
+        });
+
+        var payload = {
+          err:null
+        }
+        res.status(200)
+        .contentType('text/json')
+        .send(payload);
+
+      });
+    });
+  };
 };
 
 
