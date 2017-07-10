@@ -176,6 +176,10 @@ var WebAdmin = function() {
           .send(payload);
           return;
         }
+
+        //find all the users in the regions passed in.
+        //text each user with the message.
+
         g.twilio.sendMessage({
           to: MY_NUMBER,
           from: TWILIO_NUMBER,
