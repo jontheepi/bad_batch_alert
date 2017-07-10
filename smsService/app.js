@@ -61,6 +61,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
     console.log('User client Connected to db');
     userClient = client;
+    G.webAdmin.setUserClient(userClient);
 });
 
 var historyClient;

@@ -7,6 +7,12 @@ var WebAdmin = function() {
 
 
   var _usersLoggedIn = [];
+  var _userClient;
+
+  self.setUserClient = function(userClient)
+  {
+    _userClient = userClient;
+  }
 
   self.init = function(app, webAdminClient, g)
   {
@@ -168,7 +174,7 @@ var WebAdmin = function() {
         console.log(JSON.stringify(row));
 
         if (!row.access_level > 0) {
-            var payload = {
+          var payload = {
             err:"accessDenied"
           }
           res.status(200)
@@ -180,18 +186,43 @@ var WebAdmin = function() {
         //find all the users in the regions passed in.
         //text each user with the message.
 
-        g.twilio.sendMessage({
-          to: MY_NUMBER,
-          from: TWILIO_NUMBER,
-          body: message
-        }, function (err) {
-          if (err) {
-            console.log(err);
+        var region = regions[0];//only supporting single region alerts for now.
+
+        var findQueryString = "SELECT * FROM users WHERE regions LIKE '%" + region + "%'";
+
+        console.log(findQueryString);
+        if (!_userClient) {
+          console.log("user client not found");
+          var payload = {
+            err:"userClientNotFound"
           }
+          res.status(200)
+          .contentType('text/json')
+          .send(payload);
+          return;
+        }
+
+        var findQuery = _userClient.query(findQueryString);
+        findQuery.on('row', function(row) {
+          console.log(JSON.stringify(row));
+          var phoneNumber = g.cryptoHelper.decrypt(row.phone_number);
+          console.log(phoneNumber);
+          g.twilio.sendMessage({
+            to: phoneNumber,
+            from: TWILIO_NUMBER,
+            body: message
+            //mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
+          }, function (err) {
+            if (err) {
+              console.log(err);
+            }
+          });
+        }).on('error', function() {
+          console.log("nobody in region " + region + " to alert.")
         });
 
         var payload = {
-          err:null
+         err:null
         }
         res.status(200)
         .contentType('text/json')
