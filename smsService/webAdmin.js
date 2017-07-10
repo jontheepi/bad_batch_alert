@@ -185,9 +185,25 @@ var WebAdmin = function() {
 
         //find all the users in the regions passed in.
         //text each user with the message.
-
-        var region = regions[0];//only supporting single region alerts for now.
-
+        var region;
+        for (var i = 0; i < regions.length; i++) {
+          if (regions[i]) {
+            region = i+1;
+            break;
+          }
+        }
+        
+        if (!_userClient) {
+          console.log("region not found");
+          var payload = {
+            err:"regionNotFound"
+          }
+          res.status(200)
+          .contentType('text/json')
+          .send(payload);
+          return;
+        }
+        
         var findQueryString = "SELECT * FROM users WHERE regions LIKE '%" + region + "%'";
 
         console.log(findQueryString);
