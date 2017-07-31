@@ -81,8 +81,8 @@ var WebAdmin = function() {
         var boxId = jsonBody.boxId;
      
         g.twilio.sendMessage({
-          to: phoneNumber,
-          from: "+14436834616",
+          to: "+14436834616",
+          from: MY_NUMBER,
           body: "1"
         }, function (err) {
           if (err) {
