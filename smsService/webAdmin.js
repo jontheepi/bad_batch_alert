@@ -67,6 +67,39 @@ var WebAdmin = function() {
 
     });
 
+
+    //unlock a nalox box. Just a test for now.
+    app.post('/webadmin/unlockBox', function (req, res) {
+  
+      var body = "";
+      req.on('data', function (chunk) {
+        body += chunk;
+      });
+      req.on('end', function () {
+        console.log(body);
+        var jsonBody = JSON.parse(body);
+        var boxId = jsonBody.boxId;
+     
+        g.twilio.sendMessage({
+          to: phoneNumber,
+          from: "+14436834616",
+          body: "1"
+        }, function (err) {
+          if (err) {
+            console.log(err);
+          }
+        });
+
+        var payload = {
+          err:0
+        };
+
+        res.status(200)
+          .contentType('text/json')
+          .send(payload);
+        });
+    });
+
     //Get Users In Region
     app.post('/webadmin/getusersinregions', function (req, res) {
       var userCounts = [0,0,0,0,0,0,0,0,0];
