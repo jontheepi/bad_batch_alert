@@ -82,7 +82,7 @@ var WebAdmin = function() {
      
         g.twilio.sendMessage({
           to: "+14436834616",
-          from: MY_NUMBER,
+          from: TWILIO_NUMBER,
           body: "1"
         }, function (err) {
           if (err) {
