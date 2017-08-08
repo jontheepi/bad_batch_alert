@@ -149,7 +149,7 @@ app.post('/call/receive', bodyParser, function (req, res) {
     findQuery.on('row', function(row) {
       console.log("regions =" + row.regions);
       var hasRegion = row.regions != null;
-      G.voiceActions.doVoiceActions(req, res, hasRegion, G);
+      G.voiceActions.doVoiceActions(req, res, hasRegion, G, userClient);
     });
   });
 });
