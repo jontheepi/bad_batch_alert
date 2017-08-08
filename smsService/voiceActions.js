@@ -28,8 +28,17 @@ var audio = { //all the available messages we can play.
   welcome:      'welcome'
 };
 
+function isZipCode(body)
+{
+  if (body.length !== 5) return false;
+  if (isNaN(body)) return false;
+  return true;
+};
+
 var VoiceActions = function() {
   var self = this;
+
+
 
   self.doVoiceActions = function(request, response, hasRegion) {  
 
@@ -59,6 +68,15 @@ var VoiceActions = function() {
 
     // Add a greeting if this is the first question
     //twiml.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
+    if (_activeMessage == audio.registration && input) {
+      var zipvalid = isZipCode(input);
+
+      if (zipvalid) {
+        _activeMessage = audio.registerZip2;
+        twiml.say(input, { voice: 'alice'});
+      } 
+    } 
+
     var url = site + _activeMessage + ext;
     console.log(url);
     twiml.play(url);
