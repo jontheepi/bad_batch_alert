@@ -49,7 +49,7 @@ var VoiceActions = function() {
     //see if we have a call in progress. Find out where we were if so. Otherwise add us and start at the beginning.
 
     var initialMessage = hasRegion ? audio.welcome : audio.registration;
-    _activeCall = {phone:phone, message:initialMessage};
+    _activeCall = {phone:phone, message:initialMessage, zip:undefined};
     var callFound = false;
     for(var i = 0; i < _activeCalls.length; i++) {
       var activeCall = _activeCalls[i];
@@ -72,18 +72,18 @@ var VoiceActions = function() {
     //twiml.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
     if (_activeCall.message == audio.registration && input) {
       var zipvalid = isZipCode(input);
-
       if (zipvalid) {
         _activeCall.message = audio.registerZip2;
+        _activeCall.zip = input;
         twiml.say(input, { voice: 'alice'});
       } 
-    } 
-
-    if (_activeCall.message == audio.registerZip2 && input) {
+    } else if (_activeCall.message == audio.registerZip2 && input) {
       if (input === 1) {
         _activeCall.message = audio.registerZip1;
       } else if (input === 2) {
         _activeCall.message = audio.registration;
+      } else if (input === 3) {
+        twiml.say(_activeCall.zip, { voice: 'alice'});
       }
     }
 
