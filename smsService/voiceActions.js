@@ -79,14 +79,17 @@ var VoiceActions = function() {
       } 
     } else if (_activeCall.message == audio.registerZip2 && input) {
       if (input === 1) {
+        console.log("registerZip1");
         _activeCall.message = audio.registerZip1;
       } else if (input === 2) {
+        console.log('registration')
         _activeCall.message = audio.registration;
       } else if (input === 3) {
+        console.log('registerZip2');
+        _activeCall.message = audio.registerZip2;
         twiml.say(_activeCall.zip, { voice: 'alice'});
       }
     }
-
 
     var url = site + _activeCall.message + ext;
     console.log(url);
