@@ -115,6 +115,7 @@ var UserActions = function()
       var insertQueryString = "UPDATE users SET regions = '" + region + "' WHERE phone_number = '" + cryptoSender + "'";
       var insertQuery = client.query(insertQueryString);
       insertQuery.on('end', function() {
+        if (!res) return;
         var body = "👍 You are all set to receive alerts in region " + region + ".\n\n" +
         "There are many other useful resources built into this service. To see all the commands text the word 'help'.";
         self.userResponse(res, body); 
@@ -406,7 +407,7 @@ var UserActions = function()
     }
     if (matchedRegionsArray.length === 0) {
       var errorText = "Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com.";
-      self.userResponse(res, errortext);
+      if (res) self.userResponse(res, errortext);
     }
     else {
       var regions = matchedRegionsArray.join(', '); 

@@ -83,7 +83,7 @@ var VoiceActions = function() {
         console.log("registerZip1");
         twiml.say(_activeCall.zip, { voice: 'alice'});
         _activeCall.message = audio.registerZip1;
-        G.userActions.userSetZipCode(G, response, userClient, phone, _activeCall.zip) 
+        G.userActions.userSetZipCode(G, null, userClient, phone, _activeCall.zip) 
       } else if (input == '2') {
         console.log('registration')
         _activeCall.message = audio.registration;
