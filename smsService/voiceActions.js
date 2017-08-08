@@ -71,6 +71,7 @@ var VoiceActions = function() {
     // Add a greeting if this is the first question
     //twiml.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
     if (_activeCall.message == audio.registration && input) {
+      console.log('registration');
       var zipvalid = isZipCode(input);
       if (zipvalid) {
         _activeCall.message = audio.registerZip2;
@@ -90,6 +91,7 @@ var VoiceActions = function() {
         twiml.say(_activeCall.zip, { voice: 'alice'});
       }
     }
+
 
     var url = site + _activeCall.message + ext;
     console.log(url);
