@@ -143,7 +143,7 @@ app.post('/call/receive', bodyParser, function (req, res) {
   var body   = "phone call";
   console.log ('SENDER:' + sender + ', BODY:' + body);
   insertUser(res, sender, body, function(){
-    var cryptoSender = g.cryptoHelper.encrypt(sender);
+    var cryptoSender = G.cryptoHelper.encrypt(sender);
     var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = userClient.query(findQueryString);
     findQuery.on('row', function(row) {
