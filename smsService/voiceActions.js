@@ -80,9 +80,9 @@ var VoiceActions = function() {
     } 
 
     if (_activeCall.message == audio.registerZip2 && input) {
-      if (input === '1') {
+      if (input === 1) {
         _activeCall.message = audio.registerZip1;
-      } else if (input === '2') {
+      } else if (input === 2) {
         _activeCall.message = audio.registration;
       }
     }
