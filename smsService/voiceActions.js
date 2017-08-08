@@ -40,7 +40,7 @@ var VoiceActions = function() {
 
 
 
-  self.doVoiceActions = function(request, response, hasRegion) {  
+  self.doVoiceActions = function(request, response, hasRegion, G) {  
 
     var phone = request.body.From;
     var input = request.body.RecordingUrl || request.body.Digits;
@@ -81,7 +81,9 @@ var VoiceActions = function() {
     } else if (_activeCall.message == audio.registerZip2 && input) {
       if (input == '1') {
         console.log("registerZip1");
+        twiml.say(_activeCall.zip, { voice: 'alice'});
         _activeCall.message = audio.registerZip1;
+        G.userActions.userSetZipCode(G, response, G.userClient, phone, _activeCall.zip) 
       } else if (input == '2') {
         console.log('registration')
         _activeCall.message = audio.registration;
