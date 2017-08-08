@@ -3,7 +3,7 @@ var TwimlResponse = require('twilio').TwimlResponse;
 
 
 var _activeCalls = [];//all phone calls in progress.
-var _activeMessage;//where they are at in the menu.
+var _activeCall;
 
 var site = "http://www.badbatchalert.com/audio/";//the site where the audio lives  
 var ext = ".wav";//the audio extension.
@@ -47,12 +47,14 @@ var VoiceActions = function() {
     var twiml = new TwimlResponse();
 
     //see if we have a call in progress. Find out where we were if so. Otherwise add us and start at the beginning.
-    _activeMessage = hasRegion ? audio.welcome : audio.registration;
+
+    var initialMessage = hasRegion ? audio.welcome : audio.registration;
+    _activeCall = {phone:phone, message:initialMessage};
     var callFound = false;
     for(var i = 0; i < _activeCalls.length; i++) {
       var activeCall = _activeCalls[i];
       if (activeCall.phone === phone) {
-        _activeMessage = activeCall.message;
+        _activeCall = activeCall;
         callFound = true;
         console.log('found call');
         break;
@@ -61,23 +63,32 @@ var VoiceActions = function() {
 
     if (!callFound) {
       console.log("new call");
-      _activeCalls.push({phone:phone, message:_activeMessage});
+      _activeCalls.push(_activeCall);
     }
 
     console.log("input = " + input);
 
     // Add a greeting if this is the first question
     //twiml.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
-    if (_activeMessage == audio.registration && input) {
+    if (_activeCall.message == audio.registration && input) {
       var zipvalid = isZipCode(input);
 
       if (zipvalid) {
-        _activeMessage = audio.registerZip2;
+        _activeCall.message = audio.registerZip2;
         twiml.say(input, { voice: 'alice'});
       } 
     } 
 
-    var url = site + _activeMessage + ext;
+    if (_activeCall.message == audio.registerZip2 && input) {
+      if (input === '1') {
+        _activeCall.message = audio.registerZip1;
+      } else if (input === '2') {
+        _activeCall.message = audio.registration;
+      }
+    }
+
+
+    var url = site + _activeCall.message + ext;
     console.log(url);
     twiml.play(url);
 
