@@ -142,10 +142,15 @@ app.post('/call/receive', bodyParser, function (req, res) {
   var sender = req.body.From;
   var body   = "phone call";
   console.log ('SENDER:' + sender + ', BODY:' + body);
-  insertUser(res, sender, body);
-
-  G.voiceActions.doVoiceActions(req, res);
- 
+  insertUser(res, sender, body, function(){
+    var cryptoSender = g.cryptoHelper.encrypt(sender);
+    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
+    var findQuery = userClient.query(findQueryString);
+    findQuery.on('row', function(row) {
+      var hasRegion = row.regions != undefined;
+      G.voiceActions.doVoiceActions(req, res, hasRegion);
+    });
+  });
 });
 
 // [START receive_sms]
