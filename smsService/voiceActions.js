@@ -5,7 +5,7 @@ var TwimlResponse = require('twilio').TwimlResponse;
 var _activeCalls = [];//all phone calls in progress.
 var _activeMessage;//where they are at in the menu.
 
-var site = "https://www.badbatchalert.com/audio/";//the site where the audio lives  
+var site = "http://www.badbatchalert.com/audio/";//the site where the audio lives  
 var ext = ".wav";//the audio extension.
 
 var audio = { //all the available messages we can play.
@@ -57,15 +57,11 @@ var VoiceActions = function() {
 
     console.log("input = " + input);
 
-    // respond with the current TwiML content
-    function respond() {
-      response.type('text/xml');
-      response.send(twiml.toString());
-    }
-
     // Add a greeting if this is the first question
     //twiml.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
-    twiml.play(site + _activeMessage + ext);
+    var url = site + _activeMessage + ext;
+    console.log(url);
+    twiml.play(url);
 
     // Depending on the type of question, we either need to get input via
     // DTMF tones or recorded speech
@@ -75,7 +71,8 @@ var VoiceActions = function() {
     });
 
     // render TwiML response
-    respond();
+    response.type('text/xml');
+    response.send(twiml.toString());
   };
  
 };
