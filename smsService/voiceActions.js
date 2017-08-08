@@ -38,7 +38,7 @@ var VoiceActions = function() {
     var twiml = new TwimlResponse();
 
     //see if we have a call in progress. Find out where we were if so. Otherwise add us and start at the beginning.
-    _activeMessage = hasRegion ? audio.welcome: audio.registration;
+    _activeMessage = hasRegion ? audio.welcome : audio.registration;
     var callFound = false;
     for(var i = 0; i < _activeCalls.length; i++) {
       var activeCall = _activeCalls[i];
@@ -65,7 +65,7 @@ var VoiceActions = function() {
 
     // Add a greeting if this is the first question
     //twiml.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
-    twiml.play(site + _activeMesssage + ext);
+    twiml.play(site + _activeMessage + ext);
 
     // Depending on the type of question, we either need to get input via
     // DTMF tones or recorded speech
