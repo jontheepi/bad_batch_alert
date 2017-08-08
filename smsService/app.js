@@ -147,7 +147,8 @@ app.post('/call/receive', bodyParser, function (req, res) {
     var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
     var findQuery = userClient.query(findQueryString);
     findQuery.on('row', function(row) {
-      var hasRegion = row.regions != undefined;
+      console.log("regions =" + row.regions);
+      var hasRegion = row.regions != null;
       G.voiceActions.doVoiceActions(req, res, hasRegion);
     });
   });
