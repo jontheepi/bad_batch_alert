@@ -76,7 +76,7 @@ var UserActions = function()
     self.userResponse(res, body);
   };
   
-  self.userLeave= function(g, res, client, sender, action)
+  self.userLeave = function(g, res, client, sender, action)
   { 
     console.log("userLeave");
     var cryptoSender = g.cryptoHelper.encrypt(sender);
@@ -91,7 +91,7 @@ var UserActions = function()
       console.log('Error on userLeave');
     });
     var body= "Thanks for using Bad Batch. Text 'join' to continue recieving updates.";
-    self.userResponse(res, body);
+    if(res) self.userResponse(res, body);
   };
   
   self.userMap = function(g, res, client, sender, action)
