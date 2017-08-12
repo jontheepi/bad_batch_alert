@@ -71,6 +71,7 @@ var VoiceActions = function() {
     // Add a greeting if this is the first question
     //twiml.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
     if (_activeCall.message == audio.registration && input) {
+      //user registration, set zipcode
       console.log('registration');
       var zipvalid = isZipCode(input);
       if (zipvalid) {
@@ -78,7 +79,13 @@ var VoiceActions = function() {
         _activeCall.zip = input;
         twiml.say(input, { voice: 'alice'});
       } 
+    } else if(_activeCall.message == audio.registerZip1 && input) {
+      // after user has successfully registered a zipcode
+      if (input == '1') {
+        _activeCall.message = audio.help; 
+      }
     } else if (_activeCall.message == audio.registerZip2 && input) {
+      // confirm zipcode
       if (input == '1') {
         console.log("registerZip1");
         twiml.say(_activeCall.zip, { voice: 'alice'});
@@ -91,6 +98,26 @@ var VoiceActions = function() {
         console.log('registerZip2');
         _activeCall.message = audio.registerZip2;
         twiml.say(_activeCall.zip, { voice: 'alice'});
+      }
+    } else if (_activeCall.message == audio.help && input) {
+      //say help options
+      switch(input) {
+        case '1'://hear message again
+          _activeCall.message = audio.help;
+          break;
+        case '2'://van
+          twiml.say('The van is at 1010 TODO street.', { voice: 'alice'});
+          break;
+        case '3'://send message
+          twiml.say('Say your message and we\'ll get back to you. If this is a medical emergency, please call 911.', { voice: 'alice'});
+          break;
+        case '4'://learn more/info
+          //needs to get audio currently on live
+          twiml.say('Bad Batch alert is great.', { voice: 'alice'});
+          break;
+        case '5'://stop alerts
+          G.userActions.userLeave(G, null, userClient, phone, '');
+          break;
       }
     }
 
