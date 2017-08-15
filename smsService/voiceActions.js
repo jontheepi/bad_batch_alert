@@ -111,7 +111,9 @@ var VoiceActions = function() {
           break;
         case '2'://van
           var vanLocation =  G.userActions.userVan(G, null, userClient, phone, '');
-          twiml.say(vanLocation, { voice: 'alice'});
+          var message = vanLocation + ". To Hear more options, press 1 followed by star.";
+          _activeCall.message = audio.help;
+          twiml.say(message, { voice: 'alice'});
           break;
         case '3'://send message
           twiml.say('Say your message and we\'ll get back to you. If this is a medical emergency, please call 911.', { voice: 'alice'});
