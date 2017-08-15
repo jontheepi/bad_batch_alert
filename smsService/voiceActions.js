@@ -45,9 +45,6 @@ var VoiceActions = function() {
     var phone = request.body.From;
     var input = request.body.RecordingUrl || request.body.Digits;
     var twiml = new TwimlResponse();
-
-    var isGathered = false;
-
     //see if we have a call in progress. Find out where we were if so. Otherwise add us and start at the beginning.
 
     var initialMessage = hasRegion ? audio.welcome : audio.registration;
@@ -69,6 +66,7 @@ var VoiceActions = function() {
     }
 
     console.log("input = " + input);
+    var numDigits = 1;
 
     // Add a greeting if this is the first question
     //twiml.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
@@ -82,11 +80,6 @@ var VoiceActions = function() {
           _activeCall.message = audio.registerZip2;
           _activeCall.zip = input;
           twiml.say(input + ". If this zipcode is correct press 1 , if not press 2. To hear the zipcode again press three.", { voice: 'alice'});
-          isGathered = true;
-          twiml.gather({
-           timeout: 15,
-           numDigits: 1
-          });
         } 
       } else {
         twiml.say("Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, please enter your zipcode into the number pad followed by the star key.", { voice: 'alice'});
@@ -103,21 +96,23 @@ var VoiceActions = function() {
       // confirm zipcode
       if (input == '1') {
         console.log("registerZip1");
-        twiml.say("You are all set to receive alerts at " + _activeCall.zip + " Text 1 followed by star for more options, or hang up now.", { voice: 'alice'});
+        twiml.say("Congratulations! You are all set to receive alerts at " + _activeCall.zip + ". If you like to hear more options, press 1 now.", { voice: 'alice'});
         _activeCall.message = audio.help;
         G.userActions.userSetZipCode(G, null, userClient, phone, _activeCall.zip) 
       } else if (input == '2') {
         console.log('registration');
-         twiml.say("Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, please enter your zipcode into the number pad followed by the star key.", { voice: 'alice'});
+         twiml.say("Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, Enter your 5 digit zip code now.", { voice: 'alice'});
         _activeCall.message = audio.registration;
+        numDigits = 5;
       } else if (input == '3') {
         console.log('registerZip2');
         _activeCall.message = audio.registerZip2;
-        twiml.say(_activeCall.zip, { voice: 'alice'});
+        twiml.say(input + ". If this zipcode is correct press 1 , if not press 2. To hear the zipcode again press 3.", { voice: 'alice'});
       } else {
         console.log('not recognized');
-        twiml.say("Sorry, " + input + " is not an available option. To begin receiving overdose alerts in your area, please enter your zipcode into the number pad followed by the star key.", { voice: 'alice'});
+        twiml.say("Sorry, " + input + " is not an available option. To begin receiving overdose alerts in your area, please enter the 5 digits of your zip code", { voice: 'alice'});
         _activeCall.message = audio.registration;
+        numDigits = 5;
       }
     } else if (_activeCall.message == audio.help && input) {
       //say help options
@@ -146,11 +141,6 @@ var VoiceActions = function() {
           twiml.play(url);
           break;
       }
-      isGathered = true;
-      twiml.gather({
-       timeout: 15,
-       numDigits: 1
-      });
     } else {
       if (input && input == '1') {
         _activeCall.message = audio.help;
@@ -158,7 +148,7 @@ var VoiceActions = function() {
         console.log(url);
         twiml.play(url);
       } else {
-        twiml.say('Thanks for calling the Bad Batch Alert service. Press 1 followed by star for more options.', { voice: 'alice'});
+        twiml.say('Thanks for calling the Bad Batch Alert service. Press 1 for more options.', { voice: 'alice'});
       }
     } 
 
@@ -169,12 +159,11 @@ var VoiceActions = function() {
 
     // Depending on the type of question, we either need to get input via
     // DTMF tones or recorded speech
-    if (!isGathered) {
-      twiml.gather({
-        timeout: 15,
-        finishOnKey: '*'
-      });
-    }
+    twiml.gather({
+      timeout: 15,
+      numDigits: numDigits
+    });
+    
 
     // render TwiML response
     response.type('text/xml');
