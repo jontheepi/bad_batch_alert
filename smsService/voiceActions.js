@@ -105,6 +105,9 @@ var VoiceActions = function() {
       switch(input) {
         case '1'://hear message again
           _activeCall.message = audio.help;
+          var url = site + _activeCall.message + ext;
+          console.log(url);
+          twiml.play(url);
           break;
         case '2'://van
           var vanLocation =  G.userActions.userVan(G, null, userClient, phone, '');
@@ -123,10 +126,17 @@ var VoiceActions = function() {
           break;
       }
     } else if (_activeCall.message == audio.welcome) {
-      twiml.say('Thanks for calling the Bad Batch Alert service. Press 1 followed by star for more options.');
+      if (input && input == '1') {
+        _activeCall.message = audio.help;
+        var url = site + _activeCall.message + ext;
+        console.log(url);
+        twiml.play(url);
+      } else {
+        twiml.say('Thanks for calling the Bad Batch Alert service. Press 1 followed by star for more options.', { voice: 'alice'});
+      }
     }
 
-
+    
     //var url = site + _activeCall.message + ext;
     //console.log(url);
     //twiml.play(url);
