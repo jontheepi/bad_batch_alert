@@ -142,14 +142,10 @@ var VoiceActions = function() {
           break;
       }
     } else {
-      if (input && input == '1') {
-        _activeCall.message = audio.help;
-        var url = site + _activeCall.message + ext;
-        console.log(url);
-        twiml.play(url);
-      } else {
-        twiml.say('Thanks for calling the Bad Batch Alert service. Press 1 for more options.', { voice: 'alice'});
-      }
+      _activeCall.message = audio.help;
+      var url = site + _activeCall.message + ext;
+      console.log(url);
+      twiml.play(url);
     } 
 
     
