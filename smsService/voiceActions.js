@@ -125,7 +125,8 @@ var VoiceActions = function() {
           twiml.say(message, { voice: 'alice'});
           break;
         case '3'://send message
-          twiml.say('Say your message and we\'ll get back to you. If this is a medical emergency, please call 911.', { voice: 'alice'});
+          twiml.say('Please record your message and we will get back to you. If this is a medical emergency, please call 9 1 1.', { voice: 'alice'});
+          twiml.record();
           break;
         case '4'://learn more/info
           //needs to get audio currently on live
