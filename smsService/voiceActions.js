@@ -161,8 +161,7 @@ var VoiceActions = function() {
       input:'dtmf speech',
       timeout: 15,
       numDigits: numDigits,
-      bargeIn: true,
-      action:'test'
+      bargeIn: true
     });
     
 
