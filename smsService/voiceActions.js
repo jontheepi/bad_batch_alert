@@ -83,6 +83,7 @@ var VoiceActions = function() {
         } 
       } else {
         twiml.say("Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, please enter your 5 digit zipcode now.", { voice: 'alice'});
+        numDigits = 5;
       }
     } else if((_activeCall.message == audio.registerZip1 || _activeCall.message == audio.registerZip1) && input) {
       //after user has successfully registered a zipcode
