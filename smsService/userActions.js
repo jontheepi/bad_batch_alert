@@ -323,7 +323,7 @@ var UserActions = function()
     self.userResponse(res, body);
   };
   
-  //userNeedles will show you where and when the need fan will show up at certain times/
+  //userVan will show you where and when the needle exchange van will show up at certain times
   self.userVan = function (g,res,client,sender,action)
   {
     console.log("userVan");
@@ -386,8 +386,11 @@ var UserActions = function()
     }
 
     //send message
-    var body = vanLocation;
-    self.userResponse(res, body);
+    if (res) {
+      self.userResponse(res, vanLocation);
+    }
+
+    return vanLocation;
 
   };
 
