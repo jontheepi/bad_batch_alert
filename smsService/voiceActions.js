@@ -79,7 +79,7 @@ var VoiceActions = function() {
         if (zipvalid) {
           _activeCall.message = audio.registerZip2;
           _activeCall.zip = input;
-          twiml.say(input + "if this zipcode is correct press 1 followed by the star key, if not press 2 followed by the star key. To hear the zipcode again press three followed by star.", { voice: 'alice'});
+          twiml.say(input + ". If this zipcode is correct press 1 followed by the star key, if not press 2 followed by the star key. To hear the zipcode again press three followed by star.", { voice: 'alice'});
         } 
       } else {
         twiml.say("Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, please enter your zipcode into the number pad followed by the star key.", { voice: 'alice'});
@@ -87,7 +87,10 @@ var VoiceActions = function() {
     } else if((_activeCall.message == audio.registerZip1 || _activeCall.message == audio.registerZip1) && input) {
       //after user has successfully registered a zipcode
       if (input == '1') {
-        _activeCall.message = audio.help; 
+        _activeCall.message = audio.help;
+        var url = site + _activeCall.message + ext;
+        console.log(url);
+        twiml.play(url);
       }
     } else if (_activeCall.message == audio.registerZip2 && input) {
       // confirm zipcode
@@ -104,16 +107,14 @@ var VoiceActions = function() {
         console.log('registerZip2');
         _activeCall.message = audio.registerZip2;
         twiml.say(_activeCall.zip, { voice: 'alice'});
+      } else {
+        console.log('not recognized');
+        twiml.say("Sorry, " + input + " is not an available option. To begin receiving overdose alerts in your area, please enter your zipcode into the number pad followed by the star key.", { voice: 'alice'});
+        _activeCall.message = audio.registration;
       }
     } else if (_activeCall.message == audio.help && input) {
       //say help options
       switch(input) {
-        case '1'://hear message again
-          _activeCall.message = audio.help;
-          var url = site + _activeCall.message + ext;
-          console.log(url);
-          twiml.play(url);
-          break;
         case '2'://van
           var vanLocation =  G.userActions.userVan(G, null, userClient, phone, '');
           var message = vanLocation + ". To Hear more options, press 1 followed by star.";
@@ -131,8 +132,14 @@ var VoiceActions = function() {
           twiml.say('Thank you for using the Bad Batch Alert service. You are no longer registered to receive alerts.');
           G.userActions.userLeave(G, null, userClient, phone, '');
           break;
+        default:
+          _activeCall.message = audio.help;
+          var url = site + _activeCall.message + ext;
+          console.log(url);
+          twiml.play(url);
+          break;
       }
-    } else if (_activeCall.message == audio.welcome) {
+    } else {
       if (input && input == '1') {
         _activeCall.message = audio.help;
         var url = site + _activeCall.message + ext;
@@ -141,7 +148,7 @@ var VoiceActions = function() {
       } else {
         twiml.say('Thanks for calling the Bad Batch Alert service. Press 1 followed by star for more options.', { voice: 'alice'});
       }
-    }
+    } 
 
     
     //var url = site + _activeCall.message + ext;
