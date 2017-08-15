@@ -122,6 +122,8 @@ var VoiceActions = function() {
           G.userActions.userLeave(G, null, userClient, phone, '');
           break;
       }
+    } else if (_activeCall.message == audio.welcome) {
+      twiml.say('Thanks for calling the Bad Batch Alert service. Press 1 followed by star for more options.');
     }
 
 
