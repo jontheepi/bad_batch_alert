@@ -128,10 +128,10 @@ var VoiceActions = function() {
           break;
         case '4'://learn more/info
           //needs to get audio currently on live
-          twiml.say('Bad Batch Alert is an anonymous free text message service to help heroin users stay alive in Baltimore City. Find out more at Bad Batch Alert dot com', { voice: 'alice'});
+          twiml.say('Bad Batch Alert is an anonymous free text message service to help heroin users stay alive in Baltimore City. Find out more at Bad Batch Alert dot com. Press 1 for more options', { voice: 'alice'});
           break;
         case '5'://stop alerts
-          twiml.say('Thank you for using the Bad Batch Alert service. You are no longer registered to receive alerts.');
+          twiml.say('Thank you for using the Bad Batch Alert service. You are no longer registered to receive alerts. Press 1 for more options.');
           G.userActions.userLeave(G, null, userClient, phone, '');
           break;
         default:
