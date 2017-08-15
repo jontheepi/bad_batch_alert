@@ -143,9 +143,7 @@ var VoiceActions = function() {
       }
     } else {
       _activeCall.message = audio.help;
-      var url = site + _activeCall.message + ext;
-      console.log(url);
-      twiml.play(url);
+      twiml.say("Thank you for calling Bad Batch Alert, " + HELP_STR, { voice: 'alice'});
     } 
 
     
