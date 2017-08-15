@@ -47,7 +47,7 @@ var VoiceActions = function() {
     var twiml = new TwimlResponse();
     //see if we have a call in progress. Find out where we were if so. Otherwise add us and start at the beginning.
 
-    var initialMessage = hasRegion ? audio.welcome : audio.registration;
+    var initialMessage = hasRegion ? audio.help : audio.registration;
     _activeCall = {phone:phone, message:initialMessage, zip:undefined};
     var callFound = false;
     for(var i = 0; i < _activeCalls.length; i++) {
@@ -82,7 +82,7 @@ var VoiceActions = function() {
           twiml.say(input + ". If this zipcode is correct press 1 , if not press 2. To hear the zipcode again press three.", { voice: 'alice'});
         } 
       } else {
-        twiml.say("Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, please enter your zipcode into the number pad followed by the star key.", { voice: 'alice'});
+        twiml.say("Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, please enter your 5 digit zipcode now.", { voice: 'alice'});
       }
     } else if((_activeCall.message == audio.registerZip1 || _activeCall.message == audio.registerZip1) && input) {
       //after user has successfully registered a zipcode
@@ -119,7 +119,7 @@ var VoiceActions = function() {
       switch(input) {
         case '2'://van
           var vanLocation =  G.userActions.userVan(G, null, userClient, phone, '');
-          var message = vanLocation + ". To Hear more options, press 1 followed by star.";
+          var message = vanLocation + ". To Hear more options, press 1 now.";
           _activeCall.message = audio.help;
           twiml.say(message, { voice: 'alice'});
           break;
