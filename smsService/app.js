@@ -154,6 +154,10 @@ app.post('/call/receive', bodyParser, function (req, res) {
   });
 });
 
+app.post('/call/receive/test', bodyParser, function (req, res) {
+  console.log("errr maybe this worked?");
+});
+
 // [START receive_sms]
 app.post('/sms/receive', bodyParser, function (req, res) {
   var sender = req.body.From;

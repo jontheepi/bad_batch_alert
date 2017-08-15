@@ -158,10 +158,11 @@ var VoiceActions = function() {
     // Depending on the type of question, we either need to get input via
     // DTMF tones or recorded speech
     twiml.gather({
-      input:'dtmf',
+      input:'dtmf speech',
       timeout: 15,
       numDigits: numDigits,
-      bargeIn: true
+      bargeIn: true,
+      action:'test'
     });
     
 
