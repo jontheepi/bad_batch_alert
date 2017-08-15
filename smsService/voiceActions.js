@@ -28,6 +28,8 @@ var audio = { //all the available messages we can play.
   welcome:      'welcome'
 };
 
+var HELP_STR = "If you would like to know where the Baltimore Needle Exchange Van is right now, Press 2. If you'd like to send an anonymous report to the Bad Batch Alert team, press 3.  If you would like to learn more about the Bad Batch alert service, press 4. If you would like to stop recieving overdose alerts, press 5. If you would like to hear this message again, press 1.";
+
 function isZipCode(body)
 {
   if (body.length !== 5) return false;
@@ -89,9 +91,7 @@ var VoiceActions = function() {
       //after user has successfully registered a zipcode
       if (input == '1') {
         _activeCall.message = audio.help;
-        var url = site + _activeCall.message + ext;
-        console.log(url);
-        twiml.play(url);
+        twiml.say(HELP_STR, { voice: 'alice'});
       }
     } else if (_activeCall.message == audio.registerZip2 && input) {
       // confirm zipcode
@@ -138,9 +138,7 @@ var VoiceActions = function() {
           break;
         default:
           _activeCall.message = audio.help;
-          var url = site + _activeCall.message + ext;
-          console.log(url);
-          twiml.play(url);
+          twiml.say(HELP_STR, { voice: 'alice'});
           break;
       }
     } else {
