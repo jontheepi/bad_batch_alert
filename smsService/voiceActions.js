@@ -158,7 +158,8 @@ var VoiceActions = function() {
     // DTMF tones or recorded speech
     twiml.gather({
       timeout: 15,
-      numDigits: numDigits
+      numDigits: numDigits,
+      bargeIn: true
     });
     
 
