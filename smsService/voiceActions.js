@@ -70,15 +70,20 @@ var VoiceActions = function() {
 
     // Add a greeting if this is the first question
     //twiml.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
-    if (_activeCall.message == audio.registration && input) {
+    if (_activeCall.message == audio.registration) {
       //user registration, set zipcode
       console.log('registration');
-      var zipvalid = isZipCode(input);
-      if (zipvalid) {
-        _activeCall.message = audio.registerZip2;
-        _activeCall.zip = input;
-        twiml.say(input + "if this zipcode is correct press 1 followed by the star key, if not press 2 followed by the star key. To hear the zipcode again press three followed by star.", { voice: 'alice'});
-      } 
+
+      if (input) {
+        var zipvalid = isZipCode(input);
+        if (zipvalid) {
+          _activeCall.message = audio.registerZip2;
+          _activeCall.zip = input;
+          twiml.say(input + "if this zipcode is correct press 1 followed by the star key, if not press 2 followed by the star key. To hear the zipcode again press three followed by star.", { voice: 'alice'});
+        } 
+      } else {
+        twiml.say("Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, please enter your zipcode into the number pad followed by the star key.", { voice: 'alice'});
+      }
     } else if((_activeCall.message == audio.registerZip1 || _activeCall.message == audio.registerZip1) && input) {
       //after user has successfully registered a zipcode
       if (input == '1') {
