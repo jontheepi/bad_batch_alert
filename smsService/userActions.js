@@ -289,7 +289,7 @@ var UserActions = function()
     self.userResponse(res, body);
   };
 
-  elf.userNaloxone = function(g, res, client, sender, action) 
+  self.userNaloxone = function(g, res, client, sender, action) 
   {
     var body  = "This new feature is currently under development.";
     self.userResponse(res, body);
