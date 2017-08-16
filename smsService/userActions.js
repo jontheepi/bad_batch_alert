@@ -1,7 +1,7 @@
 var UserActions = function() 
 {
   var self = this;
-  var commands = ["van","near","join","help","map", "add", "leave", "!", "share", "info","treatment"];
+  var commands = ["van", "near", "join", "help", "map", "add", "leave", "!", "share", "info", "treatment", "naloxone"];
   var commandDescriptions = ["Tells you where the Baltimore Needle Exchange Van is at any time.",
    "Tells you where the nearest available medical care center is.", 
    "Registers you with the Bad Batch alert service.",
@@ -12,7 +12,8 @@ var UserActions = function()
    "Text '!' followed by your message to anonymously send a message to someone who can help you.", 
    "Text 'share' followed by a friend's number to tell that friend about the Bad Batch Alert service.",
    "Gives you some additional information about the service",
-   "To get the 24 hour crisis number."];
+   "To get the 24 hour crisis number.",
+   "To get information about naloxone resources near you."];
 
    var regionZips = [ 
    /* region 1  */    [21217, 21216],
@@ -265,7 +266,7 @@ var UserActions = function()
       }
     }); 
 
-    var body  = "Your report has been sent. Text 'OD' if this is an emergency.";
+    var body  = "Your report has been sent. Please contact 911 if this is a medical emergency.";
     self.userResponse(res, body);
   };
 	
@@ -285,6 +286,12 @@ var UserActions = function()
     }); 
 
     var body  = "Thank you for your report we are taking action.";
+    self.userResponse(res, body);
+  };
+
+  elf.userNaloxone = function(g, res, client, sender, action) 
+  {
+    var body  = "This new feature is currently under development.";
     self.userResponse(res, body);
   }
 
@@ -465,6 +472,8 @@ var UserActions = function()
       self.userJoin(g, res, client, sender, body);   
     } else if (command == 'od') {
       self.userOd(g, res, client, sender, body);
+    } else if (command == 'naloxone') {
+      self.userNaloxone(g, res, client, sender, body);
     } else {
       self.userFail(g, res, client, sender, body);
     }
