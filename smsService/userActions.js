@@ -394,7 +394,7 @@ var UserActions = function()
 
     //send message
     if (res) {
-      self.userResponse(res, vanLocation);
+      self.userResponse(res, vanLocation +' Full schduele at http://bit.ly/2vN1GE6.');
     }
 
     return vanLocation;
