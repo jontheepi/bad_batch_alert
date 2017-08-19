@@ -291,9 +291,10 @@ var UserActions = function()
 
   self.userNaloxone = function(g, res, client, sender, action) 
   {
-    var body  = "This new feature is currently under development.";
+    console.log("userNaloxone");
+    var body  = "This new feature is currently under development. See the Naloxone training schedule at http://dontdie.org/public-trainings-schedule/";
     self.userResponse(res, body);
-  }
+  };
 
   //userShare will allow the user's message to share their experience to others/
   self.userShare = function(g, res, client, sender, action)
