@@ -73,13 +73,13 @@ var VoiceActions = function() {
       if (input) {
         var zipvalid = G.userActions.isZipCode(input);
         if (zipvalid) {
-          var matchedRegionsArray = G.userActions.getRegionsFromZipCode(body);
+          var matchedRegionsArray = G.userActions.getRegionsFromZipCode(input);
           if (matchedRegionsArray.length === 0) {
-            var errorText = twiml.say("Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com.", { voice: 'alice'});
+            twiml.say("Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com.", { voice: 'alice'});
           } else {
-             _activeCall.message = audio.registerZip2;
-             _activeCall.zip = input;
-             twiml.say(input + ". If this zipcode is correct press 1 , if not press 2. To hear the zipcode again press three.", { voice: 'alice'});
+            _activeCall.message = audio.registerZip2;
+            _activeCall.zip = input;
+            twiml.say(input + ". If this zipcode is correct press 1 , if not press 2. To hear the zipcode again press three.", { voice: 'alice'});
           }
         } 
       } else {
