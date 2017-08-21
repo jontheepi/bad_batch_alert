@@ -30,12 +30,6 @@ var audio = { //all the available messages we can play.
 
 var HELP_STR = "If you would like to know where the Baltimore Needle Exchange Van is right now, Press 2. If you'd like to send an anonymous report to the Bad Batch Alert team, press 3.  If you would like to learn more about the Bad Batch alert service, press 4. If you would like to stop recieving overdose alerts, press 5. If you would like to hear this message again, press 1.";
 
-function isZipCode(body)
-{
-  if (body.length !== 5) return false;
-  if (isNaN(body)) return false;
-  return true;
-};
 
 var VoiceActions = function() {
   var self = this;
@@ -77,11 +71,16 @@ var VoiceActions = function() {
       console.log('registration');
 
       if (input) {
-        var zipvalid = isZipCode(input);
+        var zipvalid = userClient.isZipCode(input);
         if (zipvalid) {
-          _activeCall.message = audio.registerZip2;
-          _activeCall.zip = input;
-          twiml.say(input + ". If this zipcode is correct press 1 , if not press 2. To hear the zipcode again press three.", { voice: 'alice'});
+          var matchedRegionsArray = userClient.getRegionsFromZipCode(body);
+          if (matchedRegionsArray.length === 0) {
+            var errorText = twiml.say("Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com.", { voice: 'alice'});
+          } else {
+             _activeCall.message = audio.registerZip2;
+             _activeCall.zip = input;
+             twiml.say(input + ". If this zipcode is correct press 1 , if not press 2. To hear the zipcode again press three.", { voice: 'alice'});
+          }
         } 
       } else {
         twiml.say("Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, please enter your 5 digit zipcode now.", { voice: 'alice'});

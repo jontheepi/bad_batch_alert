@@ -405,17 +405,7 @@ var UserActions = function()
   self.userSetZipCode = function(g, res, client, sender, body) 
   {
     console.log("userSetZipCode");
-    var zipCode = parseInt(body);
-    var matchedRegionsArray = [];
-    for (var i = 0; i < regionZips.length; i++) {
-      var zips = regionZips[i];
-      for (var j = 0; j < zips.length; j++) {
-        var zip = zips[j];
-        if (zip == zipCode) {
-          matchedRegionsArray.push(i + 1);
-        }
-      }
-    }
+    var matchedRegionsArray = self.getRegionsFromZipCode(body);
     if (matchedRegionsArray.length === 0) {
       var errorText = "Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com.";
       if (res) self.userResponse(res, errortext);
@@ -437,6 +427,22 @@ var UserActions = function()
     if (body.length !== 5) return false;
     if (isNaN(body)) return false;
     return true;
+  };
+
+  self.getRegionsFromZipCode = function(body)
+  {
+    var zipCode = parseInt(body);
+    var matchedRegionsArray = [];
+    for (var i = 0; i < regionZips.length; i++) {
+      var zips = regionZips[i];
+      for (var j = 0; j < zips.length; j++) {
+        var zip = zips[j];
+        if (zip == zipCode) {
+          matchedRegionsArray.push(i + 1);
+        }
+      }
+    }
+    return matchedRegionsArray;
   };
 
  
