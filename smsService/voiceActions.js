@@ -71,9 +71,9 @@ var VoiceActions = function() {
       console.log('registration');
 
       if (input) {
-        var zipvalid = userClient.isZipCode(input);
+        var zipvalid = G.userActions.isZipCode(input);
         if (zipvalid) {
-          var matchedRegionsArray = userClient.getRegionsFromZipCode(body);
+          var matchedRegionsArray = G.userActions.getRegionsFromZipCode(body);
           if (matchedRegionsArray.length === 0) {
             var errorText = twiml.say("Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com.", { voice: 'alice'});
           } else {
