@@ -75,7 +75,8 @@ var VoiceActions = function() {
         if (zipvalid) {
           var matchedRegionsArray = G.userActions.getRegionsFromZipCode(input);
           if (matchedRegionsArray.length === 0) {
-            twiml.say("Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com.", { voice: 'alice'});
+            twiml.say("Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com. To hear more otions, please press 1 now.", { voice: 'alice'});
+            _activeCall.message = audio.help;
           } else {
             _activeCall.message = audio.registerZip2;
             _activeCall.zip = input;
