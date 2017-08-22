@@ -32,7 +32,7 @@ var REPORT = "Please record your message and we will get back to you. If this is
 var VoiceActions = function() {
   var self = this;
 
-  function roboGather(twiml, message, numDigits)
+  function roboGather(response, twiml, message, numDigits)
   {
     if (!numDigits) numDigits = 1;
   
@@ -43,6 +43,9 @@ var VoiceActions = function() {
     });
 
     gather.say(message, { voice: 'alice'});
+
+    response.type('text/xml');
+    response.send(twiml.toString());
   };
 
 
@@ -84,41 +87,41 @@ var VoiceActions = function() {
         if (zipvalid) {
           var matchedRegionsArray = G.userActions.getRegionsFromZipCode(input);
           if (matchedRegionsArray.length === 0) {
-            roboGather(twiml, INVALID_LOCATION);
+            roboGather(response, twiml, INVALID_LOCATION);
             _activeCall.message = audio.help;
           } else {
             _activeCall.message = audio.registerZip2;
             _activeCall.zip = input;
-            roboGather(twiml, input + ZIPCODE_CONFIRM);
+            roboGather(response, twiml, input + ZIPCODE_CONFIRM);
           }
         } 
       } else {
-        roboGather(twiml, REGISTRATION, 5);
+        roboGather(response, twiml, REGISTRATION, 5);
       }
     } else if((_activeCall.message == audio.registerZip1 || _activeCall.message == audio.registerZip1) && input) {
       //after user has successfully registered a zipcode
       if (input == '1') {
         _activeCall.message = audio.help;
-        roboGather(twiml, HELP_STR);
+        roboGather(response, twiml, HELP_STR);
       }
     } else if (_activeCall.message == audio.registerZip2 && input) {
       // confirm zipcode
       if (input == '1') {
         console.log("registerZip1");
-        roboGather(twiml, REGISTRATION_SUCCESS);
+        roboGather(response, twiml, REGISTRATION_SUCCESS);
         _activeCall.message = audio.help;
         G.userActions.userSetZipCode(G, null, userClient, phone, _activeCall.zip) 
       } else if (input == '2') {
         console.log('registration');
         _activeCall.message = audio.registration;
-        roboGather(twiml, REGISTRATION, 5);
+        roboGather(response, twiml, REGISTRATION, 5);
       } else if (input == '3') {
         console.log('registerZip2');
         _activeCall.message = audio.registerZip2;
-        roboGather(twiml, input + ZIPCODE_CONFIRM);
+        roboGather(response, twiml, input + ZIPCODE_CONFIRM);
       } else {
         console.log('not recognized');
-        roboGather(twiml, REGISTRATION_INVALID, 5);
+        roboGather(response, twiml, REGISTRATION_INVALID, 5);
         _activeCall.message = audio.registration;
       }
     } else if (_activeCall.message == audio.help && input) {
@@ -128,28 +131,28 @@ var VoiceActions = function() {
           var vanLocation =  G.userActions.userVan(G, null, userClient, phone, '');
           var message = vanLocation + ". To Hear more options, press 1 now.";
           _activeCall.message = audio.help;
-          roboGather(twiml, message);
+          roboGather(response, twiml, message);
           break;
         case '3'://send message
-          roboGather(twiml, REPORT);
+          roboGather(response, twiml, REPORT);
           twiml.record();
           break;
         case '4'://learn more/info
           //needs to get audio currently on live
-          roboGather(twiml, INFO);
+          roboGather(response, twiml, INFO);
           break;
         case '5'://stop alerts
-          roboGather(twiml, LEAVE);
+          roboGather(response, twiml, LEAVE);
           G.userActions.userLeave(G, null, userClient, phone, '');
           break;
         default:
           _activeCall.message = audio.help;
-          roboGather(twiml, HELP_STR);
+          roboGather(response, twiml, HELP_STR);
           break;
       }
     } else {
       _activeCall.message = audio.help;
-      roboGather(twiml, WELCOME);
+      roboGather(response, twiml, WELCOME);
     } 
 
     
@@ -161,8 +164,7 @@ var VoiceActions = function() {
     // DTMF tones or recorded speech
 
     // render TwiML response
-    response.type('text/xml');
-    response.send(twiml.toString());
+ 
   };
  
 };
