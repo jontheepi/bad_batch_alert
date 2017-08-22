@@ -36,13 +36,15 @@ var VoiceActions = function() {
   {
     if (!numDigits) numDigits = 1;
 
-    var gather = twiml.gather({
+    twiml.gather({
       input: 'dtmf',
       timeout: 15,
       numDigits: numDigits,
+    }, (gatherNode) => {
+      gatherNode.say(message, { voice: 'alice'});
     });
 
-    gather.say(message, { voice: 'alice'});
+    twiml.redirect('/recieve');
 
     response.type('text/xml');
     response.send(twiml.toString());
