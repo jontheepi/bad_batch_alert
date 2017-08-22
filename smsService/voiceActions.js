@@ -1,6 +1,5 @@
 //handles all voice commands.
 var TwimlResponse = require('twilio').TwimlResponse;
-var VoiceResponse = require('twilio').VoiceResponse;
 
 
 var _activeCalls = [];//all phone calls in progress.
@@ -36,9 +35,8 @@ var VoiceActions = function() {
   function roboGather(response, twiml, message, numDigits)
   {
     if (!numDigits) numDigits = 1;
-  
-    var voiceResponse = new VoiceResponse();
-    voiceResponse.gather();
+
+    
     var gather = response.gather({
       input: 'dtmf',
       timeout: 15,
