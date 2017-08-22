@@ -36,8 +36,7 @@ var VoiceActions = function() {
   {
     if (!numDigits) numDigits = 1;
 
-    
-    var gather = response.gather({
+    var gather = twiml.gather({
       input: 'dtmf',
       timeout: 15,
       numDigits: numDigits,
