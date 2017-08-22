@@ -9,16 +9,6 @@ var site = "http://www.badbatchalert.com/audio/";//the site where the audio live
 var ext = ".wav";//the audio extension.
 
 var audio = { //all the available messages we can play.
-  zero:         '0',
-  one:          '1',
-  two:          '2',
-  three:        '3',
-  four:         '4',
-  five:         '5',
-  six:          '6',
-  seven:        '7',
-  eight:        '8',
-  nine:         '9',
   correctZip:   'correctZip',
   help:         'help',
   afterWelcome: 'playsAfterWelcomeChildren',
@@ -29,19 +19,39 @@ var audio = { //all the available messages we can play.
 };
 
 var HELP_STR = "If you would like to know where the Baltimore Needle Exchange Van is right now, Press 2. If you'd like to send an anonymous report to the Bad Batch Alert team, press 3.  If you would like to learn more about the Bad Batch alert service, press 4. If you would like to stop recieving overdose alerts, press 5. If you would like to hear this message again, press 1.";
-
+var INVALID_LOCATION = "Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com. To hear more options, please press 1 now.";
+var ZIPCODE_CONFIRM = ". If this zipcode is correct press 1 , if not press 2. To hear the zipcode again press three.";
+var REGISTRATION = "Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, please enter your 5 digit zipcode now.";
+var REGISTRATION_INVALID = "Sorry, that is not an available option. To begin receiving overdose alerts in your area, please enter the 5 digits of your zip code";
+var REGISTRATION_SUCCESS = "Congratulations! You are all set to receive alerts. If you like to hear more options, press 1 now.";
+var WELCOME = "Thank you for calling Bad Batch Alert, " + HELP_STR;
+var LEAVE = "Thank you for using the Bad Batch Alert service. You are no longer registered to receive alerts. Press 1 for more options.";
+var INFO = "Bad Batch Alert is an anonymous free text message service to help heroin users stay alive in Baltimore City. Find out more at Bad Batch Alert dot com. Press 1 for more options";
+var REPORT = "Please record your message and we will get back to you. If this is a medical emergency, please call nine one one.";
 
 var VoiceActions = function() {
   var self = this;
 
+  function roboGather(twiml, message, numDigits)
+  {
+    if (!numDigits) numDigits = 1;
+  
+    var gather = response.gather({
+      input: 'dtmf',
+      timeout: 15,
+      numDigits: numDigits,
+    });
+
+    gather.say(message, { voice: 'alice'});
+  };
 
 
   self.doVoiceActions = function(request, response, hasRegion, G, userClient) {  
 
     var phone = request.body.From;
     var input = request.body.RecordingUrl || request.body.Digits;
-    var twiml = new TwimlResponse();
     //see if we have a call in progress. Find out where we were if so. Otherwise add us and start at the beginning.
+    var twiml = new TwimlResponse();
 
     var initialMessage = hasRegion ? audio.help : audio.registration;
     _activeCall = {phone:phone, message:initialMessage, zip:undefined};
@@ -62,7 +72,6 @@ var VoiceActions = function() {
     }
 
     console.log("input = " + input);
-    var numDigits = 1;
 
     // Add a greeting if this is the first question
     //twiml.play('http://www.mike-legrand.com/BadBatchAlert/Info.mp3');
@@ -75,45 +84,42 @@ var VoiceActions = function() {
         if (zipvalid) {
           var matchedRegionsArray = G.userActions.getRegionsFromZipCode(input);
           if (matchedRegionsArray.length === 0) {
-            twiml.say("Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com. To hear more otions, please press 1 now.", { voice: 'alice'});
+            roboGather(twiml, INVALID_LOCATION);
             _activeCall.message = audio.help;
           } else {
             _activeCall.message = audio.registerZip2;
             _activeCall.zip = input;
-            twiml.say(input + ". If this zipcode is correct press 1 , if not press 2. To hear the zipcode again press three.", { voice: 'alice'});
+            roboGather(twiml, input + ZIPCODE_CONFIRM);
           }
         } 
       } else {
-        twiml.say("Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, please enter your 5 digit zipcode now.", { voice: 'alice'});
-        numDigits = 5;
+        roboGather(twiml, REGISTRATION, 5);
       }
     } else if((_activeCall.message == audio.registerZip1 || _activeCall.message == audio.registerZip1) && input) {
       //after user has successfully registered a zipcode
       if (input == '1') {
         _activeCall.message = audio.help;
-        twiml.say(HELP_STR, { voice: 'alice'});
+        roboGather(twiml, HELP_STR);
       }
     } else if (_activeCall.message == audio.registerZip2 && input) {
       // confirm zipcode
       if (input == '1') {
         console.log("registerZip1");
-        twiml.say("Congratulations! You are all set to receive alerts at " + _activeCall.zip + ". If you like to hear more options, press 1 now.", { voice: 'alice'});
+        roboGather(twiml, REGISTRATION_SUCCESS);
         _activeCall.message = audio.help;
         G.userActions.userSetZipCode(G, null, userClient, phone, _activeCall.zip) 
       } else if (input == '2') {
         console.log('registration');
-         twiml.say("Thanks for calling the bad batch alert service, to begin receiving overdose alerts in your area, Enter your 5 digit zip code now.", { voice: 'alice'});
         _activeCall.message = audio.registration;
-        numDigits = 5;
+        roboGather(twiml, REGISTRATION, 5);
       } else if (input == '3') {
         console.log('registerZip2');
         _activeCall.message = audio.registerZip2;
-        twiml.say(input + ". If this zipcode is correct press 1 , if not press 2. To hear the zipcode again press 3.", { voice: 'alice'});
+        roboGather(twiml, input + ZIPCODE_CONFIRM);
       } else {
         console.log('not recognized');
-        twiml.say("Sorry, " + input + " is not an available option. To begin receiving overdose alerts in your area, please enter the 5 digits of your zip code", { voice: 'alice'});
+        roboGather(twiml, REGISTRATION_INVALID, 5);
         _activeCall.message = audio.registration;
-        numDigits = 5;
       }
     } else if (_activeCall.message == audio.help && input) {
       //say help options
@@ -122,28 +128,28 @@ var VoiceActions = function() {
           var vanLocation =  G.userActions.userVan(G, null, userClient, phone, '');
           var message = vanLocation + ". To Hear more options, press 1 now.";
           _activeCall.message = audio.help;
-          twiml.say(message, { voice: 'alice'});
+          roboGather(twiml, message);
           break;
         case '3'://send message
-          twiml.say('Please record your message and we will get back to you. If this is a medical emergency, please call nine one one.', { voice: 'alice'});
+          roboGather(twiml, REPORT);
           twiml.record();
           break;
         case '4'://learn more/info
           //needs to get audio currently on live
-          twiml.say('Bad Batch Alert is an anonymous free text message service to help heroin users stay alive in Baltimore City. Find out more at Bad Batch Alert dot com. Press 1 for more options', { voice: 'alice'});
+          roboGather(twiml, INFO);
           break;
         case '5'://stop alerts
-          twiml.say('Thank you for using the Bad Batch Alert service. You are no longer registered to receive alerts. Press 1 for more options.');
+          roboGather(twiml, LEAVE);
           G.userActions.userLeave(G, null, userClient, phone, '');
           break;
         default:
           _activeCall.message = audio.help;
-          twiml.say(HELP_STR, { voice: 'alice'});
+          roboGather(twiml, HELP_STR);
           break;
       }
     } else {
       _activeCall.message = audio.help;
-      twiml.say("Thank you for calling Bad Batch Alert, " + HELP_STR, { voice: 'alice'});
+      roboGather(twiml, WELCOME);
     } 
 
     
@@ -153,13 +159,6 @@ var VoiceActions = function() {
 
     // Depending on the type of question, we either need to get input via
     // DTMF tones or recorded speech
-    twiml.gather({
-      input:'dtmf speech',
-      timeout: 15,
-      numDigits: numDigits,
-      bargeIn: true
-    });
-    
 
     // render TwiML response
     response.type('text/xml');
