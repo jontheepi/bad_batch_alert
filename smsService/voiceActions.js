@@ -36,6 +36,8 @@ var VoiceActions = function() {
   {
     if (!numDigits) numDigits = 1;
   
+    var voiceResponse = new VoiceResponse();
+    voiceResponse.gather();
     var gather = response.gather({
       input: 'dtmf',
       timeout: 15,
