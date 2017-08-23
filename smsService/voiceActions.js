@@ -44,10 +44,6 @@ var VoiceActions = function() {
       gatherNode.say(message, { voice: 'alice'});
     });
 
-    twiml.redirect('/recieve');
-
-    response.type('text/xml');
-    response.send(twiml.toString());
   };
 
 
@@ -136,7 +132,7 @@ var VoiceActions = function() {
           roboGather(response, twiml, message);
           break;
         case '3'://send message
-          roboGather(response, twiml, REPORT);
+          twiml.say(REPORT, { voice: 'alice'});
           twiml.record();
           break;
         case '4'://learn more/info
@@ -157,7 +153,9 @@ var VoiceActions = function() {
       roboGather(response, twiml, WELCOME);
     } 
 
-    
+
+    twiml.redirect('/recieve');
+
     //var url = site + _activeCall.message + ext;
     //console.log(url);
     //twiml.play(url);
@@ -166,6 +164,10 @@ var VoiceActions = function() {
     // DTMF tones or recorded speech
 
     // render TwiML response
+    response.type('text/xml');
+    response.send(twiml.toString());
+    
+    
  
   };
  
