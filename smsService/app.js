@@ -163,13 +163,6 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   doAction(res, sender, body);
 });
 
-// Voice to text test
-app.post('/watson/receive', function (test) {
-  console.log("inside watson call");
-  console.log(test);
-});
-
-
 // Start the server
 var server = app.listen(process.env.PORT || '8080', function () {
   console.log('Bad Batch Alert listening on port %s', server.address().port);

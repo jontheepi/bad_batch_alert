@@ -154,7 +154,7 @@ var VoiceActions = function() {
     } 
 
 
-    twiml.redirect('/recieve');
+    twiml.redirect('/call/receive');
 
     //var url = site + _activeCall.message + ext;
     //console.log(url);
