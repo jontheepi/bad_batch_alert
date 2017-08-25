@@ -172,6 +172,13 @@ var UserActions = function()
         return;
       }
 
+      if (regionsArray.length > 3) {
+        console.log ('Too many regions');
+        var body = "We're sorry, You can only register for 3 regions. To reset your regions just type the number for the region you wish to start with."
+        self.userResponse(res, body);
+        return;
+      }
+
       regionsArray.push(region);
       regions = regionsArray.length > 1 ?  regionsArray.join(', ') : regionsArray.join('');
       console.log ('regions after =' + regions);
