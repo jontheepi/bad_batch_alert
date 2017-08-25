@@ -172,6 +172,7 @@ var UserActions = function()
         return;
       }
 
+      regionsArray.push(region);
       if (regionsArray.length > 3) {
         console.log ('Too many regions');
         var body = "We're sorry, You can only register for 3 regions. To reset your regions just type the number for the region you wish to start with."
@@ -179,7 +180,6 @@ var UserActions = function()
         return;
       }
 
-      regionsArray.push(region);
       regions = regionsArray.length > 1 ?  regionsArray.join(', ') : regionsArray.join('');
       console.log ('regions after =' + regions);
       var insertQueryString = "UPDATE users SET regions = '" + regions + "' WHERE phone_number = '" + cryptoSender + "'";
