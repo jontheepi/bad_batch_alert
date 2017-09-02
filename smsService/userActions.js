@@ -307,14 +307,19 @@ var UserActions = function()
   self.userShare = function(g, res, client, sender, action)
   { 
     var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
-    var length = "share".length + 1;
+    var length = "share".length;
     var number = action.substring(length);
-    
-    number = "+1" + number;
+    number = number.replace(" ", "");
+    number = number.replace("+" , "");  	  
     number = number.replace("-" , "");
     number = number.replace("(" , "");
     number = number.replace(")" , "");
 	  
+    if (!number.startsWith('1')) {
+      number = '1' + number;
+    }
+    number = "+" + number;
+     
     var body;
     var isValidNumber = true;
     if (number.length != '+10000000000'.length) {
