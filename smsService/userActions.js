@@ -309,11 +309,7 @@ var UserActions = function()
     var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
     var length = "share".length;
     var number = action.substring(length);
-    number = number.replace(" ", "");
-    number = number.replace("+" , "");  	  
-    number = number.replace("-" , "");
-    number = number.replace("(" , "");
-    number = number.replace(")" , "");
+    number = number.replace(/\s|-|\(|\)|\+/g, '');
 	  
     if (!number.startsWith('1')) {
       number = '1' + number;
