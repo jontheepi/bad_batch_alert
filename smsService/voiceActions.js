@@ -57,8 +57,10 @@ var VoiceActions = function() {
     }, (gatherNode) => {
       if (message.split(' ').length === 1) {//all one word is a file name. a little hax but convenient.
         var url = AUDIO_SITE + message + EXTENSION;
-        gatherNode.play(message);
+        console.log("play " + url);
+        gatherNode.play(url);
       } else {
+        console.log('say ' + message);
         gatherNode.say(message, { voice: 'alice'});
       }
       
