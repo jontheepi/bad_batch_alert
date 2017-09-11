@@ -141,8 +141,8 @@ var VoiceActions = function() {
         gather(response, twiml, REGISTRATION_URL, 5);
       } else if (input == '3') {
         console.log('registerZip2');
-        _activeCall.message = audio.registerZip2;
-        gather(response, twiml, input + ZIPCODE_CONFIRM_URL);
+        twiml.say(activeCall.zip, { voice: 'alice'});
+        gather(response, twiml, ZIPCODE_CONFIRM_URL);
       } else {
         console.log('not recognized');
         gather(response, twiml, REGISTRATION_INVALID_URL, 5);
