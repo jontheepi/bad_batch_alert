@@ -169,6 +169,7 @@ var VoiceActions = function() {
         case '5'://stop alerts
           gather(response, twiml, LEAVE_URL);
           G.userActions.userLeave(G, null, userClient, phone, '');
+          activeCall.phone = '';
           break;
         default:
           _activeCall.message = audio.help;
