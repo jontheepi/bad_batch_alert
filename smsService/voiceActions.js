@@ -115,7 +115,7 @@ var VoiceActions = function() {
           } else {
             _activeCall.message = audio.registerZip2;
             _activeCall.zip = input;
-            gatherNode.say(input, { voice: 'alice'});
+            twiml.say(input, { voice: 'alice'});
             gather(response, twiml, ZIPCODE_CONFIRM_URL);
           }
         } 
