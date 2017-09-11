@@ -40,8 +40,11 @@ var LEAVE_URL = "leave";
 var INFO_URL = "info";
 var REPORT_URL = "report";
 
-var AUDIO_SITE = 'http://www.badbatchalert.com/audio/';
-var EXTENSION = '.wav';
+function getUrl(message) {
+  var AUDIO_SITE = 'http://www.badbatchalert.com/audio/';
+  var EXTENSION = '.wav';
+  return AUDIO_SITE + message + EXTENSION;
+}
 
 var VoiceActions = function() {
   var self = this;
@@ -56,7 +59,7 @@ var VoiceActions = function() {
       numDigits: numDigits,
     }, (gatherNode) => {
       if (message.split(' ').length === 1) {//all one word is a file name. a little hax but convenient.
-        var url = AUDIO_SITE + message + EXTENSION;
+        var url = getUrl(message);
         console.log("play " + url);
         gatherNode.play(url);
       } else {
@@ -155,7 +158,8 @@ var VoiceActions = function() {
           gather(response, twiml, message);
           break;
         case '3'://send message
-          twiml.play(REPORT_URL);
+          var url = getUrl(REPORT_URL);
+          twiml.play(url);
           twiml.record();
           break;
         case '4'://learn more/info
