@@ -111,8 +111,6 @@ var VoiceActions = function() {
           var matchedRegionsArray = G.userActions.getRegionsFromZipCode(input);
           if (matchedRegionsArray.length === 0) {
             gather(response, twiml, INVALID_LOCATION_URL);
-            _activeCall.zip = '';
-            _activeCall.phone = '';
             _activeCall.message = audio.help;
           } else {
             _activeCall.message = audio.registerZip2;
