@@ -40,7 +40,7 @@ var LEAVE_URL = "leave";
 var INFO_URL = "info";
 var REPORT_URL = "report";
 
-var AUDIO_SITE = 'www.badbatchalert.com/audio/';
+var AUDIO_SITE = 'http://www.badbatchalert.com/audio/';
 var EXTENSION = '.wav';
 
 var VoiceActions = function() {
