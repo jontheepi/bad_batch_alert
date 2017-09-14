@@ -119,7 +119,8 @@ var UserActions = function()
         if (!res) return;
         var body = "👍 You are all set to receive alerts in region " + region + ".\n\n" +
         "There are many other useful resources built into this service. To see all the commands text the word 'help'.";
-        self.userResponse(res, body); 
+        var media = "http://www.badbatchalert.com/images/regions/region_" + region + ".jpg";
+        self.userResponse(res, body, media); 
       });
     });
   };
@@ -208,7 +209,7 @@ var UserActions = function()
         var body = "👌 You're signed up as: " + name;
         self.userResponse(res, body);
       });
-    });
+    }); 
   };
 	
   self.userDetox = function(g, res, client, sender, action)
