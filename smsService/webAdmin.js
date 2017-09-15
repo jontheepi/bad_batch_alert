@@ -173,12 +173,12 @@ var WebAdmin = function() {
           }
         }
         var media = "http://www.badbatchalert.com/images/regions/region_" + region + ".jpg";
-        var response = '<Response><Message><Body>' + message  + '</Body><Media>' + media + '</Media></Message></Response>';//show the region where the alert occurred.
-
+       
         g.twilio.sendMessage({
           to: phoneNumber,
           from: TWILIO_NUMBER,
-          body: response
+          body: message,
+          mediaUrl: media
         }, function (err) {
           if (err) {
             console.log(err);
