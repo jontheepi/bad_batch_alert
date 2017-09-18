@@ -191,7 +191,7 @@ var WebAdmin = function() {
               address: phoneNumber,
             }),
           ],
-          body: 'test',
+          body: message,
           mediaUrl: media
         }).then(notification => {
           console.log(notification);
