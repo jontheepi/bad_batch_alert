@@ -305,22 +305,31 @@ var WebAdmin = function() {
         var media = "http://www.badbatchalert.com/images/regions/region_" + region + ".jpg";
 
         var findQuery = _userClient.query(findQueryString);
+        var bindings = [];
         findQuery.on('row', function(row) {
           console.log(JSON.stringify(row));
           var phoneNumber = g.cryptoHelper.decrypt(row.phone_number);
           console.log(phoneNumber);
-          g.twilio.sendMessage({
-            to: phoneNumber,
-            from: TWILIO_NUMBER,
-            body: message,
-            mediaUrl: media  
-          }, function (err) {
-            if (err) {
-              console.log(err);
-            }
-          });
+          bindings.push(JSON.stringify({
+            binding_type: 'sms',
+            address: phoneNumber,
+          }));
         }).on('error', function() {
           console.log("nobody in region " + region + " to alert.")
+        }).on('end', function() {
+          console.log("sending alert now");
+          var service = g.twilio.notify.services(NOTIFY_SID);
+          service.notifications.create({
+            toBinding: bindings,
+            body: message,
+            sms: JSON.stringify({media_urls:[media]})  
+          }).then(notification => {
+            console.log(notification);
+          })
+          .catch(error => {
+            console.log(error);
+          })
+          .done();
         });
 
         var payload = {
