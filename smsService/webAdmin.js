@@ -186,8 +186,13 @@ var WebAdmin = function() {
               binding_type: 'sms',
               address: phoneNumber,
             }),
+            JSON.stringify({
+              binding_type: 'sms',
+              address: phoneNumber,
+            }),
           ],
-          body: 'test'
+          body: 'test',
+          mediaUrl: media
         }).then(notification => {
           console.log(notification);
         })
