@@ -4,6 +4,7 @@ var WebAdmin = function() {
 
   var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
   var MY_NUMBER     = process.env.MY_NUMBER;
+  var ACCOUNT       = process.env.TWILIO_ACCOUNT_SID;
 
 
   var _usersLoggedIn = [];
@@ -173,11 +174,8 @@ var WebAdmin = function() {
           }
         }
         var media = "http://www.badbatchalert.com/images/regions/region_" + region + ".jpg";
-
-        var account = process.env.TWILIO_ACCOUNT_SID;
-        var token = process.env.TWILIO_AUTH_TOKEN;
-
-        var service = g.twilio.notify.services(account);
+  
+        var service = g.twilio.notify.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 
         service.notifications.create({
           toBinding: [
