@@ -192,7 +192,7 @@ var WebAdmin = function() {
             }),
           ],
           body: message,
-          mediaUrl: media
+          media_urls: [media]  
         }).then(notification => {
           console.log(notification);
         })
@@ -313,7 +313,7 @@ var WebAdmin = function() {
             to: phoneNumber,
             from: TWILIO_NUMBER,
             body: message,
-            media_urls: [media]  
+            mediaUrl: media  
           }, function (err) {
             if (err) {
               console.log(err);
