@@ -313,7 +313,7 @@ var WebAdmin = function() {
             to: phoneNumber,
             from: TWILIO_NUMBER,
             body: message,
-            mediaUrl: media  
+            media_urls: [media]  
           }, function (err) {
             if (err) {
               console.log(err);
