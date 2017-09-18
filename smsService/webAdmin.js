@@ -192,7 +192,7 @@ var WebAdmin = function() {
             }),
           ],
           body: message,
-          media_urls: [media]  
+          sms: JSON.stringify({media_urls:[media]})  
         }).then(notification => {
           console.log(notification);
         })
