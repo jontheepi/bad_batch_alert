@@ -300,7 +300,7 @@ var UserActions = function()
   self.userNaloxone = function(g, res, client, sender, action) 
   {
     console.log("userNaloxone");
-    var body  = "See the Naloxone training schedule at: http://dontdie.org/public-trainings-schedule/, Watch a Naloxone training video here: https://www.youtube.com/watch?v=YyDdMdLvdBc";
+    var body  = "See the Naloxone training schedule at: http://dontdie.org/public-trainings-schedule/, Watch a Naloxone training video here: http://bit.ly/2wpWNTi";
     self.userResponse(res, body);
   };
 

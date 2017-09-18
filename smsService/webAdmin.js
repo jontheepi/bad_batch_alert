@@ -173,17 +173,39 @@ var WebAdmin = function() {
           }
         }
         var media = "http://www.badbatchalert.com/images/regions/region_" + region + ".jpg";
-       
-        g.twilio.sendMessage({
-          to: phoneNumber,
-          from: TWILIO_NUMBER,
-          body: message,
-          mediaUrl: media
-        }, function (err) {
-          if (err) {
-            console.log(err);
-          }
-        });
+
+        var account = process.env.TWILIO_ACCOUNT_SID;
+        var token = process.env.TWILIO_AUTH_TOKEN;
+
+        var service = g.twilio.notify.services(account);
+
+        service.notifications.create({
+          to_binding: [
+            JSON.stringify({
+              binding_type: 'sms',
+              address: phoneNumber,
+            }),
+          ],
+          body: 'test'
+        }).then(notification => {
+          console.log(notification);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+        .done();
+
+
+        //g.twilio.sendMessage({
+        //  to: phoneNumber,
+        //  from: TWILIO_NUMBER,
+        //  body: message,
+        //  mediaUrl: media
+        //}, function (err) {
+        //  if (err) {
+        //    console.log(err);
+        //  }
+        //});
 
         var payload = {
           err:null
@@ -265,6 +287,17 @@ var WebAdmin = function() {
           return;
         }
 
+        //find all the users in the regions passed in.
+        //text each user with the message.
+        var region;
+        for (var i = 0; i < regions.length; i++) {
+          if (regions[i]) {
+            region = i+1;
+            break;
+          }
+        }
+        var media = "http://www.badbatchalert.com/images/regions/region_" + region + ".jpg";
+
         var findQuery = _userClient.query(findQueryString);
         findQuery.on('row', function(row) {
           console.log(JSON.stringify(row));
@@ -273,8 +306,8 @@ var WebAdmin = function() {
           g.twilio.sendMessage({
             to: phoneNumber,
             from: TWILIO_NUMBER,
-            body: message
-            //mediaUrl: "http://www.mike-legrand.com/BadBatchAlert/uplift.jpg"  
+            body: message,
+            mediaUrl: media  
           }, function (err) {
             if (err) {
               console.log(err);
