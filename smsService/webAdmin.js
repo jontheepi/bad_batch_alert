@@ -180,7 +180,11 @@ var WebAdmin = function() {
         var service = g.twilio.notify.services(account);
 
         service.notifications.create({
-          to_binding: [
+          toBinding: [
+            JSON.stringify({
+              binding_type: 'sms',
+              address: phoneNumber,
+            }),
             JSON.stringify({
               binding_type: 'sms',
               address: phoneNumber,
