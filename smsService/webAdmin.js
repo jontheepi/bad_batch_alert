@@ -80,7 +80,7 @@ var WebAdmin = function() {
         var jsonBody = JSON.parse(body);
         var boxId = jsonBody.boxId;
      
-        g.twilio.sendMessage({
+        g.twilio.message.create({
           to: "+14436834616",
           from: TWILIO_NUMBER,
           body: "1"

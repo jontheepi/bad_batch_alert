@@ -264,7 +264,7 @@ var UserActions = function()
     var report = "from:" + sender + " " + action;
     var MY_NUMBER  = process.env.MY_NUMBER;
     var TWILIO_NUMBER = process.env.TWILIO_NUMBER;
-    g.twilio.sendMessage({
+    g.twilio.message.create({
       to: MY_NUMBER,
       from: TWILIO_NUMBER,
       body: report
@@ -325,7 +325,7 @@ var UserActions = function()
     
     if (isValidNumber) {
       body  = "You have shared the Bad Batch Service with: " + number;
-      g.twilio.sendMessage({
+      g.twilio.message.create({
         to: number,
         from: TWILIO_NUMBER,
         body: "Your friend at " + sender + " wants to share the Bad Batch Alert messaging service with you. Text 'Join' to try it out."
