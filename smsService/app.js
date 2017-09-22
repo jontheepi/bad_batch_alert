@@ -20,7 +20,6 @@ var pg            = require('pg');
 var format        = require('util').format;
 var express       = require('express');
 var twilio        = require('twilio') (process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-var VoiceResponse = require('twilio').twiml.VoiceResponse;
 var bodyParser    = require('body-parser').urlencoded({extended: false});
 var CryptoHelper  = require('./cryptoHelper');
 var AdminActions  = require('./adminActions');
