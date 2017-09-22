@@ -53,21 +53,20 @@ var VoiceActions = function() {
   {
     if (!numDigits) numDigits = 1;
 
-    twiml.gather({
+    const gather = response.gather({
       input: 'dtmf',
       timeout: 15,
       numDigits: numDigits,
-    }, (gatherNode) => {
-      if (message.split(' ').length === 1) {//all one word is a file name. a little hax but convenient.
+    });
+    if (message.split(' ').length === 1) {//all one word is a file name. a little hax but convenient.
         var url = getUrl(message);
         console.log("play " + url);
-        gatherNode.play({}, url);
+        gather.play({}, url);
       } else {
         console.log('say ' + message);
-        gatherNode.say({ voice: 'alice'}, message);
-      }
-      
-    });
+        gather.say({ voice: 'alice'}, message);
+      } 
+    };
 
   };
 
