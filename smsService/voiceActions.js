@@ -58,14 +58,14 @@ var VoiceActions = function() {
       timeout: 15,
       numDigits: numDigits,
     });
+
     if (message.split(' ').length === 1) {//all one word is a file name. a little hax but convenient.
-        var url = getUrl(message);
-        console.log("play " + url);
-        gather.play({}, url);
-      } else {
-        console.log('say ' + message);
-        gather.say({ voice: 'alice'}, message);
-      } 
+      var url = getUrl(message);
+      console.log("play " + url);
+      gather.play({}, url);
+    } else {
+      console.log('say ' + message);
+      gather.say({ voice: 'alice'}, message);
     };
 
   };
