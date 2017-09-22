@@ -1,5 +1,5 @@
 //handles all voice commands.
-var VoiceRepsonse = require('twilio').VoiceResponse;
+var VoiceRepsonse = require('twilio').twiml.VoiceResponse;
 
 
 var _activeCalls = [];//all phone calls in progress.
