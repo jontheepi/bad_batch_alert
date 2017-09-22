@@ -1,5 +1,5 @@
 //handles all voice commands.
-var TwimlResponse = require('twilio').TwimlResponse;
+var VoiceRepsonse = require('twilio').VoiceResponse;
 
 
 var _activeCalls = [];//all phone calls in progress.
@@ -77,7 +77,7 @@ var VoiceActions = function() {
     var phone = request.body.From;
     var input = request.body.RecordingUrl || request.body.Digits;
     //see if we have a call in progress. Find out where we were if so. Otherwise add us and start at the beginning.
-    var twiml = new TwimlResponse();
+    var twiml = new VoiceResponse();
 
     var initialMessage = hasRegion ? audio.help : audio.registration;
     _activeCall = {phone:phone, message:initialMessage, zip:undefined};
