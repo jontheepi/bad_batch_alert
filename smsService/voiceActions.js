@@ -61,10 +61,10 @@ var VoiceActions = function() {
       if (message.split(' ').length === 1) {//all one word is a file name. a little hax but convenient.
         var url = getUrl(message);
         console.log("play " + url);
-        gatherNode.play(url);
+        gatherNode.play({}, url);
       } else {
         console.log('say ' + message);
-        gatherNode.say(message, { voice: 'alice'});
+        gatherNode.say({ voice: 'alice'}, message);
       }
       
     });
@@ -115,7 +115,7 @@ var VoiceActions = function() {
           } else {
             _activeCall.message = audio.registerZip2;
             _activeCall.zip = input;
-            twiml.say(input, { voice: 'alice'});
+            twiml.say({ voice: 'alice'}, input);
             gather(response, twiml, ZIPCODE_CONFIRM_URL);
           }
         } 
@@ -141,7 +141,7 @@ var VoiceActions = function() {
         gather(response, twiml, REGISTRATION_URL, 5);
       } else if (input == '3') {
         console.log('registerZip2');
-        twiml.say(activeCall.zip, { voice: 'alice'});
+        twiml.say({ voice: 'alice'}, activeCall.zip);
         gather(response, twiml, ZIPCODE_CONFIRM_URL);
       } else {
         console.log('not recognized');
@@ -159,7 +159,7 @@ var VoiceActions = function() {
           break;
         case '3'://send message
           var url = getUrl(REPORT_URL);
-          twiml.play(url);
+          twiml.play({}, url);
           twiml.record();
           break;
         case '4'://learn more/info
