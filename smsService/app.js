@@ -162,6 +162,14 @@ app.post('/sms/receive', bodyParser, function (req, res) {
   doAction(res, sender, body);
 });
 
+// [START receive_sms]
+app.post('/sms/naloxsafereceive', bodyParser, function (req, res) {
+  var sender = req.body.From;
+  var body   = req.body.Body;
+  console.log ('SENDER:' + sender + ', BODY:' + body);
+});
+
+
 // Start the server
 var server = app.listen(process.env.PORT || '8080', function () {
   console.log('Bad Batch Alert listening on port %s', server.address().port);

@@ -82,7 +82,7 @@ var WebAdmin = function() {
      
         g.twilio.messages.create({
           to: "+14435636212",
-          from: MY_NUMBER,
+          from: "+14108460014",//number for nalox box only. Will add own service shortly.
           body: "1"
         }, function (err) {
           if (err) {
