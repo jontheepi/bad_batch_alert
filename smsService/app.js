@@ -167,6 +167,7 @@ app.post('/sms/naloxsafereceive', bodyParser, function (req, res) {
   var sender = req.body.From;
   var body   = req.body.Body;
   console.log ('SENDER:' + sender + ', BODY:' + body);
+  res.status(200).send();
 });
 
 
