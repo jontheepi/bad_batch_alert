@@ -345,7 +345,7 @@ var UserActions = function()
   {
     console.log("userVan");
     //EST
-    offset = -3.0;//need a better solution here this needs to be updated with daylight savings.
+    offset = -5.0;//need a better solution here this needs to be updated with daylight savings.
     clientDate = new Date();
     utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
     serverDate = new Date(utc + (3600000*offset));
