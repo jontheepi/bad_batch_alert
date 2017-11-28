@@ -417,7 +417,7 @@ var UserActions = function()
     var matchedRegionsArray = self.getRegionsFromZipCode(body);
     if (matchedRegionsArray.length === 0) {
       var errorText = "Sorry, this service is only available in the Baltimore metro area. If you'd like to have your area added to the Bad Batch Alert Serivce, send an email to badbatchalert@gmail.com.";
-      if (res) self.userResponse(res, errortext);
+      if (res) self.userResponse(res, errorText);
     }
     else {
       var regions = matchedRegionsArray.join(', '); 
