@@ -82,9 +82,9 @@ var UserActions = function()
     console.log("userLeave");
     var cryptoSender = g.cryptoHelper.encrypt(sender);
     console.log(cryptoSender);
-    var findQueryString = "DELETE FROM users WHERE phone_number = '" + cryptoSender + "'";
+    var findQueryString = "DELETE FROM users WHERE phone_number = $1";
     console.log(findQueryString);
-    var findQuery = client.query(findQueryString);
+    var findQuery = client.query(findQueryString, [cryptoSender]);
     findQuery.on('end', function() {
       console.log('Success on userLeave');
     });
@@ -108,13 +108,14 @@ var UserActions = function()
     console.log("userSetRegion");
     var cryptoSender = g.cryptoHelper.encrypt(sender);
     var region = action;
-    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
-    var findQuery = client.query(findQueryString);
+    var findQueryString = "SELECT * FROM users WHERE phone_number = $1";
+    var findQuery = client.query(findQueryString, [cryptoSender]);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       //if they texted us a number. Set it as their region.
-      var insertQueryString = "UPDATE users SET regions = '" + region + "' WHERE phone_number = '" + cryptoSender + "'";
-      var insertQuery = client.query(insertQueryString);
+      // var insertQueryString = "UPDATE users SET regions = '" + region + "' WHERE phone_number = '" + cryptoSender + "'";
+      var insertQueryString = "UPDATE users SET regions = $1 WHERE phone_number = $2";
+      var insertQuery = client.query(insertQueryString, [region, cryptoSender]);
       insertQuery.on('end', function() {
         if (!res) return;
         var body = "👍 You are all set to receive alerts in region " + region + ".\n\n" +
@@ -142,8 +143,8 @@ var UserActions = function()
 	
 	
     console.log('region = ' + region);
-    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
-    var findQuery = client.query(findQueryString);
+    var findQueryString = "SELECT * FROM users WHERE phone_number = $1";
+    var findQuery = client.query(findQueryString, [cryptoSender]);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       //if they texted us a number. Set it as their region.
@@ -183,9 +184,9 @@ var UserActions = function()
 
       regions = regionsArray.length > 1 ?  regionsArray.join(', ') : regionsArray.join('');
       console.log ('regions after =' + regions);
-      var insertQueryString = "UPDATE users SET regions = '" + regions + "' WHERE phone_number = '" + cryptoSender + "'";
+      var insertQueryString = "UPDATE users SET regions = $1 WHERE phone_number = $2";
       console.log(insertQueryString);
-      var insertQuery = client.query(insertQueryString);
+      var insertQuery = client.query(insertQueryString, [regions, cryptoSender]);
       insertQuery.on('end', function() {
         var body = "👍 You are all set to receive alerts in these regions " + regions;
         self.userResponse(res, body);
@@ -198,13 +199,13 @@ var UserActions = function()
     var cryptoSender = g.cryptoHelper.encrypt(sender);
     console.log("userSetName");
     var name = action.substring(5);
-    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
-    var findQuery = client.query(findQueryString);
+    var findQueryString = "SELECT * FROM users WHERE phone_number = $1";
+    var findQuery = client.query(findQueryString, [cryptoSender]);
     findQuery.on('row', function(row) {
       console.log(JSON.stringify(row));
       //if they texted us a number. Set it as their region.
-      var insertQueryString = "UPDATE users SET name = '" + name + "' WHERE phone_number = '" + cryptoSender + "'";
-      var insertQuery = client.query(insertQueryString);
+      var insertQueryString = "UPDATE users SET name = $1 WHERE phone_number = $2";
+      var insertQuery = client.query(insertQueryString, [name, cryptoSender]);
       insertQuery.on('end', function() {
         var body = "👌 You're signed up as: " + name;
         self.userResponse(res, body);
@@ -224,8 +225,8 @@ var UserActions = function()
   {
     console.log("userNear");
     var cryptoSender = g.cryptoHelper.encrypt(sender);
-    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
-    var findQuery = client.query(findQueryString);
+    var findQueryString = "SELECT * FROM users WHERE phone_number = $1";
+    var findQuery = client.query(findQueryString, [cryptoSender]);
     findQuery.on('row', function(row) {
       var regions = row.regions; 
       var body  = "Here are your options: ";
