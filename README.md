@@ -2,8 +2,6 @@
 
 Hello, and welcome to the Baltimore [Bad Batch Alert](http://www.badbatchalert.com/) project! This project reflects the combined efforts of numerous organizations in the Baltimore area and has been [featured on a number of prominent news outlets](http://www.badbatchalert.com/press/) including *The Washington Post* and *Vice News*. 
 
-[![donate](https://www.joomlashack.com/images/showcase/osdonate.png)](https://secure.squarespace.com/commerce/donate?donatePageId=5887cbbb893fc0b3632c81e7)
-
 # What?
 
 The [Baltimore Bad Batch Alert](http://wwww.badbatchalert.com) project was built to notify opiate users of trends in the medical and law enforcement communities that would otherwise not be publicized, like an increase of overdoses related to heroin being cut with fentanyl in their local area.
@@ -41,4 +39,7 @@ $ npm install
 $ node app.js
 ```
 
-More docs coming soon!
+More docs coming soon! If you like the project please consider a donation to Code in the Schools below.
+
+[![donate](https://www.joomlashack.com/images/showcase/osdonate.png)](https://secure.squarespace.com/commerce/donate?donatePageId=5887cbbb893fc0b3632c81e7)
+
