@@ -1,6 +1,6 @@
 # Baltimore Bad Batch Alert Project
 
-Hello, and welcome to the Baltimore [Bad Batch Alert](http://www.badbatchalert.com/) project! This project is a large partnership between caring people and organizations in the Baltimore area and has been [featured on a number of prominent news outlets](http://www.badbatchalert.com/press/) including *The Washington Post* and *Vice News*. 
+Hello, and welcome to the Baltimore [Bad Batch Alert](http://www.badbatchalert.com/) project! This project is dedicated to the memory of Rachel Vicary, who lost her life in the stuggle with opioid addiction. It has been [featured on a number of prominent news outlets](http://www.badbatchalert.com/press/) including *The Washington Post* and *Vice News*. 
 
 # What?
 
@@ -27,6 +27,7 @@ It's an express.js based app that uses Twilio for the communication aspect, and 
 * [Dr. Amanda Latimore, PhD](http://www.bhsbaltimore.org/amanda-latimore-phd/) - Mentoring, guiding, improving, and promoting the service. Analyzing the overdose data in Baltimore City.
 * [Dr. Lena Wen](https://health.baltimorecity.gov/node/35) - Creating public/private partnerships that allow us to exist. Dedicating herself to the fight against opioid deaths. Providing feedback and mentorship to our developers.
 * [Mike Fried](https://health.baltimorecity.gov/people/mike-fried) - Creating the [TECHealth](https://www.baltimoretechealth.com/) initiative that kicked this all off. 
+* Many many many others in the comunnity who have supported, guided, and connected us.
 
 # Geting Started
 
