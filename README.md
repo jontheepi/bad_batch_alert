@@ -1,13 +1,13 @@
-# Baltimore Bad Batch Alerting Project
+# Baltimore Bad Batch Alert Project
 
-Hello, and welcome to the Baltimore [Bad Batch Alerting](http://www.badbatchalert.com/) project! This is the brain child of [Michael LeGrand](https://github.com/michaellegrand) and a number of collaborators around the Baltimore area and has been [featured on a number of prominent news outlets](http://www.badbatchalert.com/press/) including *The Washington Post* and *Vice News*.
+Hello, and welcome to the Baltimore [Bad Batch Alert](http://www.badbatchalert.com/) project! This project reflects the combined efforts of numerous organizations in the Baltimore area and has been [featured on a number of prominent news outlets](http://www.badbatchalert.com/press/) including *The Washington Post* and *Vice News*. 
 
 
 # What?
 
-The [Baltimore Bad Batch Alerting](http://wwww.badbatchalert.com) project was built to notify opiate users of trends in the medical and law enforcement communities that would otherwise not be publicized, like an increase of overdoses related to heroin being cut with fentanyl in their local area.
+The [Baltimore Bad Batch Alert](http://wwww.badbatchalert.com) project was built to notify opiate users of trends in the medical and law enforcement communities that would otherwise not be publicized, like an increase of overdoses related to heroin being cut with fentanyl in their local area.
 
-It's also a tool that aims to help addicts in the Baltimore area get the treatment they need, and point them towards services like clean needle exchanges and free treatment services for addiction.
+It's also a tool that aims to help those struggling with addiction in the Baltimore area get the treatment they need, and point them towards services like clean needle exchanges and free treatment services for addiction.
 
 # Why?
 
@@ -19,9 +19,15 @@ Overdoses are now the [leading cause of death for Americans under the age of 50.
 
 # How?
 
-The Baltimore Bad Batch alerting service is a free and anonymous service that communicates over text message and can be thought of as an "amber alert" for an increase in overdose deaths in specific regions.
+The Baltimore Bad Batch Alert service is a free and anonymous service that communicates over text message and can be thought of as an "amber alert" for an increase in overdose deaths in specific regions.
 
 It's an express.js based app that uses Twilio for the communication aspect, and Heroku for running.
+
+# Who?
+[Michael LeGrand](https://github.com/michaellegrand) Leading the coding efforts with the [team](http://www.badbatchalert.com/team/) from [Code in the Schools](https://www.codeintheschools.org).
+[Dr. Amanda Latimore, PhD](http://www.bhsbaltimore.org/amanda-latimore-phd/) - Mentoring, guiding, improving, and promoting the service. Analyzing the overdose data in Baltimore City.
+[Dr. Lena Wen](https://health.baltimorecity.gov/node/35) - Creating public/private partnerships that allow us to exist. Dedicating herself to the fight against opioid deaths. Providing feedback and mentorship to our developers.
+[Mike Fried](https://health.baltimorecity.gov/people/mike-fried) - Creating the [TECHealth](https://www.baltimoretechealth.com/) initiative that kicked this all off. 
 
 # Geting Started
 
