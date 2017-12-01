@@ -40,7 +40,7 @@ $ npm install
 $ node app.js
 ```
 
-More docs coming soon! If you like the project please consider a donation to Code in the Schools below.
+More docs coming soon! If you like the project, please consider a donation to Code in the Schools below.
 
 [![donate](https://www.joomlashack.com/images/showcase/osdonate.png)](https://secure.squarespace.com/commerce/donate?donatePageId=5887cbbb893fc0b3632c81e7)
 
