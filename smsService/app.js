@@ -96,8 +96,8 @@ function insertUser(res, sender, body, callback)  {
   var cryptoSender = G.cryptoHelper.encrypt(sender);
   var date = new Date();
   var timestamp = date.toGMTString();
-  var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ('" + cryptoSender + "', '" + body + "', '" + timestamp + "')";
-  var insertQuery = appClient.query(insertQueryString);
+  var insertQueryString = "INSERT INTO users (phone_number, message_body, timestamp) VALUES ($1, $2, $3)";
+  var insertQuery = appClient.query(insertQueryString, [cryptoSender, body, timestamp]);
   insertQuery.on('error', function() {
     console.log("It's cool we're already in here.");
     if (callback) callback();
@@ -116,8 +116,8 @@ function storeMessageHistory(g, res, userClient, sender, body, callback) {
   var divider = '*';
   var historyLength = 5;
   var cryptoSender = G.cryptoHelper.encrypt(sender);
-  var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
-  var findQuery = historyClient.query(findQueryString);
+  var findQueryString = "SELECT * FROM users WHERE phone_number = $1";
+  var findQuery = historyClient.query(findQueryString, [cryptoSender]);
   findQuery.on('row', function(row) {
     console.log(JSON.stringify(row));
     var messageHistory = (body + divider + row.message_body).split(divider);
@@ -127,9 +127,9 @@ function storeMessageHistory(g, res, userClient, sender, body, callback) {
 
     var newBody = messageHistory.join(divider);
 
-    var queryString = "UPDATE users SET message_body = '" + newBody + "' WHERE phone_number = '" + cryptoSender + "'";
-    var udpateQuery = historyClient.query(queryString);
-    udpateQuery.on('end', function() {
+    var queryString = "UPDATE users SET message_body = $1 WHERE phone_number = $2";
+    var updateQuery = historyClient.query(queryString, [newBody, cryptoSender]);
+    updateQuery.on('end', function() {
       console.log("message history updated to " + newBody);
     });
   });
@@ -143,8 +143,8 @@ app.post('/call/receive', bodyParser, function (req, res) {
   console.log ('SENDER:' + sender + ', BODY:' + body);
   insertUser(res, sender, body, function(){
     var cryptoSender = G.cryptoHelper.encrypt(sender);
-    var findQueryString = "SELECT * FROM users WHERE phone_number = '" + cryptoSender + "'";
-    var findQuery = userClient.query(findQueryString);
+    var findQueryString = "SELECT * FROM users WHERE phone_number = $1";
+    var findQuery = userClient.query(findQueryString, [cryptoSender]);
     findQuery.on('row', function(row) {
       console.log("regions =" + row.regions);
       var hasRegion = row.regions != null;

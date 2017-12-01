@@ -29,8 +29,8 @@ var WebAdmin = function() {
       var jsonBody = JSON.parse(body);
       var username = jsonBody.username;
       var password = jsonBody.password;
-      var findQueryString = "SELECT * FROM admin WHERE username = '" + username + "' and password = '" + password + "'" ;
-      var findQuery = webAdminClient.query(findQueryString);
+      var findQueryString = "SELECT * FROM admin WHERE username = $1 and password = $2" ;
+      var findQuery = webAdminClient.query(findQueryString, [username, password]);
       findQuery.on('row', function(row) {
         console.log("found row");
         console.log(JSON.stringify(row));
@@ -279,7 +279,7 @@ var WebAdmin = function() {
           return;
         }
         
-        var findQueryString = "SELECT * FROM users WHERE regions LIKE '%" + region + "%'";
+        var findQueryString = "SELECT * FROM users WHERE regions LIKE $1";
 
         console.log(findQueryString);
         if (!_userClient) {
@@ -304,7 +304,7 @@ var WebAdmin = function() {
         }
         var media = "http://www.badbatchalert.com/images/regions/region_" + region + ".jpg";
 
-        var findQuery = _userClient.query(findQueryString);
+        var findQuery = _userClient.query(findQueryString, ['%' + region + '%']);
         var bindings = [];
         findQuery.on('row', function(row) {
           console.log(JSON.stringify(row));
