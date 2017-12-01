@@ -2,6 +2,7 @@
 
 Hello, and welcome to the Baltimore [Bad Batch Alert](http://www.badbatchalert.com/) project! This project reflects the combined efforts of numerous organizations in the Baltimore area and has been [featured on a number of prominent news outlets](http://www.badbatchalert.com/press/) including *The Washington Post* and *Vice News*. 
 
+[![donate](https://www.joomlashack.com/images/showcase/osdonate.png)](https://secure.squarespace.com/commerce/donate?donatePageId=5887cbbb893fc0b3632c81e7)
 
 # What?
 
@@ -24,10 +25,10 @@ The Baltimore Bad Batch Alert service is a free and anonymous service that commu
 It's an express.js based app that uses Twilio for the communication aspect, and Heroku for running.
 
 # Who?
-[Michael LeGrand](https://github.com/michaellegrand) Leading the coding efforts with the [team](http://www.badbatchalert.com/team/) from [Code in the Schools](https://www.codeintheschools.org).
-[Dr. Amanda Latimore, PhD](http://www.bhsbaltimore.org/amanda-latimore-phd/) - Mentoring, guiding, improving, and promoting the service. Analyzing the overdose data in Baltimore City.
-[Dr. Lena Wen](https://health.baltimorecity.gov/node/35) - Creating public/private partnerships that allow us to exist. Dedicating herself to the fight against opioid deaths. Providing feedback and mentorship to our developers.
-[Mike Fried](https://health.baltimorecity.gov/people/mike-fried) - Creating the [TECHealth](https://www.baltimoretechealth.com/) initiative that kicked this all off. 
+*[Michael LeGrand](https://github.com/michaellegrand) Leading the coding efforts with the [team](http://www.badbatchalert.com/team/) from [Code in the Schools](https://www.codeintheschools.org).
+*[Dr. Amanda Latimore, PhD](http://www.bhsbaltimore.org/amanda-latimore-phd/) - Mentoring, guiding, improving, and promoting the service. Analyzing the overdose data in Baltimore City.
+*[Dr. Lena Wen](https://health.baltimorecity.gov/node/35) - Creating public/private partnerships that allow us to exist. Dedicating herself to the fight against opioid deaths. Providing feedback and mentorship to our developers.
+*[Mike Fried](https://health.baltimorecity.gov/people/mike-fried) - Creating the [TECHealth](https://www.baltimoretechealth.com/) initiative that kicked this all off. 
 
 # Geting Started
 
